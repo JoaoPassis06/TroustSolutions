@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="./src/Logo-icon.png">
+    <link rel="stylesheet" href="./css/acessos.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="login" class="container">
+        <div class="container-img">
+            <img src="./src/homem-graficos.svg" alt="img bonitinha">
+        </div>
+        <div class="container-forms login">
+           
+            <div class="topo">
+                <h1>Acesse sua conta</h1>
+                <img class="logo" src="./src/Logo-icon.png" alt="TroustSolutions">
+            </div>
+            <div class="div-forms-login">
+                <div class="msg-erros" id="div_msg_erros">  </div>
+                <label>
+                    <span>Email:</span>
+                    <input type="text" placeholder="seuemail@gmail.com" id="ipt_email">
+                </label>
+                <div style="position: relative; width: 75%;">
+    <input type="password" id="ipt_senha" placeholder="S3nh4_forte*">
+    <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" 
+         id="olho_senha" 
+         onclick="toggleSenha('ipt_senha', 'olho_senha')"
+         style="position: absolute; right: 10px; top: 15px; width: 20px; cursor: pointer; opacity: 0.5;">
+</div>
+                <button onclick="autenticar()" class="btn-login">Login</button>
+                <button onclick="entarGmail()" class="btn-google">
+                    <img src="./src/logo_google.png" alt="G">
+                    continuar com o Google
+                </button>
+            </div>
+            <div class="outros-links">
+                <p>Não possui uma conta? <a href="./cadastro.html"><span class="btn-cad-login">Cadastre-se</span></a></p>
+                <p><a class="senha-link" href="./index.html">Esqueci minha senha</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    const bcrypt = require('bcrypt');
+
+function autenticar() {
+    var emailVar = ipt_email.value.toLowerCase().trim();
+    var senhaVar = ipt_senha.value;
+
+
+
+    if (emailVar == "" || senhaVar == "") {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    console.log("Enviando requisição de login...");
+
+    fetch("http://localhost:3333/usuarios/autenticar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: emailVar, senha: senhaVar })
+
+
+    }).then(function (resposta) {
+        if (resposta.ok) {
+
+            resposta.json().then(json => {
+                console.log("DADOS RECEBIDOS:", json);
+
+                if (json.idUsuario != undefined) {
+                    
+                    sessionStorage.setItem("ID_USUARIO", json.idUsuario);
+                    sessionStorage.setItem("NOME_USUARIO", json.nome);
+                    sessionStorage.setItem("FK_EMPRESA", json.fkEmpresa);
+                    sessionStorage.setItem("NOME_EMPRESA", json.empresa);
+                    sessionStorage.setItem("SUPERVISOR_ID", json.supervisor);
+                    sessionStorage.setItem("PODE_CADASTRAR", json.pode_cadastrar);
+
+                    console.log("Sessão gravada! Redirecionando...");
+                    window.location.href = "Dash/dashborad.html"; // 
+                } else {
+                    alert("Erro: O servidor não retornou os dados do usuário.");
+                }
+            });
+        } else {
+            
+            resposta.text().then(texto => {
+                console.error("Erro na autenticação:", texto);
+                alert("Erro no login: Usuário ou senha inválidos.");
+            });
+        }
+    }).catch(function (erro) {
+        
+        console.error("ERRO DE REDE:", erro);
+        alert("Não foi possível conectar ao servidor. Verifique se a API está rodando.");
+    });
+}
+
+
+function toggleSenha(idInput, idOlho) {
+    const input = document.getElementById(idInput);
+    const olho = document.getElementById(idOlho);
+    if (input.type === "password") {
+        input.type = "text";
+        olho.style.opacity = "1";
+    } else {
+        input.type = "password";
+        olho.style.opacity = "0.5";
+    }
+}
+
+</script>
+
+
+</html>

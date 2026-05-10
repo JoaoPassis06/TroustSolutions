@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador Financeiro</title>
+    <link rel="icon" type="image/x-icon" href="../Sites/src/Logo-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    * {
+      font-family: "Poppins";
+    }
+
+    body {
+      font-family: "Poppins";
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="../Sites/index.html"><img src="../Sites/src/Logo-icon.png" alt="Logo"></a>
+    </div>
+    <div class="links">
+      <ul>
+        <li class="agora">
+          <a href="../Sites/index.html">Home</a>
+        </li>
+        <li>
+          <a href="../Sites/index.html">Nossa Missão</a>
+        </li>
+        <li>
+          <a href="../Sites/index.html">Relatos</a>
+        </li>
+        <li>
+          <a href="../Sites/index.html">Contato</a>
+        </li>
+      </ul>
+    </div>
+    <div class="acessos">
+      <div class="botoes">
+        <button onclick="window.location.href='../Sites/login.html'" class="login"><span>Login</span></button>
+        <button onclick="window.location.href='../Sites/cadastro.html'" class="cadastro"><span>Cadastro</span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main">
+    <div class="tela-calculo">
+        <h1>Simulador Financeiro</h1>
+        <p>Dados baseados no <a href="https://share.google/IcmvHlB3KLzm8TSB9" target="_blank">Instituto da Pesca</a>.</p>
+        
+        <div class="boxes">
+            <div class="box">
+                <label>Total de Alevinos:</label>
+                <input type="number" id="ipt_alevinos" placeholder="Ex: 1000" />
+                
+                <label>Custo por Alevino (R$):</label>
+                <input type="number" id="ipt_CustoAlevinos" placeholder="Ex: 0.50" />
+                
+                <label>Custo Operacional Mensal (R$):</label>
+                <input type="number" id="ipt_CustoOperacao" placeholder="Ex: 200.00" />
+            </div>
+            <div class="box">
+                <label>Custo da Ração (KG):</label>
+                <input type="number" id="ipt_RacaoKG" placeholder="Ex: 5.00">
+                
+                <label>Preço de Venda (KG):</label>
+                <input type="number" id="ipt_VendaKG" placeholder="Ex: 30.00" />
+                
+                <label>Tempo de Cultivo (Meses):</label>
+                <input type="number" id="ipt_cultivoSem" placeholder="Ex: 12" />
+            </div>
+        </div>
+        
+        <label>Visualização Inicial:</label>
+        <select id="sensor_select">
+            <option value="sem">Sem Tecnologia Troust</option>
+            <option value="com">Com Tecnologia Troust</option>
+        </select>
+        
+        <button onclick="processarSimulacao()">Simular Lucratividade</button>
+    </div>
+
+    <div class="tela-resultado">
+        <h1>Análise de Viabilidade</h1>
+        <div id="div_imagem" class="imagem">
+            <img src="../Sites/src/logo-nome.png" alt="Logo">
+        </div>
+        <div id="resultado_container" class="resultado" style="display: none;">
+            <div id="msg_resultado"></div>
+            <button onclick="abrirComparativo()">Ver Comparativo Detalhado</button>
+        </div>
+    </div>
+
+    <div class="tela-comparar" id="tela_comparar" style="display: none;">
+        <div class="div_comparar">
+            <div class="caixa">
+                <img src="../Sites/src/botao-fechar.png" onclick="fechar()" alt="Fechar">
+            </div>
+            
+            <div class="comparacao">
+                <div id="div_semSensor" class="comparar"></div>
+                <div id="div_comSensor" class="comparar"></div>
+            </div>
+
+            <div id="div_sensor">
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+</body>
+
+</html>
+<script>
+
+let dadosSimulacao = {
+    com: {},
+    sem: {}
+};
+
+function processarSimulacao() {
+    const inputs = {
+        alevinos: Number(ipt_alevinos.value),
+        custoAlevino: Number(ipt_CustoAlevinos.value),
+        custoRacao: Number(ipt_RacaoKG.value),
+        vendaKG: Number(ipt_VendaKG.value),
+        custoMensal: Number(ipt_CustoOperacao.value),
+        mesesBase: Number(ipt_cultivoSem.value)
+    };
+
+    // Validação básica
+    if (Object.values(inputs).some(v => v <= 0)) {
+        return alert("Por favor, preencha todos os campos com valores positivos.");
+    }
+
+    // Cálculos para os dois cenários
+    dadosSimulacao.sem = calcularCenario(inputs, 0.15, 1.7, 0); // 15% mortalidade, 1.7 conversão alimentar
+    dadosSimulacao.com = calcularCenario(inputs, 0.05, 1.4, -2); // 5% mortalidade, 1.4 conversão, 2 meses a menos
+
+    exibirResultadoSimples();
+}
+
+function calcularCenario(inp, taxaMortalidade, conversaoAlimentar, ajusteTempo) {
+    const colheitaQtd = inp.alevinos * (1 - taxaMortalidade);
+    const pesoTotalKG = (colheitaQtd * 300) / 1000; // Média de 300g por truta
+    const mesesTotais = inp.mesesBase + ajusteTempo;
+    
+    const custoAlevinosTotal = inp.alevinos * inp.custoAlevino;
+    const custoRacaoTotal = pesoTotalKG * (conversaoAlimentar * inp.custoRacao);
+    const custoOperacionalTotal = inp.custoMensal * mesesTotais;
+    
+    const custoTotal = custoAlevinosTotal + custoRacaoTotal + custoOperacionalTotal;
+    const receitaTotal = pesoTotalKG * inp.vendaKG;
+    const lucroLiquido = receitaTotal - custoTotal;
+    const margemLucro = (lucroLiquido / receitaTotal) * 100;
+
+    return {
+        colheitaQtd,
+        pesoTotalKG,
+        custoTotal,
+        receitaTotal,
+        lucroLiquido,
+        margemLucro,
+        taxaMortalidade: taxaMortalidade * 100,
+        tempo: mesesTotais
+    };
+}
+
+function exibirResultadoSimples() {
+    const selecao = sensor_select.value;
+    const dados = dadosSimulacao[selecao];
+    const corLucro = dados.lucroLiquido > 0 ? '#00FF7F' : '#FF4B4B';
+
+    div_imagem.style.display = 'none';
+    resultado_container.style.display = 'flex';
+
+    msg_resultado.innerHTML = `
+    <h3>Simulação ${selecao == 'com' ? 'Com Sensor' : 'Sem Sensor'}</h3>
+    <p><span>Produção:</span> <b>${dados.pesoTotalKG.toFixed(2)} kg</b></p>
+    <p><span>Custo Total:</span> <b style="color: #FF4B4B">${dados.custoTotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</b></p>
+    <p><span>Receita Bruta:</span> <b style="color: #00FF7F">${dados.receitaTotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</b></p>
+    <div style="margin: 20px 0; border-top: 2px solid #444;"></div>
+    <p><span>Lucro Líquido:</span> <b style="font-size: 1.3rem; color: ${corLucro}">${dados.lucroLiquido.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</b></p>
+    <p><span>Margem:</span> <b>${dados.margemLucro.toFixed(2)}%</b></p>
+`;
+}
+
+function abrirComparativo() {
+    const s = dadosSimulacao.sem;
+    const c = dadosSimulacao.com;
+    
+
+    const modal = document.getElementById('tela_comparar');
+    if (modal) modal.style.display = 'flex';
+
+
+    div_semSensor.innerHTML = `
+        <div class="card-comparativo sem-tecnologia">
+            <h2>SEM TECNOLOGIA</h2>
+            <div class="info-row">
+                <span>Mortalidade:</span>
+                <b style="color: #FF4B4B">15%</b>
+            </div>
+            <div class="info-row">
+                <span>Lucro Líquido:</span>
+                <b>${s.lucroLiquido.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</b>
+            </div>
+            <div class="info-row">
+                <span>Margem:</span>
+                <b>${s.margemLucro.toFixed(2)}%</b>
+            </div>
+            <div class="info-row">
+                <span>Tempo de Cultivo:</span>
+                <b>${s.tempo} meses</b>
+            </div>
+        </div>
+    `;
+
+    div_comSensor.innerHTML = `
+        <div class="card-comparativo com-tecnologia">
+            <h2 style="color: #00FFD1">TECNOLOGIA TROUST</h2>
+            <div class="info-row">
+                <span>Mortalidade:</span>
+                <b style="color: #00FF7F">5%</b>
+            </div>
+            <div class="info-row">
+                <span>Lucro Líquido:</span>
+                <b style="color: #00FF7F">${c.lucroLiquido.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</b>
+            </div>
+            <div class="info-row">
+                <span>Margem:</span>
+                <b style="color: #00FF7F">${c.margemLucro.toFixed(2)}%</b>
+            </div>
+            <div class="info-row">
+                <span>Tempo de Cultivo:</span>
+                <b style="color: #00FF7F">${c.tempo} meses</b>
+            </div>
+        </div>
+    `;
+
+    const economiaCusto = s.custoTotal - c.custoTotal;
+    const ganhoLucro = c.lucroLiquido - s.lucroLiquido;
+
+
+    div_sensor.innerHTML = `
+        <div class="painel-impacto">
+            <h3 style="color: #00FFD1">POR QUE ESCOLHER A TROUST?</h3>
+            <div class="metricas-impacto">
+                <div class="metrica">
+                    <p>Economia em Custos</p>
+                    <span style="color: #00FF7F">${economiaCusto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</span>
+                </div>
+                <div class="metrica">
+                    <p>Ganho Adicional de Lucro</p>
+                    <span style="color: #00FF7F">${ganhoLucro.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</span>
+                </div>
+            </div>
+            <p class="legenda-impacto">
+                <i>Redução de 2 meses no ciclo produtivo e otimização da conversão alimentar.</i>
+            </p>
+        </div>
+    `;
+}
+
+function fechar() {
+    tela_comparar.style.display = 'none';
+}
+
+</script>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TroustSolutions | Planos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/planos_style.css">
+</head>
+<body>
+
+
+<div class="top-nav">
+    <a href="index.html" class="btn-voltar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Voltar para Home
+    </a>
+</div>
+
+<section>
+
+    <div class="section-tag">Planos &amp; Preços</div>
+
+    <h2 class="section-title">Escolha o plano <span>ideal para você</span></h2>
+    <p class="section-sub">Monitore seus tanques, gerencie sua equipe e maximize sua produção com a solução certa para o tamanho da sua operação.</p>
+
+    <div class="billing-toggle" id="billingToggle">
+        <label class="active" id="lbl-mensal" onclick="setBilling('mensal')">Mensal</label>
+        <label id="lbl-anual" onclick="setBilling('anual')">Anual</label>
+        <span class="save-badge">Economize 20%</span>
+    </div>
+
+    <div class="plans-grid">
+
+        <!-- ── BÁSICO ── -->
+        <div class="plan-card">
+            <span class="plan-badge badge-basic">Básico</span>
+            <div class="plan-name">Starter</div>
+            <div class="plan-desc">Para pequenas operações que estão começando o monitoramento inteligente.</div>
+
+            <div class="plan-price-wrap">
+                <span class="plan-currency">R$</span>
+                <span class="plan-price" id="price-starter">149</span>
+                <span class="plan-period">/mês</span>
+            </div>
+            <div class="plan-annual-note" id="note-starter">&nbsp;</div>
+
+            <div class="plan-divider"></div>
+
+            <div class="plan-specs">
+                <div class="spec-item">
+                    <span class="spec-label">Sensores</span>
+                    <span class="spec-value">Até 5</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Tanques</span>
+                    <span class="spec-value">Até 3</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Parcelas</span>
+                    <span class="spec-value">1× ou 3×</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Moeda</span>
+                    <span class="spec-value">BRL</span>
+                </div>
+            </div>
+
+            <ul class="plan-features">
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Dashboard de monitoramento em <strong>tempo real</strong></span>
+                </li>
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Alertas automáticos por temperatura</span>
+                </li>
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Cadastro de <strong>até 2 colaboradores</strong></span>
+                </li>
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Suporte por e-mail</span>
+                </li>
+            </ul>
+
+            <button class="btn-plan btn-outline" onclick="selecionarPlano('Starter')">
+                <span><a href="contratar-plano.html">Começar agora</a></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+        </div>
+
+        <!-- ── POPULAR ── -->
+        <div class="plan-card popular">
+            <span class="plan-badge badge-popular">⭐ Mais popular</span>
+            <div class="plan-name">Premium</div>
+            <div class="plan-desc">Para produtores em expansão que precisam de controle total sobre a operação.</div>
+
+            <div class="plan-price-wrap">
+                <span class="plan-currency">R$</span>
+                <span class="plan-price" id="price-premium">349</span>
+                <span class="plan-period">/mês</span>
+            </div>
+            <div class="plan-annual-note" id="note-premium">&nbsp;</div>
+
+            <div class="plan-divider"></div>
+
+            <div class="plan-specs">
+                <div class="spec-item">
+                    <span class="spec-label">Sensores</span>
+                    <span class="spec-value">Ilimitados</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Tanques</span>
+                    <span class="spec-value">Ilimitados</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Parcelas</span>
+                    <span class="spec-value">Até 12×</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Moeda</span>
+                    <span class="spec-value">BRL / USD</span>
+                </div>
+            </div>
+
+            <ul class="plan-features">
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Tudo do Starter, mais:</span>
+                </li>
+               
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Gestão completa de <strong>equipe ilimitada</strong></span>
+                </li>
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Relatórios exportáveis (PDF / CSV) para análise</span>
+                </li>
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Suporte prioritário via WhatsApp</span>
+                </li>
+            </ul>
+
+            <button class="btn-plan btn-filled" onclick="selecionarPlano('Premium')">
+                <span><a href="contratar-plano.html">Assinar Premium</a></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+        </div>
+
+        <!-- ── ENTERPRISE ── -->
+        <div class="plan-card">
+            <span class="plan-badge badge-enterprise">Enterprise</span>
+            <div class="plan-name">Corporate</div>
+            <div class="plan-desc">Para grandes cooperativas e empresas com múltiplas unidades produtivas.</div>
+
+            <div class="plan-price-wrap">
+                <span class="plan-currency">R$</span>
+                <span class="plan-price" id="price-corporate">749</span>
+                <span class="plan-period">/mês</span>
+            </div>
+            <div class="plan-annual-note" id="note-corporate">&nbsp;</div>
+
+            <div class="plan-divider"></div>
+
+            <div class="plan-specs">
+                <div class="spec-item">
+                    <span class="spec-label">Sensores</span>
+                    <span class="spec-value">Ilimitados</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Tanques</span>
+                    <span class="spec-value">Multi-unidade</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Parcelas</span>
+                    <span class="spec-value">Até 24×</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Moeda</span>
+                    <span class="spec-value">BRL/USD/EUR</span>
+                </div>
+            </div>
+
+            <ul class="plan-features">
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Tudo do Premium, mais:</span>
+                </li>
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Múltiplas <strong>empresas / unidades</strong> no mesmo painel</span>
+                </li>
+                
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>Gerente de conta <strong>dedicado</strong></span>
+                </li>
+                <li>
+                    <span class="feat-icon check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg></span>
+                    <span>SLA 99,9% com suporte 24/7</span>
+                </li>
+            </ul>
+
+            <button class="btn-plan btn-gold" onclick="selecionarPlano('Corporate')">
+                <span><a href="contratar-plano.html">Falar com consulto</a>r</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="compare-note">
+        Tem dúvidas? <a href="#">Compare todos os recursos detalhados →</a>
+    </div>
+
+</section>
+
+<script>
+    const prices = {
+        starter:   { mensal: 149, anual: 119 },
+        premium:   { mensal: 349, anual: 279 },
+        corporate: { mensal: 749, anual: 599 }
+    };
+
+    let billing = 'mensal';
+
+    function setBilling(mode) {
+        billing = mode;
+        document.getElementById('lbl-mensal').classList.toggle('active', mode === 'mensal');
+        document.getElementById('lbl-anual').classList.toggle('active', mode === 'anual');
+
+        Object.entries(prices).forEach(([plan, p]) => {
+            const val = mode === 'anual' ? p.anual : p.mensal;
+            const el  = document.getElementById('price-' + plan);
+            const note = document.getElementById('note-' + plan);
+
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(-8px)';
+            setTimeout(() => {
+                el.textContent = val;
+                el.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, 150);
+
+            if (mode === 'anual') {
+                const saving = ((p.mensal - p.anual) * 12).toLocaleString('pt-BR');
+                note.innerHTML = `<span class="highlight">Economia de R$${saving}/ano</span>`;
+            } else {
+                note.innerHTML = '&nbsp;';
+            }
+        });
+    }
+
+    function selecionarPlano(nome) {
+        alert('Plano ' + nome + ' selecionado! Redirecionando para o cadastro...');
+    }
+</script>
+
+</body>
+</html>

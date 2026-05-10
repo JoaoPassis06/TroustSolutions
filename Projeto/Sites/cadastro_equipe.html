@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TroustSolutions | Gestão de Equipe</title>
+    <link rel="stylesheet" href="css/style-cadastro-equipe.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="js/cadastro-equipe.js"></script>
+</head>
+<body onload="verificarAcesso()">
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <img class="logo-icon" src="src/Logo-icon.png" alt="" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <span class="logo-solucoes">Soluções</span>
+                <span class="logo-troust">Troust</span>
+            </div>
+        </div>
+        <div class="logo-divider"></div>
+
+        <nav>
+            <a href="Dash/dashborad.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                Home
+            </a>
+            <a href="Dash/dash-tanque.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/><circle cx="6" cy="7" r="1" fill="currentColor"/><circle cx="6" cy="12" r="1" fill="currentColor"/><circle cx="6" cy="17" r="1" fill="currentColor"/></svg>
+                Tanque
+            </a>
+            <a href="#" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Equipe Cadastral
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="index.html" onclick="sessionStorage.clear()" class="btn-desconectar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Desconectar
+            </a>
+        </div>
+    </div>
+
+    <main class="content">
+
+
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('colaborador', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                Colaborador
+            </button>
+            <button class="tab-btn" onclick="switchTab('tanque', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="8" rx="9" ry="4"/><path d="M3 8v8c0 2.2 4 4 9 4s9-1.8 9-4V8"/><path d="M3 12c0 2.2 4 4 9 4s9-1.8 9-4"/></svg>
+                Tanque
+            </button>
+            <button class="tab-btn" id="btn-tab-pagamento" onclick="switchTab('pagamento', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                Pagamentos
+            </button>
+        </div>
+
+        <div class="tab-panel active" id="panel-colaborador">
+            <div class="page-header">
+                <div class="breadcrumb">Painel de controle — Equipe</div>
+                <h1 class="page-title">Cadastrar <span class="highlight">Colaborador</span></h1>
+            </div>
+
+            <div class="card-form">
+                <div class="card-form-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                    </div>
+                    <div>
+                        <h2>Cadastrar Novo Colaborador</h2>
+                        <p>Os usuários cadastrados por você estarão vinculados ao seu ID de supervisor.</p>
+                    </div>
+                </div>
+
+                <div class="form-body">
+                    <div class="input-group">
+                        <label for="ipt_nome">Nome Completo</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <input type="text" id="ipt_nome" placeholder="Ex: João Silva">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="ipt_email">E-mail de Acesso</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <input type="email" id="ipt_email" placeholder="joao@email.com">
+                        </div>
+                    </div>
+
+<div class="input-group">
+    <label for="ipt_senha">Senha Provisória</label>
+    <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+
+        <input type="password" id="ipt_senha" placeholder="••••••••" style="flex: 1; padding-right: 40px;">
+
+        <button type="button" onclick="toggleSenha()" class="btn-visualizar-senha" 
+            style="position: absolute; right: 12px; background: none; border: none; color: #888; cursor: pointer; display: flex; align-items: center;">
+            <svg id="svg_olho" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+        </button>
+    </div>
+</div>
+                   
+
+                    <div class="input-group">
+                        <label for="sel_permissao">Nível de Acesso</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <select id="sel_permissao">
+                                <option value="0">Operador (Apenas visualização)</option>
+                                <option value="1">Sub-Supervisor (Pode cadastrar outros)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="btn-cadastrar" onclick="cadastrarMembro()">
+                        <span class="btn-text">Cadastrar na Minha Equipe</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+ </div>
+
+        <div class="tab-panel" id="panel-tanque">
+            <div class="page-header">
+                <div class="breadcrumb">Painel de controle — Infraestrutura</div>
+                <h1 class="page-title">Cadastrar <span class="highlight-cyan">Tanque</span></h1>
+            </div>
+
+            <div class="card-form card-form--tank">
+                <div class="card-form-header card-form-header--tank">
+                    <div class="card-icon card-icon--tank">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="8" rx="9" ry="4"/><path d="M3 8v8c0 2.2 4 4 9 4s9-1.8 9-4V8"/><path d="M3 12c0 2.2 4 4 9 4s9-1.8 9-4"/></svg>
+                    </div>
+                    <div>
+                        <h2>Cadastrar Novo Tanque</h2>
+                        <p>Informe as especificações técnicas e de localização do tanque.</p>
+                    </div>
+                </div>
+
+                <div class="form-body">
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="ipt_tank_nome">Nome do Tanque</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10M7 12h6"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                                <input type="text" id="ipt_tank_nome" placeholder="Ex: Tanque A1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="ipt_tank_setor">Setor</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                <input type="text" id="ipt_tank_setor" placeholder="Ex: Setor Norte">
+                            </div>
+                        </div>
+                    </div>
+
+  
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="ipt_tank_tempmin">Temp. Mínima (°C)</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+                                <input type="number" id="ipt_tank_tempmin" placeholder="Ex: 18" step="0.1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="ipt_tank_tempmax">Temp. Máxima (°C)</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+                                <input type="number" id="ipt_tank_tempmax" placeholder="Ex: 28" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="ipt_tank_truta">Qtd. de Trutas</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                <input type="number" id="ipt_tank_truta" placeholder="Ex: 500" min="0">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="ipt_tank_tamanho">Tamanho (m²)</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                                <input type="number" id="ipt_tank_tamanho" placeholder="Ex: 12.5" step="0.1" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="ipt_tank_litragem">Litragem (L)</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            <input type="number" id="ipt_tank_litragem" placeholder="Ex: 10000" min="0">
+                        </div>
+                    </div>
+
+                    <button class="btn-cadastrar btn-cadastrar--tank" onclick="cadastrarTanque()">
+                        <span class="btn-text">Cadastrar Tanque</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="panel-pagamento">
+            <div class="page-header">
+                <div class="breadcrumb">Painel de controle — Financeiro</div>
+                <h1 class="page-title">Histórico de <span class="highlight-gold">Pagamentos</span></h1>
+            </div>
+
+
+            <div class="finance-summary">
+                <div class="finance-card finance-card--green">
+                    <div class="finance-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div>
+                        <span class="finance-card-label">Em dia</span>
+                        <span class="finance-card-value" id="count-pago">—</span>
+                    </div>
+                </div>
+                <div class="finance-card finance-card--yellow">
+                    <div class="finance-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <div>
+                        <span class="finance-card-label">Pendente</span>
+                        <span class="finance-card-value" id="count-pendente">—</span>
+                    </div>
+                </div>
+                <div class="finance-card finance-card--red">
+                    <div class="finance-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    </div>
+                    <div>
+                        <span class="finance-card-label">Vencido</span>
+                        <span class="finance-card-value" id="count-vencido">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="table-card-header">
+                    <div class="table-card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        Lançamentos
+                    </div>
+                    <button class="btn-refresh" onclick="carregarPagamentos()" title="Atualizar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    </button>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="finance-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Pagamento</th>
+                                <th>Vencimento</th>
+                                <th>Parcela</th>
+                                <th>Plano</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-pagamentos">
+
+                            <tr class="table-placeholder">
+                                <td colspan="6">
+                                    <div class="placeholder-inner">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                                        <span>Carregando histórico...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    
+</body>
+</html>

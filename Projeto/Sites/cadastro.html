@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="icon" type="image/x-icon" href="./src/Logo-icon.png">
+    <link rel="stylesheet" href="./css/acessos.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cad_1" class="container">
+        <div class="container-img">
+            <img src="./src/homem-tabelas.svg" alt="img bonitinha">
+        </div>
+        <div class="container-forms">
+            <div class="topo-cad">
+                <div class="topo">
+                    <h1>Cadastre-se</h1>
+                    <img class="logo" src="./src/Logo-icon.png" alt="TroustSolutions">
+                </div>
+                <div class="sub-topo">
+                    <h2>Empresa</h2>
+                    <div class="progresso">
+                        <div class="bolinha ativo"></div>
+                        <div class="linha"></div>
+                        <div class="bolinha"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="div-forms-cad">
+                <div class="msg-erros" id="div_msg_erros"> </div>
+                <div class="linha-input">
+                    <label class="w-60">
+                        <span>Nome Fantasia:</span>
+                        <input type="text" id="ipt_nome_fantasia" placeholder="Ex: TroustSolutions">
+                    </label>
+                    <label class="w-40">
+                        <span>CNPJ:</span>
+                        <input type="text" id="ipt_cnpj" placeholder="Ex: 00.000.000/0000-00" maxlength="18"
+                            onkeyup="formatarCnpj()">
+                    </label>
+                </div>
+                <div class="linha-input">
+                    <label class="w-100">
+                        <span>Razão Social:</span>
+                        <input type="text" id="ipt_razao_social"
+                            placeholder="Troust Solutions Desenvolvimento e Inovação Ltda">
+                    </label>
+                </div>
+                <div class="linha-input">
+                    <label class="w-50">
+                        <span>Telefone Fixo:</span>
+                        <input id="ipt_telefone" placeholder="(11) 8255-1524" maxlength="14" onkeyup="formatarTellFixo()">
+                    </label>
+                    <label class="w-50">
+                        <span>Telefone Celular:</span>
+                        <input id="ipt_telefone_2" placeholder="(11) 98255-1524" maxlength="15" onkeyup="formatarTellCell()">
+                    </label>
+                </div>
+                <div class="linha-input">
+    <label class="w-33">
+        <span>CEP:</span>
+
+        <input type="text" id="ipt_cep" placeholder="02612-190" maxlength="9" onkeyup="formatarCep()" onblur="buscarCep()">
+    </label>
+    <label class="w-33">
+        <span>Número:</span>
+        <input type="text" id="ipt_numero_ende" placeholder="598A">
+    </label>
+    <label class="w-33">
+        <span>Complemento:</span>
+        <input type="text" id="ipt_complemento" placeholder="Apto. 1">
+    </label>
+</div>
+
+
+                <div class="linha-input">
+                    <label class="w-50">
+                        <span>Rua:</span>
+                        <input type="text" id="ipt_rua" placeholder="Rua aparecerá aqui" readonly>
+                    </label>
+                    <label class="w-50">
+                        <span>Bairro:</span>
+                        <input type="text" id="ipt_bairro" placeholder="Bairro aparecerá aqui" readonly>
+                    </label>
+                    
+                </div>
+                <div class="linha-input">
+                    
+                    <label class="w-50">
+                        <span>Estado:</span>
+                        <input type="text" id="ipt_estado" placeholder="Estado aparecerá aqui" readonly>
+                    </label>
+                    <label class="w-50">
+                        <span>Cidade:</span>
+                        <input type="text" id="ipt_cidade" placeholder="Cidade aparecerá aqui" readonly>
+                    </label>
+                    
+                </div>
+            </div>
+            <div class="outros-links">
+                <div class="container-btn">
+                    <button onclick="avancar_p1()" class="btn-etapa">Próximo</button>
+                </div>
+                <p><a href="./login.html">Já possui uma conta? <span>Faça Login</span></a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="cad_2" class="container" style="display:none;">
+        <div class="container-img">
+            <img src="./src/homem-quadro-branco.svg" alt="img bonitinha">
+        </div>
+        <div class="container-forms">
+            <div class="topo-cad">
+                <div class="topo">
+                    <h1>Cadastre-se</h1>
+                    <img class="logo" src="./src/Logo-icon.png" alt="TroustSolutions">
+                </div>
+                <div class="sub-topo">
+                    <h2>Supervisor</h2>
+                    <div class="progresso">
+                        <div class="bolinha ativo"></div>
+                        <div class="linha ativo"></div>
+                        <div class="bolinha ativo"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="div-forms-cad">
+                <div class="msg-erros" id="div_msg_erros_2"> </div>
+                <div class="linha-input">
+                    <label class="w-40">
+                        <span>Nome:</span>
+                        <input type="text" id="ipt_nome_supervisor" placeholder="Ex: Matheus">
+                    </label>
+                    <label class="w-60">
+                        <span>Sobrenome:</span>
+                        <input type="text" id="ipt_sobrenome" placeholder="Ex: Silva">
+                    </label>
+                </div>
+                <div class="linha-input">
+                    <label class="w-100">
+                        <span>Email:</span>
+                        <input type="text" id="ipt_email" placeholder="supervisor@troustsolutions.com">
+                    </label>
+                </div>
+                <div class="linha-input">
+                    <label class="w-100">
+                        <span>Senha:</span>
+                        <input type="password" id="ipt_senha" placeholder="S3nh4_fort*" onkeyup="Validar_forca_senha()">
+                        <div class="barra-senha" id="div_forca_senha">
+                            <div class="forca"><span id="span_forca_senha">Insegura</span></div>
+                            <div class="barra-forca-senha">
+                                <div class="barra barra-1" id="div_barra_0"></div>
+                                <div class="barra" id="div_barra_1"></div>
+                                <div class="barra" id="div_barra_2"></div>
+                                <div class="barra" id="div_barra_3"></div>
+                                <div class="barra" id="div_barra_4"></div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                <div class="linha-input">
+                    <label class="w-100">
+                        <span>Confirme sua Senha:</span>
+                        <input type="password" id="ipt_confirme_senha" placeholder="">
+                    </label>
+                </div>
+            </div>
+            <div class="outros-links">
+                <div class="container-btn">
+                    <button onclick="voltar_p1()" class="btn-etapa">Voltar</button>
+                    <button onclick="avancar_p2()" class="btn-cadastrar">Cadastrar</button>
+                </div>
+                <p>Já possui uma conta? <a href="./login.html"><span class="btn-cad-cadastro">Faça Login</span></a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    
+    var nomeFantasiaEmpresa = '';
+    var cnpjEmpresa = '';
+    var razaoSocialEmpresa = '';
+    var tellFixoEmpresa = '';
+    var tellCellEmpresa = '';
+    var cepEmpresa = '';
+    var numEndeEmpresa = '';
+    var compEndeEmpresa = '';
+    var ruaEndeEmpresa = '';
+    var bairoEndeEmpresa = '';
+    var cidadeEndeEmpresa = '';
+    var estadoEndeEmpresa = '';
+
+    var emailFunc = '';
+    var senhaFunc = '';
+    var forcaSenha = 'Insegura';
+
+    function avancar_p1() {
+        nomeFantasiaEmpresa = ipt_nome_fantasia.value;
+        cnpjEmpresa = ipt_cnpj.value.replace(/\D/g, '');
+        razaoSocialEmpresa = ipt_razao_social.value;
+        tellFixoEmpresa = ipt_telefone.value.replace(/\D/g, '');
+        tellCellEmpresa = ipt_telefone_2.value.replace(/\D/g, '');
+        cepEmpresa = ipt_cep.value.replace(/\D/g, '');
+        numEndeEmpresa = ipt_numero_ende.value;
+        compEndeEmpresa = ipt_complemento.value;
+        ruaEndeEmpresa = ipt_rua.value;
+        bairoEndeEmpresa = ipt_bairro.value;
+        cidadeEndeEmpresa = ipt_cidade.value;
+        estadoEndeEmpresa = ipt_estado.value;
+
+        if (nomeFantasiaEmpresa == '' || razaoSocialEmpresa == '' || cnpjEmpresa.length != 14 || cepEmpresa.length != 8) {
+            div_msg_erros.style.display = 'block';
+            div_msg_erros.innerHTML = 'Preencha os dados da empresa corretamente (CNPJ 14 dígitos)';
+        } else {
+            cad_1.style.display = 'none';
+            cad_2.style.display = 'flex';
+        }
+    }
+
+    function avancar_p2() {
+        var nomeFunc = ipt_nome_supervisor.value.ToUpperCase().Trim();
+        var sobrenomeFunc = ipt_sobrenome.value.ToUpperCase().Trim();
+        emailFunc = ipt_email.value.ToLowerCase().Trim();
+        senhaFunc = ipt_senha.value;
+        var confirmarSenhaFunc = ipt_confirme_senha.value;
+
+        if (nomeFunc == '' || emailFunc.indexOf('@') == -1 || senhaFunc != confirmarSenhaFunc) {
+            div_msg_erros_2.style.display = 'block';
+            div_msg_erros_2.innerHTML = 'Verifique os campos do supervisor e se as senhas coincidem';
+        } else {
+            cadastrar();
+        }
+    }
+
+
+async function cadastrar() {
+    try {
+        const respostaEmpresa = await fetch("http://localhost:3333/empresas/cadastrar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nomeFantasia: nomeFantasiaEmpresa,
+                razaoSocial: razaoSocialEmpresa,
+                cnpj: cnpjEmpresa,
+                cell: tellCellEmpresa,
+                tellFixo: tellFixoEmpresa,
+                cep: cepEmpresa,
+                rua: ruaEndeEmpresa,
+                bairro: bairoEndeEmpresa,
+                cidade: cidadeEndeEmpresa,
+                estado: estadoEndeEmpresa,
+                numero: numEndeEmpresa,
+                complemento: compEndeEmpresa
+            })
+        });
+
+        if (respostaEmpresa.ok) {
+            const jsonEmpresa = await respostaEmpresa.json();
+            // Passa o ID da empresa para a próxima função
+            cadastrarUsuario(jsonEmpresa.insertId);
+        } else {
+            const erroCorpo = await respostaEmpresa.json();
+            console.error("Erro detalhado:", erroCorpo);
+            alert("Erro ao cadastrar empresa. Verifique o console do VS Code.");
+        }
+    } catch (erro) {
+        console.error("Erro na requisição:", erro);
+    }
+}
+
+function cadastrarUsuario(idEmpresa) {
+    var nomeSupervisor = ipt_nome_supervisor.value;
+    var sobrenomeSupervisor = ipt_sobrenome.value;
+    var nomeCompleto = `${nomeSupervisor} ${sobrenomeSupervisor}`;
+
+    fetch("http://localhost:3333/usuarios/cadastrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            nome: nomeCompleto,
+            email: emailFunc, 
+            senha: senhaFunc,
+            fkEmpresa: idEmpresa
+        })
+    }).then(resposta => {
+        if (resposta.ok) {
+            alert("Cadastro concluído com sucesso!");
+            window.location.href = "login.html";
+        } else {
+            alert("Erro ao cadastrar o supervisor.");
+        }
+    });
+}
+    function voltar_p1() {
+        cad_1.style.display = 'flex';
+        cad_2.style.display = 'none';
+    }
+
+    
+    function formatarCnpj() {
+        var cnpj = ipt_cnpj.value.replace(/\D/g, '');
+        cnpj = cnpj.replace(/^(\2)(\d)/, "$1.$2");
+        cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+        cnpj = cnpj.replace(/\.(\d{3})(\d)/, ".$1/$2");
+        cnpj = cnpj.replace(/(\d{4})(\d)/, "$1-$2");
+        ipt_cnpj.value = cnpj;
+    }
+
+    function formatarCep() {
+        var cep = ipt_cep.value.replace(/\D/g, '');
+        cep = cep.replace(/^(\d{5})(\d)/, "$1-$2");
+        ipt_cep.value = cep;
+    }
+
+    function formatarTellFixo() {
+        var tell = ipt_telefone.value.replace(/\D/g, '');
+        tell = tell.replace(/^(\d{2})(\d)/g, "($1) $2");
+        tell = tell.replace(/(\d{4})(\d)/, "$1-$2");
+        ipt_telefone.value = tell;
+    }
+
+    function formatarTellCell() {
+        var tell = ipt_telefone_2.value.replace(/\D/g, '');
+        tell = tell.replace(/^(\d{2})(\d)/g, "($1) $2");
+        tell = tell.replace(/(\d{5})(\d)/, "$1-$2");
+        ipt_telefone_2.value = tell;
+    }
+
+    function Validar_forca_senha() {
+        var senha = ipt_senha.value;
+        var criterios = 0;
+        if (senha.length >= 6) criterios++;
+        if (/[A-Z]/.test(senha)) criterios++;
+        if (/[0-9]/.test(senha)) criterios++;
+        if (/[!@#$%^&*]/.test(senha)) criterios++;
+
+        var cores = ['red', 'orange', 'yellow', 'lightgreen', 'green'];
+        var textos = ['Insegura', 'Fraca', 'Média', 'Segura', 'Muito Segura'];
+        
+        for(let i=0; i<5; i++) {
+            document.getElementById(`div_barra_${i}`).style.backgroundColor = i <= criterios ? cores[criterios] : '#c4c4c4';
+        }
+        span_forca_senha.innerHTML = textos[criterios];
+        span_forca_senha.style.color = cores[criterios];
+        forcaSenha = textos[criterios];
+    }
+    function buscarCep() {
+    var cep = ipt_cep.value.replace(/\D/g, '');
+
+    if (cep.length == 8) {
+        
+        ipt_rua.value = "Buscando...";
+        ipt_bairro.value = "Buscando...";
+        ipt_cidade.value = "Buscando...";
+        ipt_estado.value = "Buscando...";
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(res => res.json())
+            .then(dados => {
+    if (!dados.erro) {
+        ipt_rua.value = dados.logradouro;
+        ipt_bairro.value = dados.bairro;
+        ipt_cidade.value = dados.localidade;
+        ipt_estado.value = dados.uf; 
+    } else {
+        alert("CEP não encontrado!");
+        limparEndereco();
+    }
+})
+            .catch(err => {
+                console.error("Erro na API de CEP:", err);
+                alert("Erro ao consultar CEP.");
+            });
+    }
+}
+
+function limparEndereco() {
+    ipt_cep.value = "";
+    ipt_rua.value = "";
+    ipt_bairro.value = "";
+    ipt_cidade.value = "";
+    ipt_estado.value = "";
+}
+</script>
+
+</html>

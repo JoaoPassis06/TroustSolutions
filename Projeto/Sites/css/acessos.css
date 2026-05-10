@@ -1,0 +1,499 @@
+* {
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+:root {
+    --roxo-fundo: #420F65;
+    --roxo-2: #A70FFF;
+    --roxo-3: #8f20cf;
+    --branco-fundo: #FFFFFF;
+    --cinza: #D9D9D9;
+    --cor-input: #D9D9D9;
+    --cinza-2: #c4c4c4;
+    --tamanho-vw-banner: 55%;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.container-img {
+    width: 45%;
+    height: 100%;
+    background-color: var(--roxo-2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0% 5%;
+}
+
+.container-img img {
+    width: 600px;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.container-forms {
+    width: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1% 3%;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.container-forms .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-forms .topo h1 {
+    font-weight: 400;
+}
+
+.container-forms .topo h1::after {
+    content: '';
+    display: block;
+    width: 6rem;
+    height: 0.3rem;
+    background-color: var(--roxo-2);
+}
+
+.logo {
+    width: 80px;
+    margin-right: 50px;
+}
+
+.outros-links {
+    text-align: center;
+    padding-bottom: 2vh;
+}
+
+.outros-links a {
+    color: #000;
+    text-decoration: none;
+}
+
+.outros-links a>span {
+    color: var(--roxo-2);
+    font-weight: 500;
+}
+
+.outros-links .senha-link {
+    text-decoration: underline;
+}
+
+.div-forms-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div-forms-login label {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+
+.div-forms-login input {
+    width: 100%;
+    height: 6vh;
+    padding: 1% 2%;
+    margin-bottom: 2vh;
+    margin-top: 0.5vh;
+    border-radius: 5px;
+    border: solid 1px;
+    font-size: 18px;
+}
+
+.div-forms-login span {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+
+/* Cadastro*/
+.sub-topo {
+    display: flex;
+    margin-top: 0;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-topo h2 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.progresso {
+    width: 200px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progresso .bolinha {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: var(--cinza);
+    z-index: 1;
+}
+
+.progresso .linha {
+    width: 30px;
+    height: 4px;
+    margin: 0 -2px;
+    background-color: var(--cinza);
+}
+
+.progresso .ativo {
+    background-color: var(--roxo-2);
+}
+
+.div-forms-cad {
+    width: 100%;
+    height: 100%;
+    padding: 2vh 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.linha-input {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: space-between;
+    margin-bottom: 1vh;
+}
+
+.linha-input label {
+    display: flex;
+    flex-direction: column;
+}
+.linha-input label > input:focus {
+    outline: none;
+    border-color: var(--roxo-2);
+    box-shadow: 0 0 8px rgba(167, 15, 255, 0.3);
+    background-color: #fff;
+}
+.linha-input label>input,
+.linha-input label>select {
+    width: 100%;
+    height: 5vh;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+    border-radius: 5px;
+    padding: 0px 5px;
+}
+
+.linha-input label>input:hover,
+.linha-input label>select:hover {
+    background-color: var(--cinza-2);
+}
+.barra-senha{
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    margin-top: 1vh;
+    margin-bottom: -1vh;
+}
+
+.barra-forca-senha {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.barra-forca-senha .barra{
+    min-width: 19%;
+    min-height: 5px;
+    border-radius: 20px;
+    background-color: var(--cinza-2);
+}
+.barra-forca-senha .barra-1{
+    background-color: rgb(255, 0, 0);
+}
+.barra-senha .forca{
+    font-size: 14px;
+    margin-left: 0.5vw;
+    color: red;
+}
+
+
+/*Tamanhos para os input*/
+.w-100 {
+    width: 100%;
+}
+
+.w-60 {
+    width: 60%;
+}
+
+.w-50 {
+    width: 49%;
+}
+
+.w-40 {
+    width: 38%;
+}
+
+.w-33 {
+    width: 32%;
+}
+
+.w-25 {
+    width: 21%;
+}
+
+.w-0 {
+    display: none;
+}
+
+
+/*Btn*/
+.senha-link{
+    text-decoration: none;
+}
+.senha-link:hover{
+    text-decoration: underline;
+}
+.btn-login {
+    width: 75%;
+    height: 6vh;
+    background-color: transparent;
+    color: var(--roxo-2);
+    font-size: 22px;
+    border: solid 2px var(--roxo-2);
+    border-radius: 5px;
+    transition: 0.2s;
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+    transition: all 0.3s ease;
+}
+.btn-login:active, .btn-etapa:active {
+    transform: scale(0.96);
+}
+/*efeito do botão*/
+
+.btn-login:hover {
+    background-color: var(--roxo-2);
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-google {
+    width: 30%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 15px;
+    background-color: #fff;
+    border: none;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.193);
+    transition: 0.2s;
+}
+
+.btn-google img {
+    width: 25px;
+}
+
+.btn-google:hover {
+    background-color: #ebebeb;
+    cursor: pointer;
+}
+.btn-cad-cadastro {
+    text-decoration: underline;
+    transition: 0.3s;
+}
+
+.btn-etapa {
+    width: 20%;
+    height: 6vh;
+    color: #fff;
+    background-color: var(--roxo-2);
+    border: none;
+    font-size: 22px;
+    border-radius: 5px;
+    transition: 0.2s;
+    margin: 0 2vw;
+}
+
+.btn-etapa:hover {
+    background-color: var(--roxo-3);
+    cursor: pointer;
+}
+
+
+.btn-cadastrar {
+    width: 20%;
+    height: 6vh;
+    background-color: transparent;
+    color: var(--roxo-2);
+    font-size: 22px;
+    border: solid 2px var(--roxo-2);
+    font-size: 22px;
+    border-radius: 5px;
+    transition: 0.2s;
+    margin: 0 2vw;
+}
+
+.btn-cadastrar:hover {
+    background-color: var(--roxo-2);
+    color: #fff;
+    cursor: pointer;
+}
+.btn-cad-login:hover {
+text-decoration: underline;
+}
+
+/*Erros*/
+.msg-erros {
+    color: red;
+    font-weight: 500;
+    margin: none none 10px none;
+    font-size: 18px;
+    text-align: center;
+    display: none;
+}
+
+/*@keyframes tremer {
+    0% { margin-left: 0px;}
+    15% { margin-left: -5px;}
+    30% { margin-left: 0px;}
+    45% { margin-left: 5px;}
+    60% { margin-left: 0px;}
+    75% { margin-left: -5px;}
+    90% { margin-left: 0px;}
+    95% { margin-left: 5px;}
+} */
+
+/*Display*/
+#login {
+    display: flex;
+}
+
+#cad_1 {
+    display: flex;
+}
+
+#cad_2 {
+    display: none;
+}
+
+#cad_3 {
+    display: none;
+}
+
+/* Animação de entrada suave */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+@media (max-width: 850px) {
+    .container-img {
+        display: none;
+    }
+
+    .container-forms {
+        width: 100%; 
+        padding: 5% 8%;
+    }
+
+    .topo h1 {
+        font-size: 24px;
+    }
+
+    .logo {
+        width: 60px;
+        margin-right: 0;
+    }
+
+    .linha-input {
+        flex-direction: column;
+    }
+
+    .linha-input label {
+        width: 100% !important; 
+        margin-bottom: 15px;
+    }
+
+    /* Botões */
+    .btn-etapa, .btn-cadastrar {
+        width: 45%;
+        font-size: 18px;
+    }
+
+    .btn-login {
+        width: 100%;
+    }
+
+    .btn-google {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .sub-topo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .progresso {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .container-btn {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+/* Estilizando a barra de rolagem */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--roxo-2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--roxo-3);
+}
