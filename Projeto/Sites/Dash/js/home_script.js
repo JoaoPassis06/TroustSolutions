@@ -130,7 +130,6 @@ function atualizarGraficoLinha(novoLabel, novoDado) {
         // 2. Colocamos o novo dado na última posição
         chartTempoReal.data.datasets[0].data[chartTempoReal.data.datasets[0].data.length - 1] = novoDado;
 
-        // 3. Atualizamos sem o 'none' para ele "correr" a linha
         chartTempoReal.update(); 
     }
 }
@@ -151,6 +150,7 @@ function atualizarGraficoRosca(qtdIdeal, qtdAlerta) {
 // --- 4. BUSCA DE DADOS ---
 
 function exibirDadosDoTanque(idTanque) {
+
     fetch(`http://localhost:3333/medidas/tempo-real/${idTanque}`, { cache: 'no-store' })
         .then(resposta => {
             if (resposta.ok) {
@@ -172,8 +172,17 @@ function exibirDadosDoTanque(idTanque) {
                         elementoStatus.innerHTML = isIdeal ? "NORMAL" : "ALERTA";
                         elementoStatus.style.color = isIdeal ? "#00FF7F" : "#ff4b4b";
 
-                        // 3. Atualização do Gráfico de Linha (Apenas o ponto mais recente)
-                        atualizarGraficoLinha(ultimaLeitura.momento, ultimaTemp);
+
+                        if (chartTempoReal.data.datasets[0].data.length == 0) {
+                            novoRegistro.forEach(reg => {
+                                chartTempoReal.data.labels.push(reg.momento);
+                                chartTempoReal.data.datasets[0].data.push(Number(reg.temperatura));
+                            });
+                            chartTempoReal.update();
+                        } else {
+
+                            atualizarGraficoLinha(ultimaLeitura.momento, ultimaTemp);
+                        }
                     }
                 });
             }
@@ -182,18 +191,16 @@ function exibirDadosDoTanque(idTanque) {
 }
 
 function buscarSaudeDoDia(idTanque) {
-    // Verifique se a URL no fetch está correta conforme o seu backend
+
     fetch(`http://localhost:3333/medidas/saude-dia/${idTanque}`, { cache: 'no-store' })
         .then(res => res.json())
         .then(registro => {
-            // Como vimos na imagem, o dado vem como: {"qtdIdeal":"262", "qtdAlerta":"189"}
-            // O Number() é OBRIGATÓRIO aqui porque os valores estão vindo com aspas
+           
             const ideal = Number(registro.qtdIdeal);
             const alerta = Number(registro.qtdAlerta);
 
             console.log("Dados convertidos:", ideal, alerta);
-            
-            // Chama a função que você testou no console e funcionou
+
             atualizarGraficoRosca(ideal, alerta);
         })
         .catch(err => console.error("Erro ao buscar saúde:", err));
@@ -204,7 +211,7 @@ function iniciarAtualizacaoAutomatica() {
         const id = document.getElementById("select_tanque").value;
         
         exibirDadosDoTanque(id); // Atualiza a linha e KPIs (Tempo Real)
-        buscarSaudeDoDia(id);    // Atualiza a rosca (Acumulado do Dia)
+        buscarSaudeDoDia(id);    // Atualiza a rosca (Acumulado dos 7 Dias)
         
     }, 5000);
 }
@@ -213,10 +220,15 @@ function mudarTanque() {
     sessionStorage.TANQUE_ATUAL = id;
   
     if (chartTempoReal) {
+     
         chartTempoReal.data.labels = [];
         chartTempoReal.data.datasets[0].data = [];
-        chartTempoReal.update('none');
+        chartTempoReal.update(); 
     }
+    
+    document.getElementById("kpi_min").innerHTML = "--ºC";
+    document.getElementById("kpi_max").innerHTML = "--ºC";
+    
     exibirDadosDoTanque(id);
 }
 
