@@ -41,4 +41,4 @@ O **TroustSolutions** é um ecossistema completo de monitoramento térmico para 
 │   └── Sites/          # Frontend e Dashboards
 └── index.html          # Redirecionador para GitHub Pages
 ```
-### Visualização Inicial: https://joaopassis06.github.io/TroustSolutions/Projeto/Sites/index.html
+Visualização Inicial: https://joaopassis06.github.io/TroustSolutions/Projeto/Sites/index.html
