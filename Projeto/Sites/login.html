@@ -7,62 +7,69 @@
     <title>Login</title>
     <link rel="icon" type="image/x-icon" href="./src/Logo-icon.png">
     <link rel="stylesheet" href="./css/acessos.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-        body {
-            font-family: "Poppins", sans-serif;
-        }
-    </style>
 </head>
 
 <body>
     <div id="login" class="container">
+
+        <!-- Banner esquerdo -->
         <div class="container-img">
-            <img src="./src/homem-graficos.svg" alt="img bonitinha">
+            <!-- Botão voltar home — sobre o banner -->
+            <a href="./index.html" class="btn-home">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 5l-7 7 7 7"/>
+                </svg>
+                Home
+            </a>
+            <img src="./src/homem-graficos.svg" alt="Ilustração">
+            <div class="banner-text">
+                <h2>Bem-vindo de volta!</h2>
+                <p>Acesse sua conta e continue monitorando sua produção.</p>
+            </div>
         </div>
+
+        <!-- Formulário -->
         <div class="container-forms login">
-           
             <div class="topo">
                 <h1>Acesse sua conta</h1>
                 <img class="logo" src="./src/Logo-icon.png" alt="TroustSolutions">
             </div>
+
             <div class="div-forms-login">
-                <div class="msg-erros" id="div_msg_erros">  </div>
+                <div class="msg-erros" id="div_msg_erros"></div>
+
                 <label>
-                    <span>Email:</span>
+                    <span>Email</span>
                     <input type="text" placeholder="seuemail@gmail.com" id="ipt_email">
                 </label>
-                <div style="position: relative; width: 75%;">
-    <input type="password" id="ipt_senha" placeholder="S3nh4_forte*">
-    <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" 
-         id="olho_senha" 
-         onclick="toggleSenha('ipt_senha', 'olho_senha')"
-         style="position: absolute; right: 10px; top: 15px; width: 20px; cursor: pointer; opacity: 0.5;">
-</div>
-                <button onclick="autenticar()" class="btn-login">Login</button>
+
+                <div class="campo-senha-wrapper">
+                    <input type="password" id="ipt_senha" placeholder="Sua senha">
+                    <button class="olho-btn" onclick="toggleSenha('ipt_senha', 'olho_img')" type="button">
+                        <img id="olho_img" src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="Ver senha">
+                    </button>
+                </div>
+
+                <button onclick="autenticar()" class="btn-login">Entrar</button>
+
                 <button onclick="entarGmail()" class="btn-google">
-                    <img src="./src/logo_google.png" alt="G">
-                    continuar com o Google
+                    <img src="./src/logo_google.png" alt="Google">
+                    Continuar com o Google
                 </button>
             </div>
+
             <div class="outros-links">
-                <p>Não possui uma conta? <a href="./cadastro.html"><span class="btn-cad-login">Cadastre-se</span></a></p>
+                <p>Não possui uma conta? <a href="./cadastro.html"><span>Cadastre-se</span></a></p>
                 <p><a class="senha-link" href="./index.html">Esqueci minha senha</a></p>
             </div>
         </div>
     </div>
-</body>
 
 <script>
-
-    const bcrypt = require('bcrypt');
-
 function autenticar() {
     var emailVar = ipt_email.value.toLowerCase().trim();
     var senhaVar = ipt_senha.value;
-
-
 
     if (emailVar == "" || senhaVar == "") {
         alert("Preencha todos os campos!");
@@ -75,43 +82,34 @@ function autenticar() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: emailVar, senha: senhaVar })
-
-
     }).then(function (resposta) {
         if (resposta.ok) {
-
             resposta.json().then(json => {
                 console.log("DADOS RECEBIDOS:", json);
-
                 if (json.idUsuario != undefined) {
-                    
                     sessionStorage.setItem("ID_USUARIO", json.idUsuario);
                     sessionStorage.setItem("NOME_USUARIO", json.nome);
                     sessionStorage.setItem("FK_EMPRESA", json.fkEmpresa);
                     sessionStorage.setItem("NOME_EMPRESA", json.empresa);
                     sessionStorage.setItem("SUPERVISOR_ID", json.supervisor);
                     sessionStorage.setItem("PODE_CADASTRAR", json.pode_cadastrar);
-
                     console.log("Sessão gravada! Redirecionando...");
-                    window.location.href = "Dash/dashborad.html"; // 
+                    window.location.href = "Dash/dashborad.html";
                 } else {
                     alert("Erro: O servidor não retornou os dados do usuário.");
                 }
             });
         } else {
-            
             resposta.text().then(texto => {
                 console.error("Erro na autenticação:", texto);
                 alert("Erro no login: Usuário ou senha inválidos.");
             });
         }
     }).catch(function (erro) {
-        
         console.error("ERRO DE REDE:", erro);
         alert("Não foi possível conectar ao servidor. Verifique se a API está rodando.");
     });
 }
-
 
 function toggleSenha(idInput, idOlho) {
     const input = document.getElementById(idInput);
@@ -121,11 +119,10 @@ function toggleSenha(idInput, idOlho) {
         olho.style.opacity = "1";
     } else {
         input.type = "password";
-        olho.style.opacity = "0.5";
+        olho.style.opacity = "0.45";
     }
 }
-
 </script>
 
-
+</body>
 </html>

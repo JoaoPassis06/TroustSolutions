@@ -1,3 +1,4 @@
+@charset "UTF-8";
 
 :root {
     --primary: #9d33ff;
@@ -26,6 +27,7 @@ body {
     overflow-x: hidden;
 }
 
+/* ─── NAVBAR ──────────────────────────────────────────── */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -67,6 +69,7 @@ body {
 .navbar .botoes {
     display: flex;
     gap: 15px;
+    align-items: center;
 }
 
 .navbar button {
@@ -91,13 +94,14 @@ body {
 
 .navbar .cadastro:hover { background: var(--primary-hover); }
 
+/* ─── MAIN LAYOUT ─────────────────────────────────────── */
 .main {
     display: flex;
     min-height: calc(100vh - 90px);
     width: 100%;
 }
 
-
+/* ─── TELA CÁLCULO ────────────────────────────────────── */
 .tela-calculo {
     width: 55%;
     padding: 40px;
@@ -107,9 +111,10 @@ body {
 }
 
 .tela-calculo h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--primary);
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .tela-calculo p {
@@ -149,6 +154,7 @@ input, select {
     border-radius: 8px;
     outline: none;
     transition: 0.3s;
+    width: 100%;
 }
 
 input:focus, select:focus {
@@ -156,21 +162,63 @@ input:focus, select:focus {
     box-shadow: 0 0 10px rgba(157, 51, 255, 0.2);
 }
 
-.tela-calculo button {
+
+.tela-calculo > button {
     width: 100%;
-    padding: 15px;
+    padding: 13px;
     background: var(--primary);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
     transition: 0.3s;
+    margin-top: 0;
 }
 
-.tela-calculo button:hover { background: var(--primary-hover); transform: translateY(-2px); }
+.tela-calculo > button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
 
+/* ─── BOTÃO IR PARA PLANOS ────────────────────────────── */
+.btn-planos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 13px 20px;
+    background: transparent;
+    border: 1.5px solid var(--secondary);
+    color: var(--secondary);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+}
+
+.btn-planos svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.btn-planos:hover {
+    background: rgba(0, 255, 209, 0.09);
+    box-shadow: 0 0 20px rgba(0, 255, 209, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-planos:hover svg {
+    transform: translateX(5px);
+}
+
+/* ─── TELA RESULTADO ──────────────────────────────────── */
 .tela-resultado {
     width: 45%;
     background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
@@ -182,12 +230,12 @@ input:focus, select:focus {
     padding: 40px;
 }
 
-.tela-resultado h1 { margin-top: 10px; }
+.tela-resultado h1 { margin-top: 10px; text-align: center; }
 
 .resultado {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
     background: var(--glass);
     padding: 25px;
@@ -202,6 +250,7 @@ input:focus, select:focus {
     margin-bottom: 20px;
     color: var(--primary);
     font-size: 1.8rem;
+    text-align: center;
 }
 
 #msg_resultado p {
@@ -209,11 +258,13 @@ input:focus, select:focus {
     font-size: 1.1rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     padding-bottom: 5px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
-
 
 .resultado button {
     margin-top: 25px;
@@ -239,6 +290,7 @@ input:focus, select:focus {
 
 .tela-resultado img {
     max-width: 300px;
+    width: 100%;
     height: auto;
     filter: grayscale(1);
     opacity: 0.3;
@@ -258,6 +310,7 @@ input:focus, select:focus {
 
 .tela-resultado button:hover { background: var(--secondary); color: var(--bg-dark); }
 
+/* ─── MODAL COMPARATIVO ───────────────────────────────── */
 .tela-comparar {
     position: fixed;
     top: 0; left: 0;
@@ -266,8 +319,10 @@ input:focus, select:focus {
     backdrop-filter: blur(8px);
     z-index: 2000;
     display: none;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 .div_comparar {
@@ -278,6 +333,7 @@ input:focus, select:focus {
     border-radius: 25px;
     border: 1px solid #444;
     position: relative;
+    margin: auto;
 }
 
 .caixa img {
@@ -310,19 +366,22 @@ input:focus, select:focus {
     border: 1px dashed var(--secondary);
     text-align: center;
 }
-.tela-calculo label[for="sensor_select"], 
+
+.tela-calculo label[for="sensor_select"],
 #sensor_select {
     width: 100%;
     max-width: 400px;
     margin: 10px auto 20px auto;
     display: block;
 }
+
 #sensor_select {
     cursor: pointer;
     background-color: var(--bg-card);
     border: 1px solid var(--primary);
     padding: 12px;
 }
+
 .tela-resultado .imagem {
     display: flex;
     flex-direction: column;
@@ -331,6 +390,7 @@ input:focus, select:focus {
     width: 100%;
     height: 100%;
 }
+
 #resultado_container:not([style*="display: none"]) ~ .imagem {
     display: none;
 }
@@ -346,10 +406,13 @@ input:focus, select:focus {
 .info-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 12px 0;
     font-size: 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     padding-bottom: 5px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .painel-impacto {
@@ -365,7 +428,11 @@ input:focus, select:focus {
     display: flex;
     justify-content: space-around;
     margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
+
+.metrica { text-align: center; }
 
 .metrica p {
     font-size: 0.9rem;
@@ -383,4 +450,184 @@ input:focus, select:focus {
     font-size: 0.85rem;
     color: var(--secondary);
     opacity: 0.8;
+    text-align: center;
+}
+
+/* ─── TABLET (≤ 960px) ────────────────────────────────── */
+@media (max-width: 960px) {
+    .navbar ul { gap: 18px; }
+    .navbar a { font-size: 0.88rem; }
+    .navbar button { padding: 8px 18px; font-size: 0.85rem; }
+
+    .main { flex-direction: column; }
+
+    .tela-calculo {
+        width: 100%;
+        padding: 35px 30px;
+        border-bottom: 1px solid #333;
+    }
+
+    .tela-resultado {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #333;
+        padding: 35px 30px;
+        min-height: 400px;
+    }
+
+    .tela-calculo h1 { font-size: 2rem; }
+}
+
+/* ─── MOBILE GRANDE (≤ 700px) ────────────────────────── */
+@media (max-width: 700px) {
+    .navbar .links { display: none; }
+    .navbar { height: 72px; padding: 0 4%; }
+    .navbar .logo img { height: 46px; }
+    .navbar button { padding: 7px 14px; font-size: 0.8rem; }
+
+    .tela-calculo { padding: 26px 18px; }
+    .tela-calculo h1 { font-size: 1.75rem; }
+    .tela-calculo p { font-size: 0.88rem; max-width: 100%; margin-bottom: 20px; }
+
+    .boxes { gap: 18px; margin-bottom: 22px; }
+
+    .tela-calculo > button { font-size: 1.05rem; padding: 13px; }
+    .btn-planos { font-size: 0.95rem; padding: 12px 16px; }
+
+    .tela-resultado { padding: 28px 18px; min-height: 320px; }
+    .tela-resultado h1 { font-size: 1.5rem; }
+
+    #msg_resultado h3 { font-size: 1.4rem; }
+    #msg_resultado p { font-size: 1rem; }
+
+    .resultado { padding: 20px 16px; }
+    .resultado button { min-width: unset; width: 100%; }
+
+    .div_comparar { padding: 30px 18px 24px; }
+    .caixa img { top: 14px; right: 14px; width: 26px; }
+}
+
+/* ─── MOBILE (≤ 540px) ───────────────────────────────── */
+@media (max-width: 540px) {
+    .boxes { grid-template-columns: 1fr; gap: 14px; }
+
+    .tela-calculo h1 { font-size: 1.5rem; }
+
+    #msg_resultado p { flex-direction: column; gap: 2px; }
+    #msg_resultado h3 { font-size: 1.2rem; }
+
+    .comparacao { grid-template-columns: 1fr; gap: 14px; }
+    .card-comparativo { padding: 14px; }
+    .info-row { font-size: 0.9rem; }
+
+    .metricas-impacto { flex-direction: column; align-items: center; }
+    .metrica span { font-size: 1.2rem; }
+
+    .painel-impacto h3 { font-size: 0.95rem; text-align: center; }
+
+    .div_comparar { padding: 24px 14px 18px; border-radius: 16px; }
+}
+
+/* ─── MUITO PEQUENO (≤ 380px) ────────────────────────── */
+@media (max-width: 380px) {
+    .navbar .botoes .cadastro { display: none; }
+    .tela-calculo h1 { font-size: 1.3rem; }
+}
+
+/* ─── KEYFRAMES ───────────────────────────────────────── */
+@keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideLeft {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes popIn {
+    0%   { opacity: 0; transform: scale(0.88); }
+    70%  { transform: scale(1.03); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ─── ANIMAÇÕES DE ENTRADA ────────────────────────────── */
+
+
+.navbar {
+    animation: fadeSlideDown 0.5s ease both;
+}
+
+.tela-calculo h1 {
+    animation: fadeSlideUp 0.55s ease both;
+    animation-delay: 0.15s;
+}
+
+.tela-calculo > p {
+    animation: fadeSlideUp 0.55s ease both;
+    animation-delay: 0.25s;
+}
+
+.boxes .box:nth-child(1) {
+    animation: fadeSlideUp 0.55s ease both;
+    animation-delay: 0.35s;
+}
+
+.boxes .box:nth-child(2) {
+    animation: fadeSlideUp 0.55s ease both;
+    animation-delay: 0.45s;
+}
+
+#sensor_select {
+    animation: fadeSlideUp 0.5s ease both;
+    animation-delay: 0.55s;
+}
+
+.tela-calculo > button {
+    animation: fadeSlideUp 0.5s ease both;
+    animation-delay: 0.65s;
+}
+
+.btn-planos {
+    animation: fadeSlideUp 0.5s ease both;
+    animation-delay: 0.75s;
+}
+
+.tela-resultado {
+    animation: fadeSlideLeft 0.65s ease both;
+    animation-delay: 0.3s;
+}
+
+.tela-resultado .imagem img {
+    animation: popIn 0.7s ease both;
+    animation-delay: 0.55s;
+}
+
+
+#resultado_container {
+    animation: popIn 0.45s ease both;
+}
+
+
+.div_comparar {
+    animation: fadeSlideUp 0.4s ease both;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
 }
