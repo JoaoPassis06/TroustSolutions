@@ -42,6 +42,9 @@
                     <div class=" links-ativo">
                         <a href="./dash-tanque.html">Tanque</a>
                     </div>
+                    <div class="links">
+                        <a href="../historico.html">Histórico</a>
+                    </div>
                     <div id="container_cadastrar_equipe" class="links">
                         <a href="../cadastro_equipe.html" id="btn_cadastrar_equipe">
     Cadastrar Equipe
@@ -98,7 +101,7 @@
         <div class="alertas">
             <p>Estado: 
                 <span id="status_card_1" class="roxo">Normal</span></p>
-            <p>Quantidade de Alertas: <span id="alertas_card_1">0</span></p>
+            <p> Últimos alertas (24h) : <span id="alertas_card_1">0</span></p>
         </div>
     </div>
                 <div class="card" onclick="abrirModal(1)">
@@ -118,7 +121,7 @@
     </div>
     <div class="alertas">
         <p>Status: <span id="status_card_2" class="roxo">Normal</span></p>
-        <p>Quantidade de Alertas: 0</p>
+        <p>Últimos alertas (24h) : 0</p>
     </div>
 </div>
                 <div class="card" onclick="abrirModal(1)">
@@ -139,7 +142,7 @@
                     </div>
                     <div class="alertas">
                         <p>Status: <span class="roxo">Normal</span></p>
-                        <p>Quantidade de Alertas: 0</p>
+                        <p>Últimos alertas (24h) : 0</p>
                     </div>
                 </div>
                 <div class="card" onclick="abrirModal(1)">
@@ -159,7 +162,7 @@
                     </div>
                     <div class="alertas">
                         <p>Status: <span class="roxo">Normal</span></p>
-                        <p>Quantidade de Alertas: 0</p>
+                        <p>Últimos alertas (24h) : 0</p>
                     </div>
                 </div>
             </div>
@@ -172,7 +175,7 @@
                     <img src="../src/botao-fechar.png" alt="X">
                 </div>
                 <div>
-                    <h1><span id="nome_tanque_modal"> </span> - <span id="status_tanque_modal" class="status-badge"> Carregando...</span></h1>
+                    <h1><span id="nome_tanque_modal"> </span> - <span id="status_tanque_modal" class="status-badge status-normal"> Carregando...</span></h1>
                 </div>
                 <div class="logo">
                     <img src="../src/Logo-icon.png" alt="TroustSolutions">
@@ -277,10 +280,10 @@ function irParaHome() {
 // --- CONTROLE DOS CARDS PRINCIPAIS ---
 function atualizarDadosDosCards() {
     [1, 2, 3, 4].forEach(id => {
-  
         const card = document.querySelector(`.card[onclick*="(${id})"]`);
         const logo = card ? (card.querySelector(".logo img") || card.querySelector(".logo-tanque")) : null;
 
+        // 1. BUSCA TEMPERATURA EM TEMPO REAL
         fetch(`http://localhost:3333/medidas/tempo-real/${id}`)
             .then(res => res.json())
             .then(dados => {
@@ -288,13 +291,13 @@ function atualizarDadosDosCards() {
                     const registro = dados[dados.length - 1];
                     const temp = Number(registro.temperatura);
                     
-                    // 1. Atualiza o valor da temperatura no Card
+                    // Atualiza o valor da temperatura no Card
                     const tempElement = document.getElementById(`temp_card_${id}`);
                     if (tempElement) {
                         tempElement.innerHTML = temp.toFixed(1);
                     }
 
-                    // 2. LÓGICA DE STATUS DO CARD 
+                    // Lógica de Status visual (Texto Alerta/Normal)
                     const elStatusCard = document.getElementById(`status_card_${id}`);
                     if (elStatusCard) {
                         if (temp < 10 || temp > 17) {
@@ -306,7 +309,7 @@ function atualizarDadosDosCards() {
                         }
                     }
 
-                    // 3. Animação Inteligente da Logo
+                    // Animação da Logo
                     if (logo) {
                         if (temp !== ultimasTemperaturas[id]) {
                             logo.classList.add("animar-logo");
@@ -317,7 +320,20 @@ function atualizarDadosDosCards() {
                     ultimasTemperaturas[id] = temp;
                 }
             })
-            .catch(err => console.error(`Erro ao atualizar card ${id}:`, err));
+            .catch(err => console.error(`Erro ao atualizar temperatura do card ${id}:`, err));
+
+        // 2. BUSCA CONTAGEM DE ALERTAS (ÚLTIMAS 24H)
+        fetch(`http://localhost:3333/medidas/stats-24h/${id}`)
+            .then(res => res.json())
+            .then(stats => {
+                const alertaElement = document.getElementById(`alertas_card_${id}`);
+                if (alertaElement) {
+                    
+                    const totalAlertas24h = Number(stats.acima) + Number(stats.abaixo);
+                    alertaElement.innerHTML = totalAlertas24h;
+                }
+            })
+            .catch(err => console.error(`Erro ao atualizar alertas do card ${id}:`, err));
     });
 }
 
@@ -342,90 +358,65 @@ function fecharModal() {
 function obterDadosModal(idSensor) {
     if (proximaAtualizacao) clearTimeout(proximaAtualizacao);
 
-    fetch(`http://localhost:3333/medidas/ultimas/${idSensor}`)
-        .then(res => res.json())
-        .then(valores => {
-            if (valores && valores.length > 0) {
+   
+    Promise.all([
+        fetch(`http://localhost:3333/medidas/alertas-recentes/${idSensor}`).then(res => res.json()),
+        fetch(`http://localhost:3333/medidas/stats-24h/${idSensor}`).then(res => res.json()),
+        fetch(`http://localhost:3333/medidas/ultimas/${idSensor}`).then(res => res.json())
+    ])
+    .then(([resAlertas, stats24h, valores]) => {
 
-                const elTitulo = document.getElementById('nome_tanque_modal');
-                if (elTitulo) elTitulo.innerText = `Tanque ${idSensor}`;
+        const totalAlertas10h = resAlertas[0].totalAlertas;
+        
+        if (valores && valores.length > 0) {
+            const temperaturas = valores.map(v => Number(v.temperatura));
+            const atual = temperaturas[temperaturas.length - 1];
+            const media = (temperaturas.reduce((a, b) => a + b, 0) / temperaturas.length).toFixed(1);
+            const minima = Math.min(...temperaturas).toFixed(1);
 
-                const temperaturas = valores.map(v => Number(v.temperatura));
-                const atual = temperaturas[temperaturas.length - 1];
+            // Atualiza KPIs na tela
+            document.getElementById('kpi_atual').innerText = `${atual.toFixed(1)}ºC`;
+            document.getElementById('kpi_media').innerText = `${media}ºC`;
+            document.getElementById('kpi_min').innerText = `${minima}ºC`;
+            document.getElementById('kpi_alertas').innerText = totalAlertas10h;
 
-                // 2. Cálculos de KPIs para o Modal
-                const media = (temperaturas.reduce((a, b) => a + b, 0) / temperaturas.length).toFixed(1);
-                const minima = Math.min(...temperaturas).toFixed(1);
-
-                // 3. Atualização das KPIs Numéricas
-                const kpis = {
-                    'kpi_atual': `${atual.toFixed(1)}ºC`,
-                    'kpi_media': `${media}ºC`,
-                    'kpi_min': `${minima}ºC`,
-                    'kpi_alertas': contadorAlertasGlobal
-                };
-
-                for (let id in kpis) {
-                    const el = document.getElementById(id);
-                    if (el) el.innerText = kpis[id];
-                }
-
-const isAlerta = atual < 10 || atual > 17; 
-
-const elEstadoModal = document.getElementById('status_tanque_modal');
-if (elEstadoModal && !isNaN(atual) && atual !== null) {
-    elEstadoModal.textContent = isAlerta ? "ALERTA" : "NORMAL";
-
-    const corTexto = isAlerta ? "#FF4B4B" : "#00FF7F";
-    const corFundo = isAlerta ? "rgba(255, 29, 29, 0.49)" : "rgba(134, 253, 194, 0.4)";
-    const corBorda = isAlerta ? "#ff1d1d" : "#00FF7F";
-
-    elEstadoModal.style.color = corTexto;
-    elEstadoModal.style.backgroundColor = corFundo;
-    elEstadoModal.style.borderColor = corBorda;
-    elEstadoModal.style.display = "inline-block"; 
-}
-
-// B. Atualiza o Status no CARD (Agora ele vai achar o isAlerta aqui!)
-const elStatusCard = document.getElementById(`status_card_${idSensor}`);
-if (elStatusCard) {
-    elStatusCard.innerText = isAlerta ? "Alerta" : "Normal";
-    elStatusCard.style.color = isAlerta ? "#FF4B4B" : "#00FF7F";
-}
-
-// 5. Contagem e Persistência de Alertas
-if (isAlerta) {
-    contadorAlertasGlobal++;
-    totalAcima++; 
-    localStorage.setItem("contadorAlertas", contadorAlertasGlobal);
-    localStorage.setItem("totalAcima", totalAcima);
-} else {
-    totalIdeal++;
-    localStorage.setItem("totalIdeal", totalIdeal);
-}
-
-// 6. Atualização dos Gráficos (O código agora chega aqui com sucesso!)
-plotarGraficoLinha(valores);
-plotarGraficoBarrasModal();
+            // Lógica do Status Badge
+            const isAlerta = atual < 10 || atual > 17;
+            const elEstadoModal = document.getElementById('status_tanque_modal');
+            
+            if (elEstadoModal && !isNaN(atual)) {
+                elEstadoModal.textContent = isAlerta ? "ALERTA" : "NORMAL";
+                
+                elEstadoModal.className = isAlerta ? "status-badge status-alerta" : "status-badge status-normal";
             }
-            proximaAtualizacao = setTimeout(() => obterDadosModal(idSensor), 5000);
-        })
-        .catch(err => {
-            console.error("Erro ao obter dados do modal:", err);
-        });
+
+            // 2. PLOTAR GRÁFICOS
+            plotarGraficoLinha(valores);
+            
+            // Passa os dados de 24h para o gráfico de barras
+            plotarGraficoBarrasModal(stats24h.ideal, stats24h.acima, stats24h.abaixo);
+        }
+        
+        // Agenda a próxima atualização
+        proximaAtualizacao = setTimeout(() => obterDadosModal(idSensor), 5000);
+    })
+    .catch(erro => {
+        console.error("Erro no modal:", erro);
+        proximaAtualizacao = setTimeout(() => obterDadosModal(idSensor), 5000);
+    });
 }
 
 function plotarGraficoLinha(valores) {
+    if (!valores || valores.length === 0) return;
+
     const ctx = document.getElementById('grafico1').getContext('2d');
     const labels = valores.map(v => v.momento);
-    const dados = valores.map(v => v.temperatura);
+    const dados = valores.map(v => Number(v.temperatura));
 
     if (meuGrafico) {
-
         meuGrafico.data.labels = labels;
         meuGrafico.data.datasets[0].data = dados;
-
-
+        
         meuGrafico.update({
             duration: 5000,
             easing: 'linear'
@@ -436,81 +427,52 @@ function plotarGraficoLinha(valores) {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Temperatura',
+                    label: 'Temperatura ºC',
                     data: dados,
                     borderColor: '#32b9cd',
                     backgroundColor: 'rgba(50, 185, 205, 0.2)',
                     fill: true,
-                    tension: 0.4,
-                    pointRadius: 3,
-                    pointBackgroundColor: '#32b9cd'
+                    tension: 0.4, 
+                    pointRadius: 4
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-
-                animations: {
-                    numbers: {
-                        type: 'number',
-                        properties: ['x', 'y', 'active', 'radius', 'borderWidth'],
-                        duration: 5000,
-                        easing: 'linear'
-                    }
-                },
-
-                transitions: {
-                    active: {
-                        animation: {
-                            duration: 0
-                        }
-                    }
+                animation: {
+                    duration: 5000,
+                    easing: 'linear'
                 },
                 scales: {
-                    y: {
-                        beginAtZero: false,
-                        min: 8, 
-                        max: 20,
-                        grid: { color: '#444' }
-                    },
-                    x: {
-                        grid: { display: false }
-                    }
+                    y: { min: 8, max: 20, grid: { color: '#444' } },
+                    x: { grid: { display: false } }
                 },
-                plugins: {
-                    legend: { display: false }
-                }
+                plugins: { legend: { display: false } }
             }
         });
     }
 }
 
-function plotarGraficoBarrasModal() {
+function plotarGraficoBarrasModal(ideal, acima, abaixo) {
     const ctx4 = document.getElementById('grafico4').getContext('2d');
-
-    if (chart4) {
-        chart4.destroy();
-    }
+    if (chart4) chart4.destroy();
 
     chart4 = new Chart(ctx4, {
         type: 'bar',
         data: {
             labels: ['Ideal', 'Acima', 'Abaixo'],
             datasets: [{
-                label: 'Registros Acumulados',
-                data: [totalIdeal, totalAcima, totalAbaixo],
-                backgroundColor: ['#00FF7F', '#FF4B4B', '#7712C4'],
-                borderWidth: 0
+                data: [ideal, acima, abaixo],
+                backgroundColor: ['#00FF7F', '#FF4B4B', '#7712C4']
             }]
         },
         options: {
-            indexAxis: 'y', 
+            indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { beginAtZero: true, grid: { color: '#444' } },
-                y: { grid: { display: false } }
+            plugins: { 
+                legend: { display: false },
+                title: { display: true, text: 'Distribuição Térmica (Últimas 24h)', color: '#FFF' }
             }
         }
     });
@@ -534,7 +496,6 @@ function verificarPermissaoBotao() {
     }
 }
 function toggleSidebar() {
-    // AJUSTE: Selecionar .menu-lateral que é quem tem o transform no CSS
     const sidebar = document.querySelector('.menu-lateral'); 
     const overlay = document.getElementById('sidebarOverlay');
     const btn     = document.getElementById('hamburgerDash');
@@ -547,7 +508,6 @@ function toggleSidebar() {
 }
 
 function fecharSidebar() {
-    // AJUSTE: Aqui também
     document.querySelector('.menu-lateral').classList.remove('open');
     document.getElementById('sidebarOverlay').classList.remove('active');
     document.getElementById('hamburgerDash').classList.remove('open');

@@ -233,7 +233,7 @@ console.log("DADOS RECEBIDOS NA API:", req.body);
     }
 });
 
-app.listen(3333, () => console.log("Servidor Troust rodando na porta 3333"));
+
 
 app.get('/medidas/ultimas/:idSensor', async (req, res) => {
     const idSensor = req.params.idSensor;
@@ -272,3 +272,78 @@ app.get('/medidas/saude-dia/:idTanque', async (req, res) => {
         res.status(500).json({ erro: err.message });
     }
 });
+
+app.get("/medidas/alertas-recentes/:idSensor", async (req, res) => {
+    const idSensor = req.params.idSensor;
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        const query = `
+            SELECT count(idColeta) as totalAlertas 
+            FROM coletaTemp 
+            WHERE fkSensor = ? 
+              AND (temperatura < 10 OR temperatura > 17)
+              AND dtHora >= NOW() - INTERVAL 10 HOUR`;
+
+        const [rows] = await connection.execute(query, [idSensor]);
+        await connection.end();
+        
+        res.json(rows); 
+    } catch (err) {
+        console.error("ERRO ALERTAS 10H:", err);
+        res.status(500).json({ erro: err.message });
+    }
+});
+
+app.get("/medidas/stats-24h/:idSensor", async (req, res) => {
+    const idSensor = req.params.idSensor;
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        const query = `
+            SELECT 
+                IFNULL(SUM(CASE WHEN temperatura >= 10 AND temperatura <= 17 THEN 1 ELSE 0 END), 0) as ideal,
+                IFNULL(SUM(CASE WHEN temperatura > 17 THEN 1 ELSE 0 END), 0) as acima,
+                IFNULL(SUM(CASE WHEN temperatura < 10 THEN 1 ELSE 0 END), 0) as abaixo
+            FROM coletaTemp 
+            WHERE fkSensor = ? AND dtHora >= NOW() - INTERVAL 24 HOUR`;
+
+        const [rows] = await connection.execute(query, [idSensor]);
+        await connection.end();
+        
+        res.json(rows[0]);
+    } catch (err) {
+        console.error("ERRO STATS 24H:", err);
+        res.status(500).json({ erro: err.message });
+    }
+});
+
+app.get("/medidas/historico-100", async (req, res) => {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        const query = `
+            SELECT 
+                c.temperatura,
+                s.idSensor,
+                t.nome as nomeTanque,
+                t.setor,
+                DATE_FORMAT(c.dtHora, '%d/%m/%Y %H:%i:%s') as momento,
+                CASE 
+                    WHEN c.temperatura < 10 OR c.temperatura > 17 THEN 'Alerta'
+                    ELSE 'Normal'
+                END as status
+            FROM coletaTemp c
+            JOIN sensor s ON c.fkSensor = s.idSensor
+            JOIN tanque t ON s.fkTanque = t.idTanque
+            ORDER BY c.idColeta DESC 
+            LIMIT 100;
+        `;
+
+        const [rows] = await connection.execute(query);
+        await connection.end();
+        res.json(rows);
+    } catch (err) {
+        console.error("Erro ao buscar histórico:", err);
+        res.status(500).json({ erro: err.message });
+    }
+});
+
+app.listen(3333, () => console.log("Servidor Troust rodando na porta 3333"));

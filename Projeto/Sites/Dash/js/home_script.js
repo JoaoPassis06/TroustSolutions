@@ -29,12 +29,12 @@ const ctxLinha = document.getElementById('grafico_tempo_real');
             data: {
                 labels: ['7', '6', '5', '4', '3', '2', '1'],
                 datasets: [{
-                    data: [0, 0, 0, 0, 0, 0, 0], // Começa zerado
+                    data: [0, 0, 0, 0, 0, 0, 0],
                     borderColor: '#9d33ff',
                     backgroundColor: 'rgba(157, 51, 255, 0.1)',
                     fill: true,
                     tension: 0.4,
-                    pointRadius: 0
+                    pointRadius: 3
                 }]
             },
             options: {
