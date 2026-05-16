@@ -110,27 +110,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script src="js/home_script.js"></script>
-
-      <script>
-    function toggleSidebar() {
-      const sidebar = document.querySelector('.container-lateral');
-      const overlay = document.getElementById('sidebarOverlay');
-      const btn     = document.getElementById('hamburgerDash');
-      const open    = sidebar.classList.toggle('open');
-      overlay.classList.toggle('active', open);
-      btn.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    }
-    function fecharSidebar() {
-      document.querySelector('.container-lateral').classList.remove('open');
-      document.getElementById('sidebarOverlay').classList.remove('active');
-      document.getElementById('hamburgerDash').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) fecharSidebar();
-    });
-  </script>
 </body>
 
 </html>

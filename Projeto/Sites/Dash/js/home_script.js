@@ -19,7 +19,7 @@ function iniciarDash() {
     buscarSaudeDoDia(tanquePadrao);
     iniciarAtualizacaoAutomatica();
 }
-// --- 2. CONFIGURAÇÃO DOS GRÁFICOS (INSTÂNCIA ÚNICA) ---
+// --- 2. CONFIGURAÇÃO DOS GRÁFICOS ---
 function inicializarGraficos() {
     // 1. LINHA (TEMPO REAL)
 const ctxLinha = document.getElementById('grafico_tempo_real');
@@ -122,12 +122,10 @@ const ctxLinha = document.getElementById('grafico_tempo_real');
 
 function atualizarGraficoLinha(novoLabel, novoDado) {
     if (chartTempoReal) {
-        // 1. Movemos os dados existentes para a esquerda manualmente
         for (let i = 0; i < chartTempoReal.data.datasets[0].data.length - 1; i++) {
             chartTempoReal.data.datasets[0].data[i] = chartTempoReal.data.datasets[0].data[i + 1];
         }
         
-        // 2. Colocamos o novo dado na última posição
         chartTempoReal.data.datasets[0].data[chartTempoReal.data.datasets[0].data.length - 1] = novoDado;
 
         chartTempoReal.update(); 
@@ -156,12 +154,11 @@ function exibirDadosDoTanque(idTanque) {
             if (resposta.ok) {
                 resposta.json().then(novoRegistro => {
                     if (novoRegistro.length > 0) {
-                        // 1. Processamento de dados
                         const temperaturas = novoRegistro.map(v => Number(v.temperatura));
                         const ultimaLeitura = novoRegistro[novoRegistro.length - 1];
                         const ultimaTemp = Number(ultimaLeitura.temperatura);
 
-                        // 2. Atualização das KPIs (Dados instantâneos)
+                        // 2. Atualização das KPIs
                         document.getElementById("kpi_min").innerHTML = `${Math.min(...temperaturas).toFixed(1)}ºC`;
                         document.getElementById("kpi_max").innerHTML = `${Math.max(...temperaturas).toFixed(1)}ºC`;
                         document.getElementById("kpi_media").innerHTML = `${ultimaTemp.toFixed(1)}ºC`;
@@ -210,8 +207,8 @@ function iniciarAtualizacaoAutomatica() {
     intervaloDados = setInterval(() => {
         const id = document.getElementById("select_tanque").value;
         
-        exibirDadosDoTanque(id); // Atualiza a linha e KPIs (Tempo Real)
-        buscarSaudeDoDia(id);    // Atualiza a rosca (Acumulado dos 7 Dias)
+        exibirDadosDoTanque(id); 
+        buscarSaudeDoDia(id); 
         
     }, 5000);
 }
@@ -277,3 +274,21 @@ function verificarPermissaoBotao() {
         }
     }
 }
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.container-lateral');
+      const overlay = document.getElementById('sidebarOverlay');
+      const btn     = document.getElementById('hamburgerDash');
+      const open    = sidebar.classList.toggle('open');
+      overlay.classList.toggle('active', open);
+      btn.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    function fecharSidebar() {
+      document.querySelector('.container-lateral').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('active');
+      document.getElementById('hamburgerDash').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) fecharSidebar();
+    });

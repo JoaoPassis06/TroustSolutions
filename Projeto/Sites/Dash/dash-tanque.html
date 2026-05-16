@@ -291,7 +291,6 @@ function atualizarDadosDosCards() {
                     const registro = dados[dados.length - 1];
                     const temp = Number(registro.temperatura);
                     
-                    // Atualiza o valor da temperatura no Card
                     const tempElement = document.getElementById(`temp_card_${id}`);
                     if (tempElement) {
                         tempElement.innerHTML = temp.toFixed(1);
@@ -393,11 +392,9 @@ function obterDadosModal(idSensor) {
             // 2. PLOTAR GRÁFICOS
             plotarGraficoLinha(valores);
             
-            // Passa os dados de 24h para o gráfico de barras
             plotarGraficoBarrasModal(stats24h.ideal, stats24h.acima, stats24h.abaixo);
         }
         
-        // Agenda a próxima atualização
         proximaAtualizacao = setTimeout(() => obterDadosModal(idSensor), 5000);
     })
     .catch(erro => {
