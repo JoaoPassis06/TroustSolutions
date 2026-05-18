@@ -39,7 +39,6 @@ nav {
     display: flex;
     position: fixed;
     z-index: 999;
-    /*Valor para ficar na frente*/
     background-color: var(--bg-roxo-nav);
     backdrop-filter: blur(5px);
 }
@@ -52,7 +51,6 @@ footer {
     background-color: var(--bg-roxo-escuro);
 }
 
-/*para facilitar quando precisar ocultar algo*/
 .d-none {
     display: none;
 }
@@ -178,7 +176,6 @@ footer {
     background-color: #830dc7;
 }
 
-/*Primeira parte apresentação*/
 .container-banner {
     z-index: -1;
 }
@@ -189,7 +186,6 @@ footer {
     height: 100vh;
     display: flex;
     justify-content: space-between;
-    /*Coloca como fundo de tudo*/
     z-index: 0;
     overflow: hidden;
 }
@@ -225,18 +221,14 @@ footer {
 
 .banner-escrita {
     flex-direction: column;
-    /* coloca h1 e h2 em coluna (um embaixo do outro) */
     align-items: flex-start;
-    /* alinha à esquerda (ou canto escolhido) */
     justify-content: flex-start;
     font-size: x-large;
     display: flex;
     position: absolute;
-    /* align-items: center; */
     top: 250px;
     width: 100vw;
     height: 100vh;
-    /*Colaca em cima*/
     z-index: 1;
 }
 
@@ -773,4 +765,10 @@ textarea {
 .container-copy{
     text-align: center;
     font-size: 14px;
+}
+.hamburger {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
 }

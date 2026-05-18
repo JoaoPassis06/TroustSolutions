@@ -1,128 +1,190 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="icon" type="image/x-icon" href="./src/Logo-icon.png">
-    <link rel="stylesheet" href="./css/acessos.css">
-</head>
+    <link rel="icon" type="image/x-icon" href="./src/Logo-icon.png" />
+    <link rel="stylesheet" href="./css/acessos.css" />
+  </head>
 
-<body>
+  <body>
     <div id="login" class="container">
+      <!-- Banner esquerdo -->
+      <div class="container-img">
+        <!-- Botão voltar home — sobre o banner -->
+        <a href="./index.html" class="btn-home">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#fff"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5M12 5l-7 7 7 7" />
+          </svg>
+          Home
+        </a>
+        <img src="./src/homem-graficos.svg" alt="Ilustração" />
+        <div class="banner-text">
+          <h2>Bem-vindo de volta!</h2>
+          <p>Acesse sua conta e continue monitorando sua produção.</p>
+        </div>
+      </div>
 
-        <!-- Banner esquerdo -->
-        <div class="container-img">
-            <!-- Botão voltar home — sobre o banner -->
-            <a href="./index.html" class="btn-home">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 12H5M12 5l-7 7 7 7"/>
-                </svg>
-                Home
-            </a>
-            <img src="./src/homem-graficos.svg" alt="Ilustração">
-            <div class="banner-text">
-                <h2>Bem-vindo de volta!</h2>
-                <p>Acesse sua conta e continue monitorando sua produção.</p>
-            </div>
+      <!-- Formulário -->
+      <div class="container-forms login">
+        <div class="topo">
+          <h1>Acesse sua conta</h1>
+          <img class="logo" src="./src/Logo-icon.png" alt="TroustSolutions" />
         </div>
 
-        <!-- Formulário -->
-        <div class="container-forms login">
-            <div class="topo">
-                <h1>Acesse sua conta</h1>
-                <img class="logo" src="./src/Logo-icon.png" alt="TroustSolutions">
-            </div>
+        <div class="div-forms-login">
+          <div class="msg-erros" id="div_msg_erros"></div>
 
-            <div class="div-forms-login">
-                <div class="msg-erros" id="div_msg_erros"></div>
+          <label>
+            <span>Email</span>
+            <input
+              type="text"
+              placeholder="seuemail@gmail.com"
+              id="ipt_email"
+            />
+          </label>
 
-                <label>
-                    <span>Email</span>
-                    <input type="text" placeholder="seuemail@gmail.com" id="ipt_email">
-                </label>
+          <div class="campo-senha-wrapper">
+            <input type="password" id="ipt_senha" placeholder="Sua senha" />
+            <button
+              class="olho-btn"
+              onclick="toggleSenha('ipt_senha', 'olho_img')"
+              type="button"
+            >
+              <img
+                id="olho_img"
+                src="https://cdn-icons-png.flaticon.com/512/159/159604.png"
+                alt="Ver senha"
+              />
+            </button>
+          </div>
 
-                <div class="campo-senha-wrapper">
-                    <input type="password" id="ipt_senha" placeholder="Sua senha">
-                    <button class="olho-btn" onclick="toggleSenha('ipt_senha', 'olho_img')" type="button">
-                        <img id="olho_img" src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="Ver senha">
-                    </button>
-                </div>
+          <button onclick="autenticar()" class="btn-login">Entrar</button>
 
-                <button onclick="autenticar()" class="btn-login">Entrar</button>
-
-                <button onclick="entarGmail()" class="btn-google">
-                    <img src="./src/logo_google.png" alt="Google">
-                    Continuar com o Google
-                </button>
-            </div>
-
-            <div class="outros-links">
-                <p>Não possui uma conta? <a href="./cadastro.html"><span>Cadastre-se</span></a></p>
-                <p><a class="senha-link" href="./index.html">Esqueci minha senha</a></p>
-            </div>
+          <button onclick="entarGmail()" class="btn-google">
+            <img src="./src/logo_google.png" alt="Google" />
+            Continuar com o Google
+          </button>
         </div>
+
+        <div class="outros-links">
+          <p>
+            Não possui uma conta?
+            <a href="./cadastro.html"><span>Cadastre-se</span></a>
+          </p>
+          <p>
+            <a class="senha-link" href="./index.html">Esqueci minha senha</a>
+          </p>
+        </div>
+      </div>
     </div>
 
-<script>
-function autenticar() {
-    var emailVar = ipt_email.value.toLowerCase().trim();
-    var senhaVar = ipt_senha.value;
+    <script>
+      window.onload = function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const destino = urlParams.get("redirect");
+        const planoEscolhido = urlParams.get("plano");
 
-    if (emailVar == "" || senhaVar == "") {
-        alert("Preencha todos os campos!");
-        return;
-    }
+        if (destino && planoEscolhido) {
+          sessionStorage.setItem("PROXIMO_DESTINO", destino);
+          sessionStorage.setItem("PLANO_RESERVADO", planoEscolhido);
+          console.log(
+            `Plano guardado na sessão: ${planoEscolhido} para redirecionar depois.`,
+          );
+        }
+      };
 
-    console.log("Enviando requisição de login...");
+      function autenticar() {
+        var emailVar = ipt_email.value.toLowerCase().trim();
+        var senhaVar = ipt_senha.value;
 
-    fetch("http://localhost:3333/usuarios/autenticar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: emailVar, senha: senhaVar })
-    }).then(function (resposta) {
-        if (resposta.ok) {
-            resposta.json().then(json => {
+        if (emailVar == "" || senhaVar == "") {
+          alert("Preencha todos os campos!");
+          return;
+        }
+
+        console.log("Enviando requisição de login...");
+
+        fetch("http://localhost:3333/usuarios/autenticar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailVar, senha: senhaVar }),
+        })
+          .then(function (resposta) {
+            if (resposta.ok) {
+              resposta.json().then((json) => {
                 console.log("DADOS RECEBIDOS:", json);
                 if (json.idUsuario != undefined) {
-                    sessionStorage.setItem("ID_USUARIO", json.idUsuario);
-                    sessionStorage.setItem("NOME_USUARIO", json.nome);
-                    sessionStorage.setItem("FK_EMPRESA", json.fkEmpresa);
-                    sessionStorage.setItem("NOME_EMPRESA", json.empresa);
-                    sessionStorage.setItem("SUPERVISOR_ID", json.supervisor);
-                    sessionStorage.setItem("PODE_CADASTRAR", json.pode_cadastrar);
-                    console.log("Sessão gravada! Redirecionando...");
+                  sessionStorage.setItem("ID_USUARIO", json.idUsuario);
+                  sessionStorage.setItem("NOME_USUARIO", json.nome);
+                  sessionStorage.setItem("FK_EMPRESA", json.fkEmpresa);
+                  sessionStorage.setItem("NOME_EMPRESA", json.empresa);
+                  sessionStorage.setItem("SUPERVISOR_ID", json.supervisor);
+                  sessionStorage.setItem("PODE_CADASTRAR", json.pode_cadastrar);
+
+                  sessionStorage.setItem("EMAIL_USUARIO", emailVar);
+
+                  console.log(
+                    "Sessão gravada! Verificando fluxo de redirecionamento...",
+                  );
+
+                  const proximoDestino =
+                    sessionStorage.getItem("PROXIMO_DESTINO");
+                  const planoReservado =
+                    sessionStorage.getItem("PLANO_RESERVADO");
+
+                  if (proximoDestino && planoReservado) {
+                    sessionStorage.removeItem("PROXIMO_DESTINO");
+                    sessionStorage.removeItem("PLANO_RESERVADO");
+
+                    console.log(
+                      "Redirecionando direto para o fechamento do plano!",
+                    );
+
+                    window.location.href = `${proximoDestino}?plano=${planoReservado}`;
+                  } else {
                     window.location.href = "Dash/dashborad.html";
+                  }
                 } else {
-                    alert("Erro: O servidor não retornou os dados do usuário.");
+                  alert("Erro: O servidor não retornou os dados do usuário.");
                 }
-            });
-        } else {
-            resposta.text().then(texto => {
+              });
+            } else {
+              resposta.text().then((texto) => {
                 console.error("Erro na autenticação:", texto);
                 alert("Erro no login: Usuário ou senha inválidos.");
-            });
+              });
+            }
+          })
+          .catch(function (erro) {
+            console.error("ERRO DE REDE:", erro);
+            alert(
+              "Não foi possível conectar ao servidor. Verifique se a API está rodando.",
+            );
+          });
+      }
+
+      function toggleSenha(idInput, idOlho) {
+        const input = document.getElementById(idInput);
+        const olho = document.getElementById(idOlho);
+        if (input.type === "password") {
+          input.type = "text";
+          olho.style.opacity = "1";
+        } else {
+          input.type = "password";
+          olho.style.opacity = "0.45";
         }
-    }).catch(function (erro) {
-        console.error("ERRO DE REDE:", erro);
-        alert("Não foi possível conectar ao servidor. Verifique se a API está rodando.");
-    });
-}
-
-function toggleSenha(idInput, idOlho) {
-    const input = document.getElementById(idInput);
-    const olho = document.getElementById(idOlho);
-    if (input.type === "password") {
-        input.type = "text";
-        olho.style.opacity = "1";
-    } else {
-        input.type = "password";
-        olho.style.opacity = "0.45";
-    }
-}
-</script>
-
-</body>
+      }
+    </script>
+  </body>
 </html>

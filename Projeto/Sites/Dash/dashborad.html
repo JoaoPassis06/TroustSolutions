@@ -1,115 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - TroustSolutions</title>
+    <link rel="stylesheet" href="estilos/home_style.css" />
+    <link rel="icon" type="image/x-icon" href="../src/Logo-icon.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - TroustSolutions</title>
-  <link rel="stylesheet" href="estilos/home_style.css">
-  <link rel="icon" type="image/x-icon" href="../src/Logo-icon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <body onload="iniciarDash()">
+    <div
+      class="sidebar-overlay"
+      id="sidebarOverlay"
+      onclick="fecharSidebar()"
+    ></div>
 
-</head>
+    <button
+      class="hamburger-dash"
+      id="hamburgerDash"
+      onclick="toggleSidebar()"
+      aria-label="Menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
 
-<body onload="iniciarDash()">
-  
-  <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
-  
-  <button class="hamburger-dash" id="hamburgerDash" onclick="toggleSidebar()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-
-  <div class="div-pai">
-    <div class="container-lateral">
-      <div class="menu-lateral">
-        <div class="topo">
-          <div class="logo">
-            <img src="../src/Logo-icon.png" alt="Logo">
-            <h2><span>Troust</span>Solutions</h2>
-          </div>
-          <div class=" links-ativo">
-            Home</div>
-
-          <div class="links"><a href="./dash-tanque.html">Tanques</a></div>
-          <div class="links"><a href="../historico.html">Histórico</a></div>
-          
-          <div id="container_cadastrar_equipe" class="links">
-                        <a href="../cadastro_equipe.html" id="btn_cadastrar_equipe" >
-                      Cadastrar Equipe
-                      </a>
+    <div class="div-pai">
+      <div class="container-lateral">
+        <div class="menu-lateral">
+          <div class="topo">
+            <div class="logo">
+              <img src="../src/Logo-icon.png" alt="Logo" />
+              <h2><span>Troust</span>Solutions</h2>
             </div>
-        </div>
-        
-      
-        <div class="alerta" id="alerta_sidebar">
-              <h3>Alerta Crítico</h3>
-              <p id="alerta_tanque">Nenhum alerta ativo</p>
+            <div class="links-ativo">Home</div>
+
+            <div class="links"><a href="./dash-tanque.html">Tanques</a></div>
+            <div class="links"><a href="../historico.html">Histórico</a></div>
+            <div class="links">
+              <a href="../index.html">Páginal Principal</a>
+            </div>
+
+            <div id="container_cadastrar_equipe" class="links">
+              <a href="../cadastro_equipe.html" id="btn_cadastrar_equipe">
+                Cadastrar Equipe
+              </a>
+            </div>
+          </div>
+
+          <div class="alerta" id="alerta_sidebar">
+            <h3>Alerta Crítico</h3>
+            <p id="alerta_tanque">Nenhum alerta ativo</p>
           </div>
           <div class="sair">
-                    <a href="../index.html">
-                        <img src="../src/icon-desconectar.png" alt="Icon">
-                        Desconectar
-                    </a>
-                </div>
+            <a
+              href="javascript:void(0)"
+              onclick="
+                console.log('Clique funcionando!');
+                deslogar();
+              "
+            >
+              <img src="../src/icon-desconectar.png" alt="Icon" />
+              Desconectar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-principal">
+        <nav>
+          <div class="empresa">
+            <p>Dashboard Geral</p>
+            <span id="nome_empresa">Carregando...</span>
+          </div>
+          <div class="funcionario">
+            <div>
+              <p>Bem Vindo, <b id="nome_usuario">Convidado</b></p>
+            </div>
+            <img src="../src/icon-perfil.png" alt="Perfil" />
+          </div>
+        </nav>
+
+        <div class="container container1">
+          <div class="kpis-container">
+            <select id="select_tanque" onchange="mudarTanque()">
+              <option value="1">TANQUE 1</option>
+              <option value="2">TANQUE 2</option>
+              <option value="3">TANQUE 3</option>
+            </select>
+            <div class="box">
+              <span>Mínima Histórica</span>
+              <b id="kpi_min">--ºC</b>
+            </div>
+            <div class="box">
+              <span>Máxima Histórica</span>
+              <b id="kpi_max">--ºC</b>
+            </div>
+            <div class="box">
+              <span>Média Atual</span>
+              <b id="kpi_media">--ºC</b>
+            </div>
+            <div class="box">
+              <span>Status</span>
+              <b id="kpi_status" style="color: #00ff7f">NORMAL</b>
+            </div>
+          </div>
+
+          <div class="grafico-secundario">
+            <canvas id="grafico_mensal"></canvas>
+          </div>
+        </div>
+
+        <div class="container container2">
+          <div class="grafico-principal">
+            <canvas id="grafico_tempo_real"></canvas>
+          </div>
+          <div class="grafico-terciario">
+            <canvas id="grafico_distribuicao"></canvas>
+          </div>
+        </div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="container-principal">
-      <nav>
-  <div class="empresa">
-    <p>Dashboard Geral</p>
-    <span id="nome_empresa">Carregando...</span>
-
-  </div>
-  <div class="funcionario">
-    <div><p>Bem Vindo, <b id="nome_usuario">Convidado</b></p></div>
-    <img src="../src/icon-perfil.png" alt="Perfil">
-  </div>
-</nav>
-
-      <div class="container container1">
-        <div class="kpis-container">
-          <select id="select_tanque" onchange="mudarTanque()">
-            <option value="1">TANQUE 1</option>
-            <option value="2">TANQUE 2</option>
-            <option value="3">TANQUE 3</option>
-          </select>
-          <div class="box">
-            <span>Mínima Histórica</span>
-            <b id="kpi_min">--ºC</b>
-          </div>
-          <div class="box">
-            <span>Máxima Histórica</span>
-            <b id="kpi_max">--ºC</b>
-          </div>
-          <div class="box">
-            <span>Média Atual</span>
-            <b id="kpi_media">--ºC</b>
-          </div>
-          <div class="box">
-            <span>Status</span>
-            <b id="kpi_status" style="color: #00FF7F;">NORMAL</b>
-          </div>
-        </div>
-
-        <div class="grafico-secundario">
-          <canvas id="grafico_mensal"></canvas>
-        </div>
-      </div>
-
-      <div class="container container2">
-        <div class="grafico-principal">
-          <canvas id="grafico_tempo_real"></canvas>
-        </div>
-        <div class="grafico-terciario">
-          <canvas id="grafico_distribuicao"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <script src="js/home_script.js"></script>
-</body>
-
+  </body>
 </html>

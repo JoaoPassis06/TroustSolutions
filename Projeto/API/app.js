@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
@@ -10,9 +12,6 @@ app.use(express.json());
 app.use(cors());
 
 
-
-// Configuração da conexão baseada no dbtroustsolutions.sql
-require('dotenv').config();
 
 const dbConfig = {
     host: process.env.DB_HOST,       
@@ -346,4 +345,84 @@ app.get("/medidas/historico-100", async (req, res) => {
     }
 });
 
+
+app.post("/pagamentos/contratar", async (req, res) => {
+    try {
+        const { 
+            preco, 
+            nomePlano, 
+            emailUsuario, 
+            qtdSensor, 
+            dtContratacao, 
+            moeda, 
+            metodo, 
+            qtdParcelas,
+            fkEmpresa
+        } = req.body;
+
+        console.log("\n--- [DEBUG - SIMULADOR LOCAL] Dados Recebidos do Front-end ---");
+        console.log({ preco, nomePlano, emailUsuario, fkEmpresa });
+
+        const idTransacaoSimulado = Math.floor(Math.random() * 90000000000) + 10000000000; 
+        
+        const qrCodeMock = `00020101021226830014br.gov.bcb.pix2561api.mercadopago.com/v1/payments/${idTransacaoSimulado}/ticket`;
+        const qrCodeBase64Mock = "iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQAQMAAAC6CgGiAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAK0lEQVR42u3BgQAAAADDoPlTH+gN1QAAAAAAAAAAAAAAAAAAAAAAAAAAAIDfAFrEAAFbI69DAAAAAElFTkSuQmCC";
+        const statusFinal = 'Pendente';
+
+        console.log(`🚀 Simulador Ativo: Pix Local Gerado (ID Provisório: ${idTransacaoSimulado})`);
+        console.log(`[3] Gravando contratação no banco de dados para a Empresa: ${fkEmpresa || 6}...`);
+        
+        // ── GRAVAÇÃO NO MYSQL ──
+        const querySQL = `
+            INSERT INTO plano (
+                dtContratacao, 
+                fkEmpresa, 
+                idPlano, 
+                metodo, 
+                moeda, 
+                preco, 
+                qtdParcelas, 
+                qtdSensor, 
+                idPagamentoMercadoPago, 
+                statusPagamento
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        `;
+
+        const dataFinal = dtContratacao || new Date().toISOString().split('T')[0];
+
+        await connection.execute(querySQL, [
+            dataFinal,
+            fkEmpresa || 6,        
+            nomePlano || 'Premium', 
+            metodo || 'Pix', 
+            moeda || 'BRL', 
+            Number(preco) || 349, 
+            qtdParcelas || 1, 
+            Number(qtdSensor) || 0,
+            String(idTransacaoSimulado),
+            statusFinal        
+        ]);
+
+        console.log("[4] Contratação gravada com sucesso no MySQL! ✅\n");
+
+        res.json({
+            idPagamento: idTransacaoSimulado,
+            status: "pending",
+            qrCode: qrCodeMock,
+            qrCodeBase64: qrCodeBase64Mock
+        });
+
+    } catch (error) {
+        console.log("\n========================================================");
+        console.log("🚨 ERRO CRÍTICO NO MYSQL OU SERVIDOR 🚨");
+        console.log("========================================================");
+        console.error("Mensagem:", error.message);
+        console.log("========================================================\n");
+
+        res.status(500).json({ 
+            erro: "Falha fatal ao processar no servidor local", 
+            detalhes: error.message 
+        });
+    }
+});
 app.listen(3333, () => console.log("Servidor Troust rodando na porta 3333"));

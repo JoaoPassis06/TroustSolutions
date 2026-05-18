@@ -1,16 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TroustSolutions | Home</title>
-    <link rel="icon" type="image/x-icon" href="./src/Logo-icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/home_style.css">
-</head>
-<body>
-
+    <link rel="icon" type="image/x-icon" href="./src/Logo-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/home_style.css" />
+  </head>
+  <body>
     <!-- Cursor -->
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-ring" id="cursorRing"></div>
@@ -19,340 +21,593 @@
 
     <!-- ── NAVBAR ── -->
     <nav class="navbar" id="navbar">
-        <div class="logo">
-                <a href="#home"><img src="src/Logo-icon.png" alt="Logo TroustSolutions" class="logo-img logo-icon"></a>
-            </div>
-        <div class="nav-content">
-            <a href="#home" class="logo-text">Troust<span>Solutions</span></a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="planos.html">Planos</a></li>
-                <li><a href="#relatos">Relatos</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-            <div class="nav-buttons">
-                <button class="btn-outline" onclick="window.location.href='./login.html'">Login</button>
-                <button class="btn-primary" onclick="window.location.href='./cadastro.html'">Cadastro</button>
-            </div>
-            <!-- Hamburger -->
-            <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
-                <span></span><span></span><span></span>
+      <div class="logo">
+        <a href="#home"
+          ><img
+            src="src/Logo-icon.png"
+            alt="Logo TroustSolutions"
+            class="logo-img logo-icon"
+        /></a>
+      </div>
+      <div class="nav-content">
+        <a href="#home" class="logo-text">Troust<span>Solutions</span></a>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="planos.html">Planos</a></li>
+          <li><a href="#relatos">Relatos</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+          <div id="div_deslogado" style="display: flex; gap: 12px">
+            <button
+              class="btn-outline"
+              onclick="window.location.href = './login.html'"
+            >
+              Login
             </button>
+            <button
+              class="btn-primary"
+              onclick="window.location.href = './cadastro.html'"
+            >
+              Cadastro
+            </button>
+          </div>
+
+          <div
+            id="div_logado"
+            style="display: none; align-items: center; gap: 16px"
+          >
+            <span class="nome-user" style="font-size: 0.88rem; color: #8892a4">
+              Olá,
+              <strong
+                id="lbl_nome_usuario"
+                style="color: #22d3ee; font-weight: 700; display: none"
+                >Usuário</strong
+              >
+            </span>
+            <button
+              class="btn-primary"
+              onclick="window.location.href = 'Dash/dashborad.html'"
+            >
+              Dashboard
+            </button>
+            <button onclick="deslogar()" class="btn-sair">Sair</button>
+          </div>
         </div>
+
+        <button
+          class="hamburger"
+          id="hamburgerBtn"
+          onclick="toggleMenu()"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
     </nav>
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-inner">
-            <ul class="mobile-links">
-                <li><a href="#home" onclick="closeMenu()">Home</a></li>
-                <li><a href="planos.html" onclick="closeMenu()">Planos</a></li>
-                <li><a href="#relatos" onclick="closeMenu()">Relatos</a></li>
-                <li><a href="#contato" onclick="closeMenu()">Contato</a></li>
-            </ul>
-            <div class="mobile-actions">
-                <button class="btn-outline" onclick="window.location.href='./login.html'">Login</button>
-                <button class="btn-primary" onclick="window.location.href='./cadastro.html'">Cadastro</button>
-            </div>
+      <div class="mobile-menu-inner">
+        <ul class="mobile-links">
+          <li><a href="#home" onclick="closeMenu()">Home</a></li>
+          <li><a href="planos.html" onclick="closeMenu()">Planos</a></li>
+          <li><a href="#relatos" onclick="closeMenu()">Relatos</a></li>
+          <li><a href="#contato" onclick="closeMenu()">Contato</a></li>
+        </ul>
+
+        <div class="mobile-actions">
+          <div
+            id="div_deslogado_mob"
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+              width: 100%;
+            "
+          >
+            <button
+              class="btn-outline"
+              onclick="window.location.href = './login.html'"
+            >
+              Login
+            </button>
+            <button
+              class="btn-primary"
+              onclick="window.location.href = './cadastro.html'"
+            >
+              Cadastro
+            </button>
+          </div>
+
+          <div
+            id="div_logado_mob"
+            style="
+              display: none;
+              flex-direction: column;
+              align-items: center;
+              gap: 16px;
+              width: 100%;
+            "
+          >
+            <span
+              class="nome-user"
+              style="font-size: 0.9rem; color: #8892a4; text-align: center"
+            >
+              Olá,
+              <strong
+                id="lbl_nome_usuario_mob"
+                style="color: #22d3ee; font-weight: 700"
+                >Usuário</strong
+              >
+            </span>
+            <button
+              class="btn-primary"
+              style="width: 100%"
+              onclick="window.location.href = 'Dash/dashborad.html'"
+            >
+              Dashboard
+            </button>
+            <button onclick="deslogar()" class="btn-sair">Sair</button>
+          </div>
         </div>
+      </div>
     </div>
     <div class="mobile-overlay" id="mobileOverlay" onclick="closeMenu()"></div>
 
     <main>
+      <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
 
-        <section class="hero" id="home">
-            <div class="hero-bg"></div>
-            <div class="hero-grid"></div>
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
+        <div class="hero-content">
+          <div class="hero-tag">Monitoramento Inteligente</div>
 
-            <div class="hero-content">
-                <div class="hero-tag">Monitoramento Inteligente</div>
+          <h1>Troust<span class="type-wrap">Solutions</span></h1>
 
-                <h1>Troust<span class="type-wrap">Solutions</span></h1>
+          <p>
+            Auxiliamos truticultores a maximizarem sua receita através de
+            monitoramento IoT inteligente e análise de dados em tempo real.
+          </p>
 
-                <p>Auxiliamos truticultores a maximizarem sua receita através de monitoramento IoT inteligente e análise de dados em tempo real.</p>
+          <div class="hero-actions">
+            <a
+              href="../Simulador Financeiro/calculadoraV1.html"
+              class="btn-hero btn-hero-cta"
+            >
+              Faça sua simulação
+              <span class="arrow-icon"></span>
+            </a>
+            <a href="#missao" class="btn-hero btn-hero-ghost"> Saiba mais </a>
+          </div>
+        </div>
 
-                <div class="hero-actions">
-                    <a href="../Simulador Financeiro/calculadoraV1.html" class="btn-hero btn-hero-cta">
-                        Faça sua simulação
-                        <span class="arrow-icon"></span>
-                    </a>
-                    <a href="#missao" class="btn-hero btn-hero-ghost">
-                        Saiba mais
-                    </a>
-                </div>
+        <div class="scroll-hint">
+          <span>Rolar</span>
+          <div class="line"></div>
+        </div>
+      </section>
+
+      <!-- ── MISSÃO ── -->
+      <section class="section-missao" id="missao">
+        <div class="reveal">
+          <p class="section-label">O que fazemos</p>
+          <h2 class="section-heading">Nossa <em>Missão</em></h2>
+        </div>
+        <div class="grid-missao reveal-stagger">
+          <article class="card-missao accent">
+            <div class="card-icon">💧</div>
+            <h3>Decisão</h3>
+            <p>
+              Alertas em tempo real facilitando a tomada de decisão estratégica
+              com dados precisos.
+            </p>
+            <span class="card-num">01</span>
+          </article>
+          <article class="card-missao">
+            <div class="card-icon">📊</div>
+            <h3>Economia</h3>
+            <p>
+              Redução de custos operacionais através da automação analítica e
+              otimização de processos.
+            </p>
+            <span class="card-num">02</span>
+          </article>
+          <article class="card-missao">
+            <div class="card-icon">🐟</div>
+            <h3>Monitoramento</h3>
+            <p>
+              Sensores precisos para o controle térmico vital das trutas em
+              tempo real.
+            </p>
+            <span class="card-num">03</span>
+          </article>
+          <article class="card-missao accent">
+            <div class="card-icon">🔒</div>
+            <h3>Segurança</h3>
+            <p>
+              Gestão baseada em dados concretos para garantir e proteger toda a
+              sua produção.
+            </p>
+            <span class="card-num">04</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- ── VALORES ── -->
+      <section class="section-valores">
+        <div class="reveal">
+          <p class="section-label">Princípios</p>
+          <h2 class="section-heading"><em>Valores</em></h2>
+        </div>
+        <div class="valores-grid reveal-stagger">
+          <div class="valor-item">
+            <h3>Compromisso</h3>
+            <p>
+              Responsabilidade e motivação são nossos pilares fundamentais. Nos
+              dedicamos a cada produtor.
+            </p>
+          </div>
+          <div class="valor-item">
+            <h3>Inovação</h3>
+            <p>
+              Impactando o agronegócio com tecnologia de ponta, transformando
+              dados em decisões.
+            </p>
+          </div>
+          <div class="valor-item">
+            <h3>Qualidade</h3>
+            <p>
+              A qualidade e desempenho são nossos objetivos inegociáveis em cada
+              entrega.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── NOTÍCIAS ── -->
+      <section class="section-noticias" id="relatos">
+        <div class="noticias-header">
+          <div class="reveal-left">
+            <p class="section-label">Conteúdo</p>
+            <h2 class="section-heading" style="margin-bottom: 0">
+              Notícias &amp; <em>Relatos</em>
+            </h2>
+          </div>
+        </div>
+        <div class="noticias-grid reveal-stagger">
+          <article class="news-card">
+            <p class="news-meta">Nutrição &amp; Mercado</p>
+            <h3>Truta ou Salmão?</h3>
+            <p>
+              Entenda por que a truta arco-íris é uma alternativa nutritiva e
+              econômica que conquista cada vez mais consumidores exigentes.
+            </p>
+            <a
+              href="https://puritybox.techinfus.com/pt/sovety/produkty/forel-ili-syomga-chto-luchshe.html"
+              target="_blank"
+              class="news-link"
+            >
+              Saiba mais →
+            </a>
+          </article>
+          <article class="news-card">
+            <p class="news-meta">Ciência &amp; Produção</p>
+            <h3>A Salmonada</h3>
+            <p>
+              A formulação química que altera a coloração da carne da truta
+              arco-íris e como isso impacta percepção e preço de mercado.
+            </p>
+            <a
+              href="https://g1.globo.com/economia/agronegocios/noticia/2024/05/26/salmao-ou-truta-salmonada-entenda-as-diferencas.ghtml"
+              target="_blank"
+              class="news-link"
+            >
+              Saiba mais →
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- ── CONTATO ── -->
+      <section class="section-contato" id="contato">
+        <div class="reveal">
+          <p class="section-label">Fale conosco</p>
+          <h2 class="section-heading">Entre em <em>Contato</em></h2>
+        </div>
+        <div class="contato-grid">
+          <div class="form-wrap reveal-left">
+            <h3 class="form-title">Envie sua mensagem</h3>
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="seu@email.com" />
             </div>
+            <div class="input-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" placeholder="Seu nome completo" />
+            </div>
+            <div class="input-group">
+              <label for="assunto">Mensagem</label>
+              <textarea
+                id="assunto"
+                placeholder="Como podemos ajudar?"
+              ></textarea>
+            </div>
+            <button class="btn-send">
+              Enviar mensagem
+              <span class="arrow-icon"></span>
+            </button>
+          </div>
 
-
-            <div class="scroll-hint">
-                <span>Rolar</span>
-                <div class="line"></div>
+          <aside class="info-side reveal-right">
+            <div class="info-card">
+              <h3>O que é a TroustSolutions?</h3>
+              <p>
+                Somos uma equipe de desenvolvimento focada em auxiliar
+                truticultores a terem uma receita maior com menor taxa de
+                mortalidade através de monitoramento IoT.
+              </p>
             </div>
-        </section>
-
-        <!-- ── MISSÃO ── -->
-        <section class="section-missao" id="missao">
-            <div class="reveal">
-                <p class="section-label">O que fazemos</p>
-                <h2 class="section-heading"> Nossa <em>Missão</em></h2>
+            <div class="info-card">
+              <h3>📞 Telefone</h3>
+              <p>(11) 4002-8922</p>
             </div>
-            <div class="grid-missao reveal-stagger">
-                <article class="card-missao accent">
-                    <div class="card-icon">💧</div>
-                    <h3>Decisão</h3>
-                    <p>Alertas em tempo real facilitando a tomada de decisão estratégica com dados precisos.</p>
-                    <span class="card-num">01</span>
-                </article>
-                <article class="card-missao">
-                    <div class="card-icon">📊</div>
-                    <h3>Economia</h3>
-                    <p>Redução de custos operacionais através da automação analítica e otimização de processos.</p>
-                    <span class="card-num">02</span>
-                </article>
-                <article class="card-missao">
-                    <div class="card-icon">🐟</div>
-                    <h3>Monitoramento</h3>
-                    <p>Sensores precisos para o controle térmico vital das trutas em tempo real.</p>
-                    <span class="card-num">03</span>
-                </article>
-                <article class="card-missao accent">
-                    <div class="card-icon">🔒</div>
-                    <h3>Segurança</h3>
-                    <p>Gestão baseada em dados concretos para garantir e proteger toda a sua produção.</p>
-                    <span class="card-num">04</span>
-                </article>
+            <div class="info-card">
+              <h3>✉️ E-mail</h3>
+              <p>troustsolutions@hotmail.com</p>
             </div>
-        </section>
-
-        <!-- ── VALORES ── -->
-        <section class="section-valores">
-            <div class="reveal">
-                <p class="section-label">Princípios</p>
-                <h2 class="section-heading"><em>Valores</em></h2>
-            </div>
-            <div class="valores-grid reveal-stagger">
-                <div class="valor-item">
-                    
-                    <h3>Compromisso</h3>
-                    <p>Responsabilidade e motivação são nossos pilares fundamentais. Nos dedicamos a cada produtor.</p>
-                </div>
-                <div class="valor-item">
-                    
-                    <h3>Inovação</h3>
-                    <p>Impactando o agronegócio com tecnologia de ponta, transformando dados em decisões.</p>
-                </div>
-                <div class="valor-item">
-                    
-                    <h3>Qualidade</h3>
-                    <p>A qualidade e desempenho são nossos objetivos inegociáveis em cada entrega.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ── NOTÍCIAS ── -->
-        <section class="section-noticias" id="relatos">
-            <div class="noticias-header">
-                <div class="reveal-left">
-                    <p class="section-label">Conteúdo</p>
-                    <h2 class="section-heading" style="margin-bottom:0">Notícias &amp; <em>Relatos</em></h2>
-                </div>
-                
-            </div>
-            <div class="noticias-grid reveal-stagger">
-                <article class="news-card">
-                    <p class="news-meta">Nutrição &amp; Mercado</p>
-                    <h3>Truta ou Salmão?</h3>
-                    <p>Entenda por que a truta arco-íris é uma alternativa nutritiva e econômica que conquista cada vez mais consumidores exigentes.</p>
-                    <a href="https://puritybox.techinfus.com/pt/sovety/produkty/forel-ili-syomga-chto-luchshe.html" target="_blank" class="news-link">
-                        Saiba mais →
-                    </a>
-                </article>
-                <article class="news-card">
-                    <p class="news-meta">Ciência &amp; Produção</p>
-                    <h3>A Salmonada</h3>
-                    <p>A formulação química que altera a coloração da carne da truta arco-íris e como isso impacta percepção e preço de mercado.</p>
-                    <a href="https://g1.globo.com/economia/agronegocios/noticia/2024/05/26/salmao-ou-truta-salmonada-entenda-as-diferencas.ghtml" target="_blank" class="news-link">
-                        Saiba mais →
-                    </a>
-                </article>
-            </div>
-        </section>
-
-        <!-- ── CONTATO ── -->
-        <section class="section-contato" id="contato">
-            <div class="reveal">
-                <p class="section-label">Fale conosco</p>
-                <h2 class="section-heading">Entre em <em>Contato</em></h2>
-            </div>
-            <div class="contato-grid">
-                <div class="form-wrap reveal-left">
-                    <h3 class="form-title">Envie sua mensagem</h3>
-                    <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="seu@email.com">
-                    </div>
-                    <div class="input-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" id="nome" placeholder="Seu nome completo">
-                    </div>
-                    <div class="input-group">
-                        <label for="assunto">Mensagem</label>
-                        <textarea id="assunto" placeholder="Como podemos ajudar?"></textarea>
-                    </div>
-                    <button class="btn-send">
-                        Enviar mensagem
-                        <span class="arrow-icon"></span>
-                    </button>
-                </div>
-
-                <aside class="info-side reveal-right">
-                    <div class="info-card">
-                        <h3>O que é a TroustSolutions?</h3>
-                        <p>Somos uma equipe de desenvolvimento focada em auxiliar truticultores a terem uma receita maior com menor taxa de mortalidade através de monitoramento IoT.</p>
-                    </div>
-                    <div class="info-card">
-                        <h3>📞 Telefone</h3>
-                        <p>(11) 4002-8922</p>
-                    </div>
-                    <div class="info-card">
-                        <h3>✉️ E-mail</h3>
-                        <p>troustsolutions@hotmail.com</p>
-                    </div>
-                </aside>
-            </div>
-        </section>
-
+          </aside>
+        </div>
+      </section>
     </main>
 
     <!-- ── FOOTER ── -->
     <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <a href="#home" class="logo-text">Troust<span>Solutions</span></a>
-                <p>Tecnologia a serviço da truticultura. Monitoramento inteligente para produtores que buscam eficiência e resultados.</p>
-                <div class="social-row" style="margin-top:20px">
-                    <div class="social-btn">
-                        <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
-                    </div>
-                    <div class="social-btn">
-                        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub">
-                    </div>
-                </div>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="logo-text">Troust<span>Solutions</span></a>
+          <p>
+            Tecnologia a serviço da truticultura. Monitoramento inteligente para
+            produtores que buscam eficiência e resultados.
+          </p>
+          <div class="social-row" style="margin-top: 20px">
+            <div class="social-btn">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
+                alt="Instagram"
+              />
             </div>
-            <div class="footer-col">
-                <h4>Navegação</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#missao">Nossa Missão</a></li>
-                    <li><a href="#relatos">Relatos</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                </ul>
+            <div class="social-btn">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                alt="GitHub"
+              />
             </div>
-            <div class="footer-col">
-                <h4>Soluções</h4>
-                <ul>
-                    <li><a href="#">Sensores IoT</a></li>
-                    <li><a href="#">Calculadora Financeira</a></li>
-                    <li><a href="#">Dashboard</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contato</h4>
-                <ul>
-                    <li><a href="tel:1140028922">(11) 4002-8922</a></li>
-                    <li><a href="mailto:troustsolutions@hotmail.com">troustsolutions@hotmail.com</a></li>
-                </ul>
-            </div>
+          </div>
         </div>
-        <div class="footer-copy">
-            <p>&copy; 2026 TroustSolutions. Todos os direitos reservados.</p>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#missao">Nossa Missão</a></li>
+            <li><a href="#relatos">Relatos</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
         </div>
+        <div class="footer-col">
+          <h4>Soluções</h4>
+          <ul>
+            <li><a href="#">Sensores IoT</a></li>
+            <li><a href="#">Calculadora Financeira</a></li>
+            <li><a href="#">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul>
+            <li><a href="tel:1140028922">(11) 4002-8922</a></li>
+            <li>
+              <a href="mailto:troustsolutions@hotmail.com"
+                >troustsolutions@hotmail.com</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-copy">
+        <p>&copy; 2026 TroustSolutions. Todos os direitos reservados.</p>
+      </div>
     </footer>
 
     <script>
-        // ── Mobile Menu ──
-        function toggleMenu() {
-            const menu    = document.getElementById('mobileMenu');
-            const overlay = document.getElementById('mobileOverlay');
-            const btn     = document.getElementById('hamburgerBtn');
-            const open    = menu.classList.toggle('open');
-            overlay.classList.toggle('open', open);
-            btn.classList.toggle('open', open);
-            btn.setAttribute('aria-expanded', open);
-            document.body.style.overflow = open ? 'hidden' : '';
+      function gerenciarSessaoIndex() {
+        const containerDesktop = document.querySelector(".nav-buttons");
+        const containerMobile = document.querySelector(".mobile-actions");
+
+        const idUsuario = sessionStorage.getItem("ID_USUARIO");
+        const nomeUsuario = sessionStorage.getItem("NOME_USUARIO");
+
+        if (idUsuario != undefined && idUsuario != null) {
+          const primeiroNome = nomeUsuario
+            ? nomeUsuario.split(" ")[0]
+            : "Usuário";
+
+          if (containerDesktop) {
+            containerDesktop.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    
+                    <button class="btn-primary" onclick="window.location.href='Dash/dashborad.html'">Dashboard</button>
+                    <button onclick="deslogar()" class="btn-sair"">Sair</button>
+                </div>
+            `;
+          }
+
+          if (containerMobile) {
+            containerMobile.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%;">
+                    
+                    <button class="btn-primary" style="width: 100%;" onclick="window.location.href='Dash/dashborad.html'">Dashboard</button>
+                    <button onclick="deslogar()" class="btn-sair" >Sair da conta</button>
+                </div>
+            `;
+          }
+
+          document.querySelectorAll(".btn-sair, .btn-primary").forEach((el) => {
+            el.addEventListener("mouseenter", () =>
+              document.getElementById("cursorRing").classList.add("hovered"),
+            );
+            el.addEventListener("mouseleave", () =>
+              document.getElementById("cursorRing").classList.remove("hovered"),
+            );
+          });
+        } else {
+          console.log("Sessão vazia detectada. Renderizando botões padrão.");
+
+          if (containerDesktop) {
+            containerDesktop.innerHTML = `
+                <button class="btn-outline" onclick="window.location.href='./login.html'">Login</button>
+                <button class="btn-primary" onclick="window.location.href='./cadastro.html'">Cadastro</button>
+            `;
+          }
+
+          if (containerMobile) {
+            containerMobile.innerHTML = `
+                <button class="btn-outline" onclick="window.location.href='./login.html'">Login</button>
+                <button class="btn-primary" onclick="window.location.href='./cadastro.html'">Cadastro</button>
+            `;
+          }
+        }
+      }
+
+      function deslogar() {
+        sessionStorage.clear();
+        window.location.reload();
+      }
+
+      gerenciarSessaoIndex();
+
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        const overlay = document.getElementById("mobileOverlay");
+        const btn = document.getElementById("hamburgerBtn");
+
+        // Faz o botão ganhar a classe "open" (para fazer os 3 risquinhos virarem um "X" no CSS)
+        if (btn) {
+          const open = btn.classList.toggle("open");
+          btn.setAttribute("aria-expanded", open);
         }
 
-        function closeMenu() {
-            document.getElementById('mobileMenu').classList.remove('open');
-            document.getElementById('mobileOverlay').classList.remove('open');
-            document.getElementById('hamburgerBtn').classList.remove('open');
-            document.getElementById('hamburgerBtn').setAttribute('aria-expanded', false);
-            document.body.style.overflow = '';
+        // Abre/fecha a gaveta do menu e a cortina de fundo
+        if (menu) menu.classList.toggle("open");
+        if (overlay) overlay.classList.toggle("open");
+
+        // Impede a página de rolar ao fundo com o menu aberto
+        const menuAberto = menu ? menu.classList.contains("open") : false;
+        document.body.style.overflow = menuAberto ? "hidden" : "";
+      }
+
+      function closeMenu() {
+        const menu = document.getElementById("mobileMenu");
+        const overlay = document.getElementById("mobileOverlay");
+        const btn = document.getElementById("hamburgerBtn");
+
+        if (menu) menu.classList.remove("open");
+        if (overlay) overlay.classList.remove("open");
+        if (btn) {
+          btn.classList.remove("open");
+          btn.setAttribute("aria-expanded", false);
         }
+        document.body.style.overflow = "";
+      }
+      // Close menu on resize above 768px
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) closeMenu();
+      });
 
-        // Close menu on resize above 768px
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) closeMenu();
+      // ── Custom Cursor ──
+      const dot = document.getElementById("cursorDot");
+      const ring = document.getElementById("cursorRing");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+      });
+
+      (function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+        requestAnimationFrame(animRing);
+      })();
+
+      document
+        .querySelectorAll("a, button, .card-missao, .news-card, .valor-item")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () =>
+            ring.classList.add("hovered"),
+          );
+          el.addEventListener("mouseleave", () =>
+            ring.classList.remove("hovered"),
+          );
         });
 
-        // ── Custom Cursor ──
-        const dot  = document.getElementById('cursorDot');
-        const ring = document.getElementById('cursorRing');
-        let mx = 0, my = 0, rx = 0, ry = 0;
+      window.addEventListener("scroll", () => {
+        const scrolled = window.scrollY;
+        const total = document.body.scrollHeight - window.innerHeight;
+        document.getElementById("progress-bar").style.width =
+          (scrolled / total) * 100 + "%";
 
-        document.addEventListener('mousemove', e => {
-            mx = e.clientX; my = e.clientY;
-            dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+        document
+          .getElementById("navbar")
+          .classList.toggle("scrolled", scrolled > 40);
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      document
+        .querySelectorAll(
+          ".reveal, .reveal-stagger, .reveal-left, .reveal-right",
+        )
+        .forEach((el) => observer.observe(el));
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth" });
+          }
         });
+      });
 
-        (function animRing() {
-            rx += (mx - rx) * 0.12;
-            ry += (my - ry) * 0.12;
-            ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
-            requestAnimationFrame(animRing);
-        })();
-
-        document.querySelectorAll('a, button, .card-missao, .news-card, .valor-item').forEach(el => {
-            el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
-        });
-
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            const total    = document.body.scrollHeight - window.innerHeight;
-            document.getElementById('progress-bar').style.width = (scrolled / total * 100) + '%';
-
-            document.getElementById('navbar').classList.toggle('scrolled', scrolled > 40);
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.12 });
-
-        document.querySelectorAll('.reveal, .reveal-stagger, .reveal-left, .reveal-right')
-            .forEach(el => observer.observe(el));
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        window.addEventListener('scroll', () => {
-            const y = window.scrollY;
-            document.querySelector('.orb-1').style.transform = `translateY(${y * 0.15}px)`;
-            document.querySelector('.orb-2').style.transform = `translateY(${y * 0.08}px)`;
-        });
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY;
+        document.querySelector(".orb-1").style.transform =
+          `translateY(${y * 0.15}px)`;
+        document.querySelector(".orb-2").style.transform =
+          `translateY(${y * 0.08}px)`;
+      });
     </script>
-</body>
+  </body>
 </html>

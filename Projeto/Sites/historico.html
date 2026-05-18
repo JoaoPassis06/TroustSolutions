@@ -1,171 +1,196 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Histórico de Registros | Troust</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/historico.css">
-</head>
-<body>
-
-<div class="page-wrapper">
-
-    <div class="topbar">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/historico.css" />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <div class="topbar">
         <div class="topbar-left">
-            <span class="breadcrumb">Dashboard Geral &rsaquo; Histórico</span>
-            <h1>Histórico de Monitoramento</h1>
-            <p>Últimos 100 registros capturados pelos sensores.</p>
+          <span class="breadcrumb">Dashboard Geral &rsaquo; Histórico</span>
+          <h1>Histórico de Monitoramento</h1>
+          <p>Últimos 100 registros capturados pelos sensores.</p>
         </div>
-        <button class="btn-voltar" onclick="window.location.href='Dash/dashborad.html'">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 12H5M12 5l-7 7 7 7"/>
-            </svg>
-            Voltar ao Dashboard
+        <button
+          class="btn-voltar"
+          onclick="window.location.href = 'Dash/dashborad.html'"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5M12 5l-7 7 7 7" />
+          </svg>
+          Voltar ao Dashboard
         </button>
-    </div>
+      </div>
 
-    <div class="stats-strip">
+      <div class="stats-strip">
         <div class="stat-card">
-            <span class="stat-label">Total de Registros</span>
-            <span class="stat-value purple" id="stat-total">—</span>
+          <span class="stat-label">Total de Registros</span>
+          <span class="stat-value purple" id="stat-total">—</span>
         </div>
         <div class="stat-card">
-            <span class="stat-label">Status Normal</span>
-            <span class="stat-value green" id="stat-normal">—</span>
+          <span class="stat-label">Status Normal</span>
+          <span class="stat-value green" id="stat-normal">—</span>
         </div>
         <div class="stat-card">
-            <span class="stat-label">Alertas</span>
-            <span class="stat-value red" id="stat-alerta">—</span>
+          <span class="stat-label">Alertas</span>
+          <span class="stat-value red" id="stat-alerta">—</span>
         </div>
         <div class="stat-card">
-            <span class="stat-label">Sensores Ativos</span>
-            <span class="stat-value purple" id="stat-sensores">—</span>
+          <span class="stat-label">Sensores Ativos</span>
+          <span class="stat-value purple" id="stat-sensores">—</span>
         </div>
-    </div>
+      </div>
 
-    <!-- ── FILTROS ────────────────────────────────────── -->
-    <div class="filtros-card">
+      <!-- ── FILTROS ────────────────────────────────────── -->
+      <div class="filtros-card">
         <div class="filtros-row">
-            <div class="filtro-group wide">
-                <label class="filtro-label" for="input_busca">Busca Livre</label>
-                <input
-                    type="text"
-                    id="input_busca"
-                    placeholder="Buscar por tanque, setor, sensor..."
-                    oninput="aplicarFiltros()"
-                    autocomplete="off"
-                >
-            </div>
-            <div class="filtro-group">
-                <label class="filtro-label" for="select_tanque">Tanque</label>
-                <select id="select_tanque" onchange="aplicarFiltros()">
-                    <option value="">Todos os tanques</option>
-                </select>
-            </div>
-            <div class="filtro-group">
-                <label class="filtro-label" for="select_setor">Setor</label>
-                <select id="select_setor" onchange="aplicarFiltros()">
-                    <option value="">Todos os setores</option>
-                </select>
-            </div>
-            <button class="btn-limpar" onclick="limparFiltros()">Limpar</button>
+          <div class="filtro-group wide">
+            <label class="filtro-label" for="input_busca">Busca Livre</label>
+            <input
+              type="text"
+              id="input_busca"
+              placeholder="Buscar por tanque, setor, sensor..."
+              oninput="aplicarFiltros()"
+              autocomplete="off"
+            />
+          </div>
+          <div class="filtro-group">
+            <label class="filtro-label" for="select_tanque">Tanque</label>
+            <select id="select_tanque" onchange="aplicarFiltros()">
+              <option value="">Todos os tanques</option>
+            </select>
+          </div>
+          <div class="filtro-group">
+            <label class="filtro-label" for="select_setor">Setor</label>
+            <select id="select_setor" onchange="aplicarFiltros()">
+              <option value="">Todos os setores</option>
+            </select>
+          </div>
+          <button class="btn-limpar" onclick="limparFiltros()">Limpar</button>
         </div>
 
         <div class="chips-row">
-            <span class="chip-label">Status:</span>
-            <button class="chip active-all" id="chip-todos"   onclick="setChip('todos')">Todos</button>
-            <button class="chip"            id="chip-normal"  onclick="setChip('normal')">● Normal</button>
-            <button class="chip"            id="chip-alerta"  onclick="setChip('alerta')">● Alerta</button>
-            <span class="resultado-contagem">Exibindo <span id="count-exibindo">—</span> registros</span>
+          <span class="chip-label">Status:</span>
+          <button
+            class="chip active-all"
+            id="chip-todos"
+            onclick="setChip('todos')"
+          >
+            Todos
+          </button>
+          <button class="chip" id="chip-normal" onclick="setChip('normal')">
+            ● Normal
+          </button>
+          <button class="chip" id="chip-alerta" onclick="setChip('alerta')">
+            ● Alerta
+          </button>
+          <span class="resultado-contagem"
+            >Exibindo <span id="count-exibindo">—</span> registros</span
+          >
         </div>
-    </div>
+      </div>
 
-    <!-- ── TABELA ─────────────────────────────────────── -->
-    <div class="tabela-card">
+      <!-- ── TABELA ─────────────────────────────────────── -->
+      <div class="tabela-card">
         <div class="tabela-toolbar">
-            <span class="tabela-toolbar-title">Registros de Sensores</span>
+          <span class="tabela-toolbar-title">Registros de Sensores</span>
         </div>
 
         <div class="tabela-wrapper">
-            <table class="tabela-registros">
-                <thead>
-                    <tr>
-                        <th>Data / Hora</th>
-                        <th>Tanque</th>
-                        <th>Setor</th>
-                        <th>Sensor</th>
-                        <th>Temperatura</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="corpo_tabela">
-                    <!-- skeleton inicial -->
-                    <tr class="skeleton-row">
-                        <td><div class="skeleton-cell" style="width:110px"></div></td>
-                        <td><div class="skeleton-cell" style="width:80px"></div></td>
-                        <td><div class="skeleton-cell" style="width:60px"></div></td>
-                        <td><div class="skeleton-cell" style="width:50px"></div></td>
-                        <td><div class="skeleton-cell" style="width:55px"></div></td>
-                        <td><div class="skeleton-cell" style="width:70px"></div></td>
-                    </tr>
-                    <tr class="skeleton-row">
-                        <td><div class="skeleton-cell" style="width:130px"></div></td>
-                        <td><div class="skeleton-cell" style="width:90px"></div></td>
-                        <td><div class="skeleton-cell" style="width:55px"></div></td>
-                        <td><div class="skeleton-cell" style="width:40px"></div></td>
-                        <td><div class="skeleton-cell" style="width:60px"></div></td>
-                        <td><div class="skeleton-cell" style="width:65px"></div></td>
-                    </tr>
-                </tbody>
-            </table>
+          <table class="tabela-registros">
+            <thead>
+              <tr>
+                <th>Data / Hora</th>
+                <th>Tanque</th>
+                <th>Setor</th>
+                <th>Sensor</th>
+                <th>Temperatura</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="corpo_tabela">
+              <!-- skeleton inicial -->
+              <tr class="skeleton-row">
+                <td><div class="skeleton-cell" style="width: 110px"></div></td>
+                <td><div class="skeleton-cell" style="width: 80px"></div></td>
+                <td><div class="skeleton-cell" style="width: 60px"></div></td>
+                <td><div class="skeleton-cell" style="width: 50px"></div></td>
+                <td><div class="skeleton-cell" style="width: 55px"></div></td>
+                <td><div class="skeleton-cell" style="width: 70px"></div></td>
+              </tr>
+              <tr class="skeleton-row">
+                <td><div class="skeleton-cell" style="width: 130px"></div></td>
+                <td><div class="skeleton-cell" style="width: 90px"></div></td>
+                <td><div class="skeleton-cell" style="width: 55px"></div></td>
+                <td><div class="skeleton-cell" style="width: 40px"></div></td>
+                <td><div class="skeleton-cell" style="width: 60px"></div></td>
+                <td><div class="skeleton-cell" style="width: 65px"></div></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <div class="tabela-footer">
-            <span class="paginacao-info" id="info-rodape">Carregando...</span>
+          <span class="paginacao-info" id="info-rodape">Carregando...</span>
         </div>
+      </div>
     </div>
+    <!-- /page-wrapper -->
 
-</div><!-- /page-wrapper -->
-
-<script>
-/* ═══════════════════════════════════════════════════════
+    <script>
+      /* ═══════════════════════════════════════════════════════
    ESTADO GLOBAL
 ═══════════════════════════════════════════════════════ */
-let todosOsDados = [];
-let chipAtivo    = 'todos';
+      let todosOsDados = [];
+      let chipAtivo = "todos";
 
-/* ═══════════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════════
    SESSÃO
 ═══════════════════════════════════════════════════════ */
-function verificarSessao() {
-    const email = sessionStorage.EMAIL_USUARIO;
-    const nome  = sessionStorage.NOME_USUARIO;
-    if (email == null && nome == null) {
-        window.location = "login.html";
-    }
-}
+      function verificarSessao() {
+        const email = sessionStorage.EMAIL_USUARIO;
+        const nome = sessionStorage.NOME_USUARIO;
+        if (email == null && nome == null) {
+          window.location = "login.html";
+        }
+      }
 
-/* ═══════════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════════
    CARREGAR DADOS
 ═══════════════════════════════════════════════════════ */
-function carregarHistorico() {
-    verificarSessao();
+      function carregarHistorico() {
+        verificarSessao();
 
-    fetch("http://localhost:3333/medidas/historico-100")
-        .then(res => {
+        fetch("http://localhost:3333/medidas/historico-100")
+          .then((res) => {
             if (!res.ok) throw new Error("Erro ao buscar dados");
             return res.json();
-        })
-        .then(dados => {
+          })
+          .then((dados) => {
             todosOsDados = dados;
             popularFiltros(dados);
             atualizarStats(dados);
             renderTabela(dados);
-        })
-        .catch(err => {
+          })
+          .catch((err) => {
             console.error("Erro:", err);
             document.getElementById("corpo_tabela").innerHTML = `
                 <tr>
@@ -178,67 +203,79 @@ function carregarHistorico() {
                         </div>
                     </td>
                 </tr>`;
-            document.getElementById("info-rodape").innerHTML = "Falha na conexão";
-        });
-}
+            document.getElementById("info-rodape").innerHTML =
+              "Falha na conexão";
+          });
+      }
 
-/* ═══════════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════════
    POPULAR SELECTS DINÂMICOS
 ═══════════════════════════════════════════════════════ */
-function popularFiltros(dados) {
-    const tanques = [...new Set(dados.map(r => r.nomeTanque).filter(Boolean))].sort();
-    const setores = [...new Set(dados.map(r => r.setor).filter(Boolean))].sort();
+      function popularFiltros(dados) {
+        const tanques = [
+          ...new Set(dados.map((r) => r.nomeTanque).filter(Boolean)),
+        ].sort();
+        const setores = [
+          ...new Set(dados.map((r) => r.setor).filter(Boolean)),
+        ].sort();
 
-    const selTanque = document.getElementById("select_tanque");
-    const selSetor  = document.getElementById("select_setor");
+        const selTanque = document.getElementById("select_tanque");
+        const selSetor = document.getElementById("select_setor");
 
-    tanques.forEach(t => {
-        const opt = document.createElement("option");
-        opt.value = t; opt.textContent = t;
-        selTanque.appendChild(opt);
-    });
+        tanques.forEach((t) => {
+          const opt = document.createElement("option");
+          opt.value = t;
+          opt.textContent = t;
+          selTanque.appendChild(opt);
+        });
 
-    setores.forEach(s => {
-        const opt = document.createElement("option");
-        opt.value = s; opt.textContent = s;
-        selSetor.appendChild(opt);
-    });
-}
+        setores.forEach((s) => {
+          const opt = document.createElement("option");
+          opt.value = s;
+          opt.textContent = s;
+          selSetor.appendChild(opt);
+        });
+      }
 
-/* ═══════════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════════
    STATS
 ═══════════════════════════════════════════════════════ */
-function atualizarStats(dados) {
-    const normais  = dados.filter(r => (r.status || 'normal').toLowerCase() !== 'alerta').length;
-    const alertas  = dados.filter(r => (r.status || '').toLowerCase() === 'alerta').length;
-    const sensores = new Set(dados.map(r => r.idSensor).filter(Boolean)).size;
+      function atualizarStats(dados) {
+        const normais = dados.filter(
+          (r) => (r.status || "normal").toLowerCase() !== "alerta",
+        ).length;
+        const alertas = dados.filter(
+          (r) => (r.status || "").toLowerCase() === "alerta",
+        ).length;
+        const sensores = new Set(dados.map((r) => r.idSensor).filter(Boolean))
+          .size;
 
-    animarContador("stat-total",    dados.length);
-    animarContador("stat-normal",   normais);
-    animarContador("stat-alerta",   alertas);
-    animarContador("stat-sensores", sensores);
-}
+        animarContador("stat-total", dados.length);
+        animarContador("stat-normal", normais);
+        animarContador("stat-alerta", alertas);
+        animarContador("stat-sensores", sensores);
+      }
 
-function animarContador(id, alvo) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    let atual = 0;
-    const step = Math.ceil(alvo / 30);
-    const iv = setInterval(() => {
-        atual = Math.min(atual + step, alvo);
-        el.textContent = atual;
-        if (atual >= alvo) clearInterval(iv);
-    }, 25);
-}
+      function animarContador(id, alvo) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        let atual = 0;
+        const step = Math.ceil(alvo / 30);
+        const iv = setInterval(() => {
+          atual = Math.min(atual + step, alvo);
+          el.textContent = atual;
+          if (atual >= alvo) clearInterval(iv);
+        }, 25);
+      }
 
-/* ═══════════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════════
    RENDERIZAR TABELA
 ═══════════════════════════════════════════════════════ */
-function renderTabela(dados) {
-    const corpo = document.getElementById("corpo_tabela");
+      function renderTabela(dados) {
+        const corpo = document.getElementById("corpo_tabela");
 
-    if (!dados.length) {
-        corpo.innerHTML = `
+        if (!dados.length) {
+          corpo.innerHTML = `
             <tr><td colspan="6">
                 <div class="empty-state">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -247,24 +284,25 @@ function renderTabela(dados) {
                     <p>Nenhum registro encontrado para os filtros aplicados.</p>
                 </div>
             </td></tr>`;
-        document.getElementById("count-exibindo").textContent = "0";
-        document.getElementById("info-rodape").innerHTML = "Nenhum registro";
-        return;
-    }
+          document.getElementById("count-exibindo").textContent = "0";
+          document.getElementById("info-rodape").innerHTML = "Nenhum registro";
+          return;
+        }
 
-    let html = "";
-    dados.forEach((reg, i) => {
-        const statusTexto = (reg.status || 'normal').toLowerCase();
-        const classeStatus = statusTexto === 'alerta' ? 'status-alerta' : 'status-normal';
-        const classeRow    = statusTexto === 'alerta' ? 'row-alerta' : '';
-        const delay        = Math.min(i * 18, 300);
+        let html = "";
+        dados.forEach((reg, i) => {
+          const statusTexto = (reg.status || "normal").toLowerCase();
+          const classeStatus =
+            statusTexto === "alerta" ? "status-alerta" : "status-normal";
+          const classeRow = statusTexto === "alerta" ? "row-alerta" : "";
+          const delay = Math.min(i * 18, 300);
 
-        html += `
+          html += `
             <tr class="${classeRow}" style="animation-delay:${delay}ms">
-                <td class="col-data"   data-label="DATA / HORA">${reg.momento || '—'}</td>
-                <td class="col-tanque" data-label="TANQUE">${reg.nomeTanque || '—'}</td>
-                <td                    data-label="SETOR">${reg.setor || '—'}</td>
-                <td class="col-sensor" data-label="SENSOR">#${reg.idSensor || '—'}</td>
+                <td class="col-data"   data-label="DATA / HORA">${reg.momento || "—"}</td>
+                <td class="col-tanque" data-label="TANQUE">${reg.nomeTanque || "—"}</td>
+                <td                    data-label="SETOR">${reg.setor || "—"}</td>
+                <td class="col-sensor" data-label="SENSOR">#${reg.idSensor || "—"}</td>
                 <td                    data-label="TEMPERATURA">
                     <span class="temp-valor">${Number(reg.temperatura).toFixed(1)}°C</span>
                 </td>
@@ -272,69 +310,92 @@ function renderTabela(dados) {
                     <span class="status-badge ${classeStatus}">${statusTexto.toUpperCase()}</span>
                 </td>
             </tr>`;
-    });
+        });
 
-    corpo.innerHTML = html;
+        corpo.innerHTML = html;
 
-    document.getElementById("count-exibindo").textContent = dados.length;
-    document.getElementById("info-rodape").innerHTML =
-        `Exibindo <strong>${dados.length}</strong> de <strong>${todosOsDados.length}</strong> registros`;
-}
+        document.getElementById("count-exibindo").textContent = dados.length;
+        document.getElementById("info-rodape").innerHTML =
+          `Exibindo <strong>${dados.length}</strong> de <strong>${todosOsDados.length}</strong> registros`;
+      }
 
-/* ═══════════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════════
    FILTROS
 ═══════════════════════════════════════════════════════ */
-function aplicarFiltros() {
-    const busca  = document.getElementById("input_busca").value.toLowerCase().trim();
-    const tanque = document.getElementById("select_tanque").value.toLowerCase();
-    const setor  = document.getElementById("select_setor").value.toLowerCase();
+      function aplicarFiltros() {
+        const busca = document
+          .getElementById("input_busca")
+          .value.toLowerCase()
+          .trim();
+        const tanque = document
+          .getElementById("select_tanque")
+          .value.toLowerCase();
+        const setor = document
+          .getElementById("select_setor")
+          .value.toLowerCase();
 
-    const filtrados = todosOsDados.filter(reg => {
-        const statusTexto = (reg.status || 'normal').toLowerCase();
+        const filtrados = todosOsDados.filter((reg) => {
+          const statusTexto = (reg.status || "normal").toLowerCase();
 
-        const bateBusca = !busca || [
-            reg.momento, reg.nomeTanque, reg.setor, reg.idSensor, reg.temperatura
-        ].some(v => String(v || '').toLowerCase().includes(busca));
+          const bateBusca =
+            !busca ||
+            [
+              reg.momento,
+              reg.nomeTanque,
+              reg.setor,
+              reg.idSensor,
+              reg.temperatura,
+            ].some((v) =>
+              String(v || "")
+                .toLowerCase()
+                .includes(busca),
+            );
 
-        const bateTanque = !tanque || (reg.nomeTanque || '').toLowerCase() === tanque;
-        const bateSetor  = !setor  || (reg.setor  || '').toLowerCase() === setor;
-        const bateChip   =
-            chipAtivo === 'todos'  ? true :
-            chipAtivo === 'alerta' ? statusTexto === 'alerta' :
-                                     statusTexto !== 'alerta';
+          const bateTanque =
+            !tanque || (reg.nomeTanque || "").toLowerCase() === tanque;
+          const bateSetor = !setor || (reg.setor || "").toLowerCase() === setor;
+          const bateChip =
+            chipAtivo === "todos"
+              ? true
+              : chipAtivo === "alerta"
+                ? statusTexto === "alerta"
+                : statusTexto !== "alerta";
 
-        return bateBusca && bateTanque && bateSetor && bateChip;
-    });
+          return bateBusca && bateTanque && bateSetor && bateChip;
+        });
 
-    renderTabela(filtrados);
-}
+        renderTabela(filtrados);
+      }
 
-function setChip(valor) {
-    chipAtivo = valor;
+      function setChip(valor) {
+        chipAtivo = valor;
 
-    document.getElementById("chip-todos").className  = 'chip' + (valor === 'todos'  ? ' active-all'    : '');
-    document.getElementById("chip-normal").className = 'chip' + (valor === 'normal' ? ' active-normal' : '');
-    document.getElementById("chip-alerta").className = 'chip' + (valor === 'alerta' ? ' active-alerta' : '');
+        document.getElementById("chip-todos").className =
+          "chip" + (valor === "todos" ? " active-all" : "");
+        document.getElementById("chip-normal").className =
+          "chip" + (valor === "normal" ? " active-normal" : "");
+        document.getElementById("chip-alerta").className =
+          "chip" + (valor === "alerta" ? " active-alerta" : "");
 
-    aplicarFiltros();
-}
+        aplicarFiltros();
+      }
 
-function limparFiltros() {
-    document.getElementById("input_busca").value   = '';
-    document.getElementById("select_tanque").value = '';
-    document.getElementById("select_setor").value  = '';
-    chipAtivo = 'todos';
-    setChip('todos');
-    renderTabela(todosOsDados);
-}
+      function limparFiltros() {
+        document.getElementById("input_busca").value = "";
+        document.getElementById("select_tanque").value = "";
+        document.getElementById("select_setor").value = "";
+        chipAtivo = "todos";
+        setChip("todos");
+        renderTabela(todosOsDados);
+      }
 
-/* ═══════════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════════════════ */
-window.onload = () => {
-    verificarSessao();
-    carregarHistorico();
-};
-</script>
-</body>
+      window.onload = () => {
+        verificarSessao();
+        carregarHistorico();
+      };
+    </script>
+  </body>
 </html>

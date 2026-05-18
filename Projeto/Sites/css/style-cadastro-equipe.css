@@ -208,12 +208,21 @@ body {
     cursor: pointer;
     flex-direction: column;
     gap: 5px;
+    transition: all 0.3s ease-in-out;
 }
+.hamburger:hover{
+    background-color: #48218a7a;
+    border: 1px solid rgba(255, 255, 255, 0.312);
+     box-shadow: 0 0 0 3px rgba(168,85,247,0.12), 0 0 20px rgba(168,85,247,0.08);
+}
+
 
 .hamburger span { display: block; width: 20px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all var(--transition); }
 
 .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 90; }
 .sidebar-overlay.active { display: block; }
+
+
 
 .content {
     flex: 1;

@@ -783,3 +783,16 @@ overflow: hidden;}
     .box b { font-size: 1.1rem; }
     .card .alertas { flex-direction: column; gap: 4px; align-items: flex-start; }
 }
+
+
+#div_deslogado_mob, #div_logado_mob {
+    width: 100%;
+    width: -webkit-fill-available;
+}
+
+.mobile-actions div button {
+    width: 100% !important;
+    display: block !important;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+}

@@ -631,3 +631,27 @@ input:focus, select:focus {
         transition-duration: 0.01ms !important;
     }
 }
+
+.btn-sair{
+            background: none; 
+            border: 1px solid #ff4040; 
+            color: #f87171; 
+            cursor: pointer; 
+            font-size: 0.85rem; 
+            font-family: 'DM Sans', sans-serif;
+            padding: 6px 10px;
+            border-radius: 10px;
+            margin-left: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-sair:hover{
+            background-color: #ff5959a9;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 15, 15, 0.4);
+        }
+        .btn-dash:hover{
+            background-color: #9c33ff83;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(171, 15, 255, 0.4);
+        }

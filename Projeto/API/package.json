@@ -17,6 +17,7 @@
     "dotenv": "^17.4.2",
     "espress": "^0.0.0",
     "express": "^5.2.1",
+    "mercadopago": "^2.12.1",
     "mysql2": "^3.22.3",
     "serialport": "^13.0.0"
   }

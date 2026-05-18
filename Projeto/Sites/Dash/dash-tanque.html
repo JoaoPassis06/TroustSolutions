@@ -1,513 +1,571 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilos/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="estilos/style.css" />
     <title>Dashboard - Tanques</title>
-    <link rel="icon" type="image/x-icon" href="../src/Logo-icon.png">
+    <link rel="icon" type="image/x-icon" href="../src/Logo-icon.png" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-        * {
-            font-family: "Poppins";
-        }
+      * {
+        font-family: "Poppins";
+      }
 
-        body {
-            font-family: "Poppins";
-        }
+      body {
+        font-family: "Poppins";
+      }
     </style>
-</head>
+  </head>
 
-<body onload="iniciarDash()">
-    
-      <div class="sidebar-overlay" id="sidebarOverlay" onclick="fecharSidebar()"></div>
-  <!-- Hamburger -->
-  <button class="hamburger-dash" id="hamburgerDash" onclick="toggleSidebar()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <body onload="iniciarDash()">
+    <div
+      class="sidebar-overlay"
+      id="sidebarOverlay"
+      onclick="fecharSidebar()"
+    ></div>
+    <!-- Hamburger -->
+    <button
+      class="hamburger-dash"
+      id="hamburgerDash"
+      onclick="toggleSidebar()"
+      aria-label="Menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
 
     <div class="div-pai">
-        <!-- Menu Lateral -->
-        <div class="container-lateral">
-            <div class="menu-lateral" id="menu_lateral">
-                <div class="topo">
-                    <div class="logo">
-                        <h2><span>Troust</span>Solutions</h2>
-                    </div>
-                    <div class="links" onclick="irParaDashboard()">
-                        <a href="dashborad.html">Home</a>
-                    </div>
-                    <div class=" links-ativo">
-                        <a href="./dash-tanque.html">Tanque</a>
-                    </div>
-                    <div class="links">
-                        <a href="../historico.html">Histórico</a>
-                    </div>
-                    <div id="container_cadastrar_equipe" class="links">
-                        <a href="../cadastro_equipe.html" id="btn_cadastrar_equipe">
-    Cadastrar Equipe
-</a>
-                    </div>
-                    
-
-                <div class="alerta" id="alerta_sidebar" style="display: none;">
-                    <h3>Alerta</h3>
-                    <p id="alerta_info_tanque">Tanque --</p>
-                    <p id="alerta_info_temp">--°C</p>
-                </div>
-                </div>
-                <div class="sair ">
-                    <a href="../index.html">
-                        <img src="../src/icon-desconectar.png" alt="Icon">
-                        Desconectar
-                    </a>
-                </div>
+      <!-- Menu Lateral -->
+      <div class="container-lateral">
+        <div class="menu-lateral" id="menu_lateral">
+          <div class="topo">
+            <div class="logo">
+              <h2><span>Troust</span>Solutions</h2>
             </div>
+            <div class="links" onclick="irParaDashboard()">
+              <a href="dashborad.html">Home</a>
+            </div>
+            <div class="links-ativo">
+              <a href="./dash-tanque.html">Tanque</a>
+            </div>
+            <div class="links">
+              <a href="../historico.html">Histórico</a>
+            </div>
+            <div class="links">
+              <a href="../index.html">Página Principal</a>
+            </div>
+            <div id="container_cadastrar_equipe" class="links">
+              <a href="../cadastro_equipe.html" id="btn_cadastrar_equipe">
+                Cadastrar Equipe
+              </a>
+            </div>
+
+            <div class="alerta" id="alerta_sidebar" style="display: none">
+              <h3>Alerta</h3>
+              <p id="alerta_info_tanque">Tanque --</p>
+              <p id="alerta_info_temp">--°C</p>
+            </div>
+          </div>
+          <div class="sair">
+            <a
+              href="javascript:void(0)"
+              onclick="
+                console.log('Clique funcionando!');
+                deslogar();
+              "
+            >
+              <img src="../src/icon-desconectar.png" alt="Icon" />
+              Desconectar
+            </a>
+          </div>
         </div>
+      </div>
 
-        <div class="container-tanque">
-            <nav>
-  <div class="empresa">
-    <p>Painel de controle - Tanques</p>
-    <span id="nome_empresa">TroustSolutions</span>
-  </div>
-  <div class="funcionario">
-    
-    <div><p>Bem Vindo <b id="nome_usuario">Convidado</b></p></div>
-    <img src="../src/icon-perfil.png" alt="Perfil">
-  </div>
-</nav>
+      <div class="container-tanque">
+        <nav>
+          <div class="empresa">
+            <p>Painel de controle - Tanques</p>
+            <span id="nome_empresa">TroustSolutions</span>
+          </div>
+          <div class="funcionario">
+            <div>
+              <p>Bem Vindo <b id="nome_usuario">Convidado</b></p>
+            </div>
+            <img src="../src/icon-perfil.png" alt="Perfil" />
+          </div>
+        </nav>
 
-            <!-- Cards -->
+        <!-- Cards -->
 
-            <div class="container-cards-tanque">
-<div class="card" onclick="abrirModal(1)">
-        <div class="titulos">
-            <div class="infos">
+        <div class="container-cards-tanque">
+          <div class="card" onclick="abrirModal(1)">
+            <div class="titulos">
+              <div class="infos">
                 <p class="nome">Tanque 1</p>
                 <p class="setor">Setor X</p>
+              </div>
+              <div class="logo">
+                <img
+                  src="../src/Logo-icon.png"
+                  alt="Logo"
+                  class="logo-tanque"
+                />
+              </div>
             </div>
-            <div class="logo">
-                <img src="../src/Logo-icon.png" alt="Logo" class="logo-tanque">
+            <div class="configs">
+              <p>Temperatura Máxima: 17°C</p>
+              <p>Temperatura Mínima: 10°C</p>
+              <p>Temperatura atual: <span id="temp_card_1">--</span>°C</p>
             </div>
-        </div>
-        <div class="configs">
-            <p>Temperatura Máxima: 17°C</p>
-            <p>Temperatura Mínima: 10°C</p>
-            <p>Temperatura atual: <span id="temp_card_1">--</span>°C</p>
-        </div>
-        <div class="alertas">
-            <p>Estado: 
-                <span id="status_card_1" class="roxo">Normal</span></p>
-            <p> Últimos alertas (24h) : <span id="alertas_card_1">0</span></p>
-        </div>
-    </div>
-                <div class="card" onclick="abrirModal(1)">
-                    <div class="titulos">
-                        <div class="infos">
-                            <p class="nome">Tanque 2</p>
-                            <p class="setor">Setor X</p>
-                        </div>
-                        <div class="logo">
-                            <img src="../src/Logo-icon.png" alt="TroustSolutions">
-                        </div>
-                    </div>
-                    <div class="configs">
-                        <p class="tempMax">Temperatura Máxima: 17</p>
-                        <p class="tempMin" >Temperatura Minima: 10</p>
-                        <p class="tempMed">Temperatura Atual: <span id="temp_card_2">--</span>°C</p>
-    </div>
-    <div class="alertas">
-        <p>Status: <span id="status_card_2" class="roxo">Normal</span></p>
-        <p>Últimos alertas (24h) : 0</p>
-    </div>
-</div>
-                <div class="card" onclick="abrirModal(1)">
-                    <div class="titulos">
-                        <div class="infos">
-                            <p class="nome">
-                                Tanque 3</p>
-                            <p class="setor">Setor X</p>
-                        </div>
-                        <div class="logo">
-                            <img src="../src/Logo-icon.png" alt="TroustSolutions">
-                        </div>
-                    </div>
-                    <div class="configs">
-                        <p class="tempMax">Temperatura Máxima: 17</p>
-                        <p class="tempMin">Temperatura Minima: 10</p>
-                        <p class="tempMed">Temperatura Média: 14</p>
-                    </div>
-                    <div class="alertas">
-                        <p>Status: <span class="roxo">Normal</span></p>
-                        <p>Últimos alertas (24h) : 0</p>
-                    </div>
-                </div>
-                <div class="card" onclick="abrirModal(1)">
-                    <div class="titulos">
-                        <div class="infos">
-                            <p class="nome">Tanque 4</p>
-                            <p class="setor">Setor X</p>
-                        </div>
-                        <div class="logo">
-                            <img src="../src/Logo-icon.png" alt="TroustSolutions">
-                        </div>
-                    </div>
-                    <div class="configs">
-                        <p class="tempMax">Temperatura Máxima: 17</p>
-                        <p class="tempMin">Temperatura Minima: 10</p>
-                        <p class="tempMed">Temperatura Média: 14</p>
-                    </div>
-                    <div class="alertas">
-                        <p>Status: <span class="roxo">Normal</span></p>
-                        <p>Últimos alertas (24h) : 0</p>
-                    </div>
-                </div>
+            <div class="alertas">
+              <p>Estado: <span id="status_card_1" class="roxo">Normal</span></p>
+              <p>Últimos alertas (24h) : <span id="alertas_card_1">0</span></p>
             </div>
+          </div>
+          <div class="card" onclick="abrirModal(1)">
+            <div class="titulos">
+              <div class="infos">
+                <p class="nome">Tanque 2</p>
+                <p class="setor">Setor X</p>
+              </div>
+              <div class="logo">
+                <img src="../src/Logo-icon.png" alt="TroustSolutions" />
+              </div>
+            </div>
+            <div class="configs">
+              <p class="tempMax">Temperatura Máxima: 17</p>
+              <p class="tempMin">Temperatura Minima: 10</p>
+              <p class="tempMed">
+                Temperatura Atual: <span id="temp_card_2">--</span>°C
+              </p>
+            </div>
+            <div class="alertas">
+              <p>Status: <span id="status_card_2" class="roxo">Normal</span></p>
+              <p>Últimos alertas (24h) : 0</p>
+            </div>
+          </div>
+          <div class="card" onclick="abrirModal(1)">
+            <div class="titulos">
+              <div class="infos">
+                <p class="nome">Tanque 3</p>
+                <p class="setor">Setor X</p>
+              </div>
+              <div class="logo">
+                <img src="../src/Logo-icon.png" alt="TroustSolutions" />
+              </div>
+            </div>
+            <div class="configs">
+              <p class="tempMax">Temperatura Máxima: 17</p>
+              <p class="tempMin">Temperatura Minima: 10</p>
+              <p class="tempMed">Temperatura Média: 14</p>
+            </div>
+            <div class="alertas">
+              <p>Status: <span class="roxo">Normal</span></p>
+              <p>Últimos alertas (24h) : 0</p>
+            </div>
+          </div>
+          <div class="card" onclick="abrirModal(1)">
+            <div class="titulos">
+              <div class="infos">
+                <p class="nome">Tanque 4</p>
+                <p class="setor">Setor X</p>
+              </div>
+              <div class="logo">
+                <img src="../src/Logo-icon.png" alt="TroustSolutions" />
+              </div>
+            </div>
+            <div class="configs">
+              <p class="tempMax">Temperatura Máxima: 17</p>
+              <p class="tempMin">Temperatura Minima: 10</p>
+              <p class="tempMed">Temperatura Média: 14</p>
+            </div>
+            <div class="alertas">
+              <p>Status: <span class="roxo">Normal</span></p>
+              <p>Últimos alertas (24h) : 0</p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <div class="modal-container" id="modal">
-        <div class="modal-tanque">
-            <div class="topo-modal">
-                <div class="sair" onclick="fecharModal()">
-                    <img src="../src/botao-fechar.png" alt="X">
-                </div>
-                <div>
-                    <h1><span id="nome_tanque_modal"> </span> - <span id="status_tanque_modal" class="status-badge status-normal"> Carregando...</span></h1>
-                </div>
-                <div class="logo">
-                    <img src="../src/Logo-icon.png" alt="TroustSolutions">
-                </div>
-            </div>
-            <div class="meio-modal">
-                <div class="kpis-modal">
-                    <div class="box">
-    <span>Temperatura Atual</span><br>
-    <hr><br>
-    <b id="kpi_atual">-- ºC</b><br>
-</div>
-<div class="box">
-    <span>Temperatura Média</span><br>
-    <hr><br>
-    <b id="kpi_media">-- ºC</b><br>
-</div>
-                    <div class="box">
-                        <span>Temperatura Mínima</span><br>
-                        <hr>
-                        <b id="kpi_min">-- ºC</b><br>
-                    </div>
-                    <div class="box">
-                        <span>Quantidade de Alertas</span><br>
-                        <hr>
-                        <b id="kpi_alertas">0</b>
-                    </div>
-                </div>
-                <div class="graficos-modal">
-                    <div class="grafico-principal grafico-modal">
-                        <canvas id="grafico1"></canvas>
-                    </div>
-                    <div class="grafico-terciario grafico-modal">
-                    <canvas id="grafico4"></canvas>
-                    </div>
-                    
-                </div>
-            </div>
+      <div class="modal-tanque">
+        <div class="topo-modal">
+          <div class="sair" onclick="fecharModal()">
+            <img src="../src/botao-fechar.png" alt="X" />
+          </div>
+          <div>
+            <h1>
+              <span id="nome_tanque_modal"> </span> -
+              <span id="status_tanque_modal" class="status-badge status-normal">
+                Carregando...</span
+              >
+            </h1>
+          </div>
+          <div class="logo">
+            <img src="../src/Logo-icon.png" alt="TroustSolutions" />
+          </div>
         </div>
+        <div class="meio-modal">
+          <div class="kpis-modal">
+            <div class="box">
+              <span>Temperatura Atual</span><br />
+              <hr />
+              <br />
+              <b id="kpi_atual">-- ºC</b><br />
+            </div>
+            <div class="box">
+              <span>Temperatura Média</span><br />
+              <hr />
+              <br />
+              <b id="kpi_media">-- ºC</b><br />
+            </div>
+            <div class="box">
+              <span>Temperatura Mínima</span><br />
+              <hr />
+              <b id="kpi_min">-- ºC</b><br />
+            </div>
+            <div class="box">
+              <span>Quantidade de Alertas</span><br />
+              <hr />
+              <b id="kpi_alertas">0</b>
+            </div>
+          </div>
+          <div class="graficos-modal">
+            <div class="grafico-principal grafico-modal">
+              <canvas id="grafico1"></canvas>
+            </div>
+            <div class="grafico-terciario grafico-modal">
+              <canvas id="grafico4"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-// --- VARIÁVEIS GLOBAIS ---
-let totalIdeal = Number(localStorage.getItem("totalIdeal")) || 0;
-let totalAcima = Number(localStorage.getItem("totalAcima")) || 0;
-let totalAbaixo = Number(localStorage.getItem("totalAbaixo")) || 0;
-const ultimasTemperaturas = { 1: null, 2: null, 3: null, 4: null };
+  // --- VARIÁVEIS GLOBAIS ---
+  let totalIdeal = Number(localStorage.getItem("totalIdeal")) || 0;
+  let totalAcima = Number(localStorage.getItem("totalAcima")) || 0;
+  let totalAbaixo = Number(localStorage.getItem("totalAbaixo")) || 0;
+  const ultimasTemperaturas = { 1: null, 2: null, 3: null, 4: null };
 
+  let meuGrafico;
+  let chart4;
+  let proximaAtualizacao;
+  let intervalorCardsTanque;
+  let contadorAlertasGlobal =
+    Number(localStorage.getItem("contadorAlertas")) || 0;
 
-let meuGrafico; 
-let chart4;     
-let proximaAtualizacao;   
-let intervalorCardsTanque; 
-let contadorAlertasGlobal = Number(localStorage.getItem("contadorAlertas")) || 0;
-
-function iniciarDash() {
+  function iniciarDash() {
     validarSessao();
     verificarPermissaoBotao();
-    
-    
+
     atualizarDadosDosCards();
     if (!intervalorCardsTanque) {
-        intervalorCardsTanque = setInterval(atualizarDadosDosCards, 5000);
+      intervalorCardsTanque = setInterval(atualizarDadosDosCards, 5000);
     }
-}
+  }
 
-// --- NAVEGAÇÃO E SESSÃO ---
-function validarSessao() {
+  // --- NAVEGAÇÃO E SESSÃO ---
+  function validarSessao() {
     const nomeUsuario = sessionStorage.NOME_USUARIO;
-    
+
     if (!nomeUsuario) {
-        window.location.href = "../login.html";
+      window.location.href = "../login.html";
     } else {
-   
-        const nomeFormatado = nomeUsuario.toLowerCase().split(' ').map(palavra => {
-            return palavra.charAt(0).toUpperCase() + palavra.slice(1);
-        }).join(' ');
+      const nomeFormatado = nomeUsuario
+        .toLowerCase()
+        .split(" ")
+        .map((palavra) => {
+          return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+        })
+        .join(" ");
 
-        if (document.getElementById("nome_usuario")) {
-           
-            document.getElementById("nome_usuario").innerText = nomeFormatado;
-        }
+      if (document.getElementById("nome_usuario")) {
+        document.getElementById("nome_usuario").innerText = nomeFormatado;
+      }
 
-        if (document.getElementById("nome_empresa")) {
-
-            document.getElementById("nome_empresa").innerText = sessionStorage.NOME_EMPRESA;
-        }
+      if (document.getElementById("nome_empresa")) {
+        document.getElementById("nome_empresa").innerText =
+          sessionStorage.NOME_EMPRESA;
+      }
     }
-}
+  }
 
-function irParaHome() {
+  function irParaHome() {
+    window.location.href = "dashborad.html";
+  }
 
-    window.location.href = "dashborad.html"; 
-}
+  // --- CONTROLE DOS CARDS PRINCIPAIS ---
+  function atualizarDadosDosCards() {
+    [1, 2, 3, 4].forEach((id) => {
+      const card = document.querySelector(`.card[onclick*="(${id})"]`);
+      const logo = card
+        ? card.querySelector(".logo img") || card.querySelector(".logo-tanque")
+        : null;
 
-// --- CONTROLE DOS CARDS PRINCIPAIS ---
-function atualizarDadosDosCards() {
-    [1, 2, 3, 4].forEach(id => {
-        const card = document.querySelector(`.card[onclick*="(${id})"]`);
-        const logo = card ? (card.querySelector(".logo img") || card.querySelector(".logo-tanque")) : null;
+      // 1. BUSCA TEMPERATURA EM TEMPO REAL
+      fetch(`http://localhost:3333/medidas/tempo-real/${id}`)
+        .then((res) => res.json())
+        .then((dados) => {
+          if (dados.length > 0) {
+            const registro = dados[dados.length - 1];
+            const temp = Number(registro.temperatura);
 
-        // 1. BUSCA TEMPERATURA EM TEMPO REAL
-        fetch(`http://localhost:3333/medidas/tempo-real/${id}`)
-            .then(res => res.json())
-            .then(dados => {
-                if (dados.length > 0) {
-                    const registro = dados[dados.length - 1];
-                    const temp = Number(registro.temperatura);
-                    
-                    const tempElement = document.getElementById(`temp_card_${id}`);
-                    if (tempElement) {
-                        tempElement.innerHTML = temp.toFixed(1);
-                    }
+            const tempElement = document.getElementById(`temp_card_${id}`);
+            if (tempElement) {
+              tempElement.innerHTML = temp.toFixed(1);
+            }
 
-                    // Lógica de Status visual (Texto Alerta/Normal)
-                    const elStatusCard = document.getElementById(`status_card_${id}`);
-                    if (elStatusCard) {
-                        if (temp < 10 || temp > 17) {
-                            elStatusCard.innerText = "Alerta";
-                            elStatusCard.style.color = "#FF4B4B"; 
-                        } else {
-                            elStatusCard.innerText = "Normal";
-                            elStatusCard.style.color = "#00FF7F";
-                        }
-                    }
+            // Lógica de Status visual (Texto Alerta/Normal)
+            const elStatusCard = document.getElementById(`status_card_${id}`);
+            if (elStatusCard) {
+              if (temp < 10 || temp > 17) {
+                elStatusCard.innerText = "Alerta";
+                elStatusCard.style.color = "#FF4B4B";
+              } else {
+                elStatusCard.innerText = "Normal";
+                elStatusCard.style.color = "#00FF7F";
+              }
+            }
 
-                    // Animação da Logo
-                    if (logo) {
-                        if (temp !== ultimasTemperaturas[id]) {
-                            logo.classList.add("animar-logo");
-                        } else {
-                            logo.classList.remove("animar-logo");
-                        }
-                    }
-                    ultimasTemperaturas[id] = temp;
-                }
-            })
-            .catch(err => console.error(`Erro ao atualizar temperatura do card ${id}:`, err));
+            // Animação da Logo
+            if (logo) {
+              if (temp !== ultimasTemperaturas[id]) {
+                logo.classList.add("animar-logo");
+              } else {
+                logo.classList.remove("animar-logo");
+              }
+            }
+            ultimasTemperaturas[id] = temp;
+          }
+        })
+        .catch((err) =>
+          console.error(`Erro ao atualizar temperatura do card ${id}:`, err),
+        );
 
-        // 2. BUSCA CONTAGEM DE ALERTAS (ÚLTIMAS 24H)
-        fetch(`http://localhost:3333/medidas/stats-24h/${id}`)
-            .then(res => res.json())
-            .then(stats => {
-                const alertaElement = document.getElementById(`alertas_card_${id}`);
-                if (alertaElement) {
-                    
-                    const totalAlertas24h = Number(stats.acima) + Number(stats.abaixo);
-                    alertaElement.innerHTML = totalAlertas24h;
-                }
-            })
-            .catch(err => console.error(`Erro ao atualizar alertas do card ${id}:`, err));
+      // 2. BUSCA CONTAGEM DE ALERTAS (ÚLTIMAS 24H)
+      fetch(`http://localhost:3333/medidas/stats-24h/${id}`)
+        .then((res) => res.json())
+        .then((stats) => {
+          const alertaElement = document.getElementById(`alertas_card_${id}`);
+          if (alertaElement) {
+            const totalAlertas24h = Number(stats.acima) + Number(stats.abaixo);
+            alertaElement.innerHTML = totalAlertas24h;
+          }
+        })
+        .catch((err) =>
+          console.error(`Erro ao atualizar alertas do card ${id}:`, err),
+        );
     });
-}
+  }
 
-// --- MODAL E GRÁFICOS INTERNOS ---
-function abrirModal(idSensor) {
-    const modal = document.getElementById('modal');
+  // --- MODAL E GRÁFICOS INTERNOS ---
+  function abrirModal(idSensor) {
+    const modal = document.getElementById("modal");
     if (modal) {
-        modal.style.display = 'flex';
-        document.getElementById('nome_tanque_modal').innerHTML = `Tanque ${idSensor}`;
-        obterDadosModal(idSensor);
+      modal.style.display = "flex";
+      document.getElementById("nome_tanque_modal").innerHTML =
+        `Tanque ${idSensor}`;
+      obterDadosModal(idSensor);
     }
-}
+  }
 
-function fecharModal() {
-    const modal = document.getElementById('modal');
+  function fecharModal() {
+    const modal = document.getElementById("modal");
     if (modal) {
-        modal.style.display = 'none';
+      modal.style.display = "none";
     }
     clearTimeout(proximaAtualizacao);
-}
+  }
 
-function obterDadosModal(idSensor) {
+  function obterDadosModal(idSensor) {
     if (proximaAtualizacao) clearTimeout(proximaAtualizacao);
 
-   
     Promise.all([
-        fetch(`http://localhost:3333/medidas/alertas-recentes/${idSensor}`).then(res => res.json()),
-        fetch(`http://localhost:3333/medidas/stats-24h/${idSensor}`).then(res => res.json()),
-        fetch(`http://localhost:3333/medidas/ultimas/${idSensor}`).then(res => res.json())
+      fetch(`http://localhost:3333/medidas/alertas-recentes/${idSensor}`).then(
+        (res) => res.json(),
+      ),
+      fetch(`http://localhost:3333/medidas/stats-24h/${idSensor}`).then((res) =>
+        res.json(),
+      ),
+      fetch(`http://localhost:3333/medidas/ultimas/${idSensor}`).then((res) =>
+        res.json(),
+      ),
     ])
-    .then(([resAlertas, stats24h, valores]) => {
-
+      .then(([resAlertas, stats24h, valores]) => {
         const totalAlertas10h = resAlertas[0].totalAlertas;
-        
+
         if (valores && valores.length > 0) {
-            const temperaturas = valores.map(v => Number(v.temperatura));
-            const atual = temperaturas[temperaturas.length - 1];
-            const media = (temperaturas.reduce((a, b) => a + b, 0) / temperaturas.length).toFixed(1);
-            const minima = Math.min(...temperaturas).toFixed(1);
+          const temperaturas = valores.map((v) => Number(v.temperatura));
+          const atual = temperaturas[temperaturas.length - 1];
+          const media = (
+            temperaturas.reduce((a, b) => a + b, 0) / temperaturas.length
+          ).toFixed(1);
+          const minima = Math.min(...temperaturas).toFixed(1);
 
-            // Atualiza KPIs na tela
-            document.getElementById('kpi_atual').innerText = `${atual.toFixed(1)}ºC`;
-            document.getElementById('kpi_media').innerText = `${media}ºC`;
-            document.getElementById('kpi_min').innerText = `${minima}ºC`;
-            document.getElementById('kpi_alertas').innerText = totalAlertas10h;
+          // Atualiza KPIs na tela
+          document.getElementById("kpi_atual").innerText =
+            `${atual.toFixed(1)}ºC`;
+          document.getElementById("kpi_media").innerText = `${media}ºC`;
+          document.getElementById("kpi_min").innerText = `${minima}ºC`;
+          document.getElementById("kpi_alertas").innerText = totalAlertas10h;
 
-            // Lógica do Status Badge
-            const isAlerta = atual < 10 || atual > 17;
-            const elEstadoModal = document.getElementById('status_tanque_modal');
-            
-            if (elEstadoModal && !isNaN(atual)) {
-                elEstadoModal.textContent = isAlerta ? "ALERTA" : "NORMAL";
-                
-                elEstadoModal.className = isAlerta ? "status-badge status-alerta" : "status-badge status-normal";
-            }
+          // Lógica do Status Badge
+          const isAlerta = atual < 10 || atual > 17;
+          const elEstadoModal = document.getElementById("status_tanque_modal");
 
-            // 2. PLOTAR GRÁFICOS
-            plotarGraficoLinha(valores);
-            
-            plotarGraficoBarrasModal(stats24h.ideal, stats24h.acima, stats24h.abaixo);
+          if (elEstadoModal && !isNaN(atual)) {
+            elEstadoModal.textContent = isAlerta ? "ALERTA" : "NORMAL";
+
+            elEstadoModal.className = isAlerta
+              ? "status-badge status-alerta"
+              : "status-badge status-normal";
+          }
+
+          // 2. PLOTAR GRÁFICOS
+          plotarGraficoLinha(valores);
+
+          plotarGraficoBarrasModal(
+            stats24h.ideal,
+            stats24h.acima,
+            stats24h.abaixo,
+          );
         }
-        
+
         proximaAtualizacao = setTimeout(() => obterDadosModal(idSensor), 5000);
-    })
-    .catch(erro => {
+      })
+      .catch((erro) => {
         console.error("Erro no modal:", erro);
         proximaAtualizacao = setTimeout(() => obterDadosModal(idSensor), 5000);
-    });
-}
+      });
+  }
 
-function plotarGraficoLinha(valores) {
+  function plotarGraficoLinha(valores) {
     if (!valores || valores.length === 0) return;
 
-    const ctx = document.getElementById('grafico1').getContext('2d');
-    const labels = valores.map(v => v.momento);
-    const dados = valores.map(v => Number(v.temperatura));
+    const ctx = document.getElementById("grafico1").getContext("2d");
+    const labels = valores.map((v) => v.momento);
+    const dados = valores.map((v) => Number(v.temperatura));
 
     if (meuGrafico) {
-        meuGrafico.data.labels = labels;
-        meuGrafico.data.datasets[0].data = dados;
-        
-        meuGrafico.update({
-            duration: 5000,
-            easing: 'linear'
-        });
-    } else {
-        meuGrafico = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Temperatura ºC',
-                    data: dados,
-                    borderColor: '#32b9cd',
-                    backgroundColor: 'rgba(50, 185, 205, 0.2)',
-                    fill: true,
-                    tension: 0.4, 
-                    pointRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: {
-                    duration: 5000,
-                    easing: 'linear'
-                },
-                scales: {
-                    y: { min: 8, max: 20, grid: { color: '#444' } },
-                    x: { grid: { display: false } }
-                },
-                plugins: { legend: { display: false } }
-            }
-        });
-    }
-}
+      meuGrafico.data.labels = labels;
+      meuGrafico.data.datasets[0].data = dados;
 
-function plotarGraficoBarrasModal(ideal, acima, abaixo) {
-    const ctx4 = document.getElementById('grafico4').getContext('2d');
+      meuGrafico.update({
+        duration: 5000,
+        easing: "linear",
+      });
+    } else {
+      meuGrafico = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Temperatura ºC",
+              data: dados,
+              borderColor: "#32b9cd",
+              backgroundColor: "rgba(50, 185, 205, 0.2)",
+              fill: true,
+              tension: 0.4,
+              pointRadius: 4,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 5000,
+            easing: "linear",
+          },
+          scales: {
+            y: { min: 8, max: 20, grid: { color: "#444" } },
+            x: { grid: { display: false } },
+          },
+          plugins: { legend: { display: false } },
+        },
+      });
+    }
+  }
+
+  function plotarGraficoBarrasModal(ideal, acima, abaixo) {
+    const ctx4 = document.getElementById("grafico4").getContext("2d");
     if (chart4) chart4.destroy();
 
     chart4 = new Chart(ctx4, {
-        type: 'bar',
-        data: {
-            labels: ['Ideal', 'Acima', 'Abaixo'],
-            datasets: [{
-                data: [ideal, acima, abaixo],
-                backgroundColor: ['#00FF7F', '#FF4B4B', '#7712C4']
-            }]
+      type: "bar",
+      data: {
+        labels: ["Ideal", "Acima", "Abaixo"],
+        datasets: [
+          {
+            data: [ideal, acima, abaixo],
+            backgroundColor: ["#00FF7F", "#FF4B4B", "#7712C4"],
+          },
+        ],
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: "Distribuição Térmica (Últimas 24h)",
+            color: "#FFF",
+          },
         },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { display: false },
-                title: { display: true, text: 'Distribuição Térmica (Últimas 24h)', color: '#FFF' }
-            }
-        }
+      },
     });
-}
+  }
 
-// --- AUXILIARES ---
-function verificarPermissaoBotao() {
+  // --- AUXILIARES ---
+  function verificarPermissaoBotao() {
     const podeCadastrar = sessionStorage.PODE_CADASTRAR;
     const supervisorId = sessionStorage.SUPERVISOR_ID;
-    
 
     const container = document.getElementById("container_cadastrar_equipe");
-    
+
     if (container) {
-        if (supervisorId === "null" || podeCadastrar === "1") {
-            container.style.display = "flex"; // Ou 
-        } else {
-
-            container.style.display = "none";
-        }
+      if (supervisorId === "null" || podeCadastrar === "1") {
+        container.style.display = "flex"; // Ou
+      } else {
+        container.style.display = "none";
+      }
     }
-}
-function toggleSidebar() {
-    const sidebar = document.querySelector('.menu-lateral'); 
-    const overlay = document.getElementById('sidebarOverlay');
-    const btn     = document.getElementById('hamburgerDash');
-    
-    const open    = sidebar.classList.toggle('open');
-    overlay.classList.toggle('active', open);
-    btn.classList.toggle('open', open);
-    
-    document.body.style.overflow = open ? 'hidden' : '';
-}
+  }
+  function toggleSidebar() {
+    const sidebar = document.querySelector(".menu-lateral");
+    const overlay = document.getElementById("sidebarOverlay");
+    const btn = document.getElementById("hamburgerDash");
 
-function fecharSidebar() {
-    document.querySelector('.menu-lateral').classList.remove('open');
-    document.getElementById('sidebarOverlay').classList.remove('active');
-    document.getElementById('hamburgerDash').classList.remove('open');
-    document.body.style.overflow = '';
-}
+    const open = sidebar.classList.toggle("open");
+    overlay.classList.toggle("active", open);
+    btn.classList.toggle("open", open);
+
+    document.body.style.overflow = open ? "hidden" : "";
+  }
+
+  function fecharSidebar() {
+    document.querySelector(".menu-lateral").classList.remove("open");
+    document.getElementById("sidebarOverlay").classList.remove("active");
+    document.getElementById("hamburgerDash").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  function deslogar() {
+    console.log("Iniciando processo de logout seguro...");
+
+    sessionStorage.clear();
+
+    console.log("Sessão após clear:", sessionStorage.getItem("ID_USUARIO"));
+
+    window.location.replace("../index.html");
+  }
 </script>

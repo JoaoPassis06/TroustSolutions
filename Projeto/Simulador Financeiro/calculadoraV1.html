@@ -27,7 +27,7 @@
         <li><a href="../Sites/index.html">Contato</a></li>
       </ul>
     </div>
-    <div class="acessos">
+    <div class="acessos" id="container_acessos">
       <div class="botoes">
         <button onclick="window.location.href='../Sites/login.html'" class="login"><span>Login</span></button>
         <button onclick="window.location.href='../Sites/cadastro.html'" class="cadastro"><span>Cadastro</span></button>
@@ -71,7 +71,6 @@
         
         <button onclick="processarSimulacao()">Simular Lucratividade</button>
 
-        <!-- Botão Planos -->
         <a href="../Sites/planos.html" class="btn-planos">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
@@ -113,6 +112,38 @@
 
 <script>
 
+function gerenciarSessaoIndex() {
+    const containerAcessos = document.getElementById("container_acessos");
+    const idUsuario = sessionStorage.getItem("ID_USUARIO");
+
+    if (idUsuario != undefined && idUsuario != null) {
+        if (containerAcessos) {
+            containerAcessos.innerHTML = `
+                <div class="botoes">
+                    <button onclick="window.location.href='../Sites/Dash/dashborad.html'" class="login btn-dash"><span>Dashboard</span></button>
+                    <button onclick="deslogar()" class="btn-sair"><span>Sair</span></button>
+                </div>
+            `;
+        }
+    } else {
+        if (containerAcessos) {
+            containerAcessos.innerHTML = `
+                <div class="botoes">
+                    <button onclick="window.location.href='../Sites/login.html'" class="login"><span>Login</span></button>
+                    <button onclick="window.location.href='../Sites/cadastro.html'" class="cadastro"><span>Cadastro</span></button>
+                </div>
+            `;
+        }
+    }
+}
+
+function deslogar() {
+    sessionStorage.clear();
+    window.location.reload(); 
+}
+
+gerenciarSessaoIndex();
+
 let dadosSimulacao = {
     com: {},
     sem: {}
@@ -128,21 +159,19 @@ function processarSimulacao() {
         mesesBase: Number(ipt_cultivoSem.value)
     };
 
-    // Validação básica
     if (Object.values(inputs).some(v => v <= 0)) {
         return alert("Por favor, preencha todos os campos com valores positivos.");
     }
 
-    // Cálculos para os dois cenários
-    dadosSimulacao.sem = calcularCenario(inputs, 0.15, 1.7, 0); // 15% mortalidade, 1.7 conversão alimentar
-    dadosSimulacao.com = calcularCenario(inputs, 0.05, 1.4, -2); // 5% mortalidade, 1.4 conversão, 2 meses a menos
+    dadosSimulacao.sem = calcularCenario(inputs, 0.15, 1.7, 0); 
+    dadosSimulacao.com = calcularCenario(inputs, 0.05, 1.4, -2); 
 
     exibirResultadoSimples();
 }
 
 function calcularCenario(inp, taxaMortalidade, conversaoAlimentar, ajusteTempo) {
     const colheitaQtd = inp.alevinos * (1 - taxaMortalidade);
-    const pesoTotalKG = (colheitaQtd * 300) / 1000; // Média de 300g por truta
+    const pesoTotalKG = (colheitaQtd * 300) / 1000; 
     const mesesTotais = inp.mesesBase + ajusteTempo;
     
     const custoAlevinosTotal = inp.alevinos * inp.custoAlevino;
@@ -236,7 +265,7 @@ function abrirComparativo() {
         </div>
     `;
 
-    const economiaCusto = s.custoTotal - c.custoTotal;
+    const economyCusto = s.custoTotal - c.custoTotal;
     const ganhoLucro = c.lucroLiquido - s.lucroLiquido;
 
     div_sensor.innerHTML = `
@@ -245,7 +274,7 @@ function abrirComparativo() {
             <div class="metricas-impacto">
                 <div class="metrica">
                     <p>Economia em Custos</p>
-                    <span style="color: #00FF7F">${economiaCusto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</span>
+                    <span style="color: #00FF7F">${economyCusto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</span>
                 </div>
                 <div class="metrica">
                     <p>Ganho Adicional de Lucro</p>

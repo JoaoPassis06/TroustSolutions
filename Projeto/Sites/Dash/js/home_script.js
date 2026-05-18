@@ -3,292 +3,312 @@ let intervaloDados;
 
 // --- 1. INICIALIZAÇÃO ---
 function iniciarDash() {
-    validarSessao();
-    verificarPermissaoBotao();
-    inicializarGraficos(); 
-    
-    const tanquePadrao = sessionStorage.TANQUE_ATUAL || "1";
-    const seletor = document.getElementById("select_tanque");
-    
-    if (seletor) {
-        seletor.value = tanquePadrao;
-    }
+  validarSessao();
+  verificarPermissaoBotao();
+  inicializarGraficos();
 
-    exibirDadosDoTanque(tanquePadrao);
+  const tanquePadrao = sessionStorage.TANQUE_ATUAL || "1";
+  const seletor = document.getElementById("select_tanque");
 
-    buscarSaudeDoDia(tanquePadrao);
-    iniciarAtualizacaoAutomatica();
+  if (seletor) {
+    seletor.value = tanquePadrao;
+  }
+
+  exibirDadosDoTanque(tanquePadrao);
+
+  buscarSaudeDoDia(tanquePadrao);
+  iniciarAtualizacaoAutomatica();
 }
 // --- 2. CONFIGURAÇÃO DOS GRÁFICOS ---
 function inicializarGraficos() {
-    // 1. LINHA (TEMPO REAL)
-const ctxLinha = document.getElementById('grafico_tempo_real');
-    if (ctxLinha && !chartTempoReal) {
-        chartTempoReal = new Chart(ctxLinha, {
-            type: 'line',
-            data: {
-                labels: ['7', '6', '5', '4', '3', '2', '1'],
-                datasets: [{
-                    data: [0, 0, 0, 0, 0, 0, 0],
-                    borderColor: '#9d33ff',
-                    backgroundColor: 'rgba(157, 51, 255, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                
-                animation: {
-                    duration: 4900,
-                    easing: 'linear'
-                },
-                scales: {
-                    y: { 
-                        min: 8, 
-                        max: 20,
-                        grid: { color: '#444' } 
-                    },
-                    x: { 
-                        grid: { display: false },
-                        ticks: { display: true }
-                    }
-                },
-                plugins: { legend: { display: false } }
-            }
-        });
-    }
+  // 1. LINHA (TEMPO REAL)
+  const ctxLinha = document.getElementById("grafico_tempo_real");
+  if (ctxLinha && !chartTempoReal) {
+    chartTempoReal = new Chart(ctxLinha, {
+      type: "line",
+      data: {
+        labels: ["7", "6", "5", "4", "3", "2", "1"],
+        datasets: [
+          {
+            data: [0, 0, 0, 0, 0, 0, 0],
+            borderColor: "#9d33ff",
+            backgroundColor: "rgba(157, 51, 255, 0.1)",
+            fill: true,
+            tension: 0.4,
+            pointRadius: 3,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
 
-    const ctxMensal = document.getElementById('grafico_mensal');
-    if (ctxMensal && !chartMensal) {
-        chartMensal = new Chart(ctxMensal, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai'],
-                datasets: [{
-                    label: 'Média Mensal',
-                    data: [0, 0, 0, 0, 0], // Começa em zero para a animação subir
-                    backgroundColor: '#9d33ff',
-                    borderRadius: 5
-                }]
-            },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: false,
-                animation: { 
-                    duration: 2000, 
-                    easing: 'easeOutBounce' 
-                },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#444' } },
-                    x: { grid: { display: false } }
-                }
-            }
-        });
-    }
+        animation: {
+          duration: 4900,
+          easing: "linear",
+        },
+        scales: {
+          y: {
+            min: 8,
+            max: 20,
+            grid: { color: "#444" },
+          },
+          x: {
+            grid: { display: false },
+            ticks: { display: true },
+          },
+        },
+        plugins: { legend: { display: false } },
+      },
+    });
+  }
 
-    // 2. ROSCA (SAÚDE DO TANQUE)
-    const ctxRosca = document.getElementById('grafico_distribuicao');
-    if (ctxRosca && !chartDistribuicao) {
-        chartDistribuicao = new Chart(ctxRosca, {
-            type: 'doughnut',
-            data: {
-                labels: ['Ideal', 'Alerta'],
-                datasets: [{
-                    data: [100, 0], 
-                    backgroundColor: ['#00FF7F', '#ff4b4b'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: { 
-                    duration: 2000, 
-                    easing: 'easeOutQuart' 
-                },
-                plugins: {
-                    legend: { position: 'bottom', labels: { color: '#888' } },
-                    title: { display: true, text: 'SAÚDE DO TANQUE (%)', color: '#888' }
-                },
-                cutout: '75%'
-            }
-        });
-    }
+  const ctxMensal = document.getElementById("grafico_mensal");
+  if (ctxMensal && !chartMensal) {
+    chartMensal = new Chart(ctxMensal, {
+      type: "bar",
+      data: {
+        labels: ["Jan", "Fev", "Mar", "Abr", "Mai"],
+        datasets: [
+          {
+            label: "Média Mensal",
+            data: [0, 0, 0, 0, 0], // Começa em zero para a animação subir
+            backgroundColor: "#9d33ff",
+            borderRadius: 5,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 2000,
+          easing: "easeOutBounce",
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#444" } },
+          x: { grid: { display: false } },
+        },
+      },
+    });
+  }
+
+  // 2. ROSCA (SAÚDE DO TANQUE)
+  const ctxRosca = document.getElementById("grafico_distribuicao");
+  if (ctxRosca && !chartDistribuicao) {
+    chartDistribuicao = new Chart(ctxRosca, {
+      type: "doughnut",
+      data: {
+        labels: ["Ideal", "Alerta"],
+        datasets: [
+          {
+            data: [100, 0],
+            backgroundColor: ["#00FF7F", "#ff4b4b"],
+            borderWidth: 0,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 2000,
+          easing: "easeOutQuart",
+        },
+        plugins: {
+          legend: { position: "bottom", labels: { color: "#888" } },
+          title: { display: true, text: "SAÚDE DO TANQUE (%)", color: "#888" },
+        },
+        cutout: "75%",
+      },
+    });
+  }
 }
 // --- 3. FUNÇÕES DE ATUALIZAÇÃO (FLUIDEZ) ---
 
 function atualizarGraficoLinha(novoLabel, novoDado) {
-    if (chartTempoReal) {
-        for (let i = 0; i < chartTempoReal.data.datasets[0].data.length - 1; i++) {
-            chartTempoReal.data.datasets[0].data[i] = chartTempoReal.data.datasets[0].data[i + 1];
-        }
-        
-        chartTempoReal.data.datasets[0].data[chartTempoReal.data.datasets[0].data.length - 1] = novoDado;
-
-        chartTempoReal.update(); 
+  if (chartTempoReal) {
+    for (let i = 0; i < chartTempoReal.data.datasets[0].data.length - 1; i++) {
+      chartTempoReal.data.datasets[0].data[i] =
+        chartTempoReal.data.datasets[0].data[i + 1];
     }
+
+    chartTempoReal.data.datasets[0].data[
+      chartTempoReal.data.datasets[0].data.length - 1
+    ] = novoDado;
+
+    chartTempoReal.update();
+  }
 }
 
 function atualizarGraficoRosca(qtdIdeal, qtdAlerta) {
-    console.log("Tentando atualizar rosca com:", qtdIdeal, qtdAlerta);
-    
-    if (chartDistribuicao) {
-        
-        chartDistribuicao.data.datasets[0].data = [qtdIdeal, qtdAlerta];
-        chartDistribuicao.update();
-        console.log("Gráfico de rosca atualizado com sucesso!");
-    } else {
-        console.error("ERRO: A variável 'chartDistribuicao' está vazia. O gráfico não foi inicializado corretamente.");
-    }
+  console.log("Tentando atualizar rosca com:", qtdIdeal, qtdAlerta);
+
+  if (chartDistribuicao) {
+    chartDistribuicao.data.datasets[0].data = [qtdIdeal, qtdAlerta];
+    chartDistribuicao.update();
+    console.log("Gráfico de rosca atualizado com sucesso!");
+  } else {
+    console.error(
+      "ERRO: A variável 'chartDistribuicao' está vazia. O gráfico não foi inicializado corretamente.",
+    );
+  }
 }
 
 // --- 4. BUSCA DE DADOS ---
 
 function exibirDadosDoTanque(idTanque) {
+  fetch(`http://localhost:3333/medidas/tempo-real/${idTanque}`, {
+    cache: "no-store",
+  })
+    .then((resposta) => {
+      if (resposta.ok) {
+        resposta.json().then((novoRegistro) => {
+          if (novoRegistro.length > 0) {
+            const temperaturas = novoRegistro.map((v) => Number(v.temperatura));
+            const ultimaLeitura = novoRegistro[novoRegistro.length - 1];
+            const ultimaTemp = Number(ultimaLeitura.temperatura);
 
-    fetch(`http://localhost:3333/medidas/tempo-real/${idTanque}`, { cache: 'no-store' })
-        .then(resposta => {
-            if (resposta.ok) {
-                resposta.json().then(novoRegistro => {
-                    if (novoRegistro.length > 0) {
-                        const temperaturas = novoRegistro.map(v => Number(v.temperatura));
-                        const ultimaLeitura = novoRegistro[novoRegistro.length - 1];
-                        const ultimaTemp = Number(ultimaLeitura.temperatura);
+            // 2. Atualização das KPIs
+            document.getElementById("kpi_min").innerHTML =
+              `${Math.min(...temperaturas).toFixed(1)}ºC`;
+            document.getElementById("kpi_max").innerHTML =
+              `${Math.max(...temperaturas).toFixed(1)}ºC`;
+            document.getElementById("kpi_media").innerHTML =
+              `${ultimaTemp.toFixed(1)}ºC`;
 
-                        // 2. Atualização das KPIs
-                        document.getElementById("kpi_min").innerHTML = `${Math.min(...temperaturas).toFixed(1)}ºC`;
-                        document.getElementById("kpi_max").innerHTML = `${Math.max(...temperaturas).toFixed(1)}ºC`;
-                        document.getElementById("kpi_media").innerHTML = `${ultimaTemp.toFixed(1)}ºC`;
+            const elementoStatus = document.getElementById("kpi_status");
+            const isIdeal = ultimaTemp >= 10 && ultimaTemp <= 17;
 
-                        const elementoStatus = document.getElementById("kpi_status");
-                        const isIdeal = ultimaTemp >= 10 && ultimaTemp <= 17;
-                        
-                        elementoStatus.innerHTML = isIdeal ? "NORMAL" : "ALERTA";
-                        elementoStatus.style.color = isIdeal ? "#00FF7F" : "#ff4b4b";
+            elementoStatus.innerHTML = isIdeal ? "NORMAL" : "ALERTA";
+            elementoStatus.style.color = isIdeal ? "#00FF7F" : "#ff4b4b";
 
-
-                        if (chartTempoReal.data.datasets[0].data.length == 0) {
-                            novoRegistro.forEach(reg => {
-                                chartTempoReal.data.labels.push(reg.momento);
-                                chartTempoReal.data.datasets[0].data.push(Number(reg.temperatura));
-                            });
-                            chartTempoReal.update();
-                        } else {
-
-                            atualizarGraficoLinha(ultimaLeitura.momento, ultimaTemp);
-                        }
-                    }
-                });
+            if (chartTempoReal.data.datasets[0].data.length == 0) {
+              novoRegistro.forEach((reg) => {
+                chartTempoReal.data.labels.push(reg.momento);
+                chartTempoReal.data.datasets[0].data.push(
+                  Number(reg.temperatura),
+                );
+              });
+              chartTempoReal.update();
+            } else {
+              atualizarGraficoLinha(ultimaLeitura.momento, ultimaTemp);
             }
-        })
-        .catch(erro => console.error(`Erro ao obter dados: ${erro.message}`));
+          }
+        });
+      }
+    })
+    .catch((erro) => console.error(`Erro ao obter dados: ${erro.message}`));
 }
 
 function buscarSaudeDoDia(idTanque) {
+  fetch(`http://localhost:3333/medidas/saude-dia/${idTanque}`, {
+    cache: "no-store",
+  })
+    .then((res) => res.json())
+    .then((registro) => {
+      const ideal = Number(registro.qtdIdeal);
+      const alerta = Number(registro.qtdAlerta);
 
-    fetch(`http://localhost:3333/medidas/saude-dia/${idTanque}`, { cache: 'no-store' })
-        .then(res => res.json())
-        .then(registro => {
-           
-            const ideal = Number(registro.qtdIdeal);
-            const alerta = Number(registro.qtdAlerta);
+      console.log("Dados convertidos:", ideal, alerta);
 
-            console.log("Dados convertidos:", ideal, alerta);
-
-            atualizarGraficoRosca(ideal, alerta);
-        })
-        .catch(err => console.error("Erro ao buscar saúde:", err));
+      atualizarGraficoRosca(ideal, alerta);
+    })
+    .catch((err) => console.error("Erro ao buscar saúde:", err));
 }
 function iniciarAtualizacaoAutomatica() {
-    clearInterval(intervaloDados); 
-    intervaloDados = setInterval(() => {
-        const id = document.getElementById("select_tanque").value;
-        
-        exibirDadosDoTanque(id); 
-        buscarSaudeDoDia(id); 
-        
-    }, 5000);
+  clearInterval(intervaloDados);
+  intervaloDados = setInterval(() => {
+    const id = document.getElementById("select_tanque").value;
+
+    exibirDadosDoTanque(id);
+    buscarSaudeDoDia(id);
+  }, 5000);
 }
 function mudarTanque() {
-    const id = document.getElementById('select_tanque').value;
-    sessionStorage.TANQUE_ATUAL = id;
-  
-    if (chartTempoReal) {
-     
-        chartTempoReal.data.labels = [];
-        chartTempoReal.data.datasets[0].data = [];
-        chartTempoReal.update(); 
-    }
-    
-    document.getElementById("kpi_min").innerHTML = "--ºC";
-    document.getElementById("kpi_max").innerHTML = "--ºC";
-    
-    exibirDadosDoTanque(id);
+  const id = document.getElementById("select_tanque").value;
+  sessionStorage.TANQUE_ATUAL = id;
+
+  if (chartTempoReal) {
+    chartTempoReal.data.labels = [];
+    chartTempoReal.data.datasets[0].data = [];
+    chartTempoReal.update();
+  }
+
+  document.getElementById("kpi_min").innerHTML = "--ºC";
+  document.getElementById("kpi_max").innerHTML = "--ºC";
+
+  exibirDadosDoTanque(id);
 }
-
-
 
 // --- FUNÇÕES DE APOIO ---
 function validarSessao() {
-    const nomeUsuario = sessionStorage.NOME_USUARIO;
-    
-    if (!nomeUsuario) {
-        window.location.href = "../login.html";
-    } else {
-   
-        const nomeFormatado = nomeUsuario.toLowerCase().split(' ').map(palavra => {
-            return palavra.charAt(0).toUpperCase() + palavra.slice(1);
-        }).join(' ');
+  const nomeUsuario = sessionStorage.NOME_USUARIO;
 
-        if (document.getElementById("nome_usuario")) {
-           
-            document.getElementById("nome_usuario").innerText = nomeFormatado;
-        }
+  if (!nomeUsuario) {
+    window.location.href = "../login.html";
+  } else {
+    const nomeFormatado = nomeUsuario
+      .toLowerCase()
+      .split(" ")
+      .map((palavra) => {
+        return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+      })
+      .join(" ");
 
-        if (document.getElementById("nome_empresa")) {
-
-            document.getElementById("nome_empresa").innerText = sessionStorage.NOME_EMPRESA;
-        }
+    if (document.getElementById("nome_usuario")) {
+      document.getElementById("nome_usuario").innerText = nomeFormatado;
     }
+
+    if (document.getElementById("nome_empresa")) {
+      document.getElementById("nome_empresa").innerText =
+        sessionStorage.NOME_EMPRESA;
+    }
+  }
 }
 
 function verificarPermissaoBotao() {
-    const podeCadastrar = sessionStorage.PODE_CADASTRAR;
-    const supervisorId = sessionStorage.SUPERVISOR_ID;
-    
+  const podeCadastrar = sessionStorage.PODE_CADASTRAR;
+  const supervisorId = sessionStorage.SUPERVISOR_ID;
 
-    const container = document.getElementById("container_cadastrar_equipe");
-    const btn = document.getElementById("btn_cadastrar_equipe");
-    
-    if (container) {
-        if (supervisorId === "null" || podeCadastrar === "1") {
-            container.style.display = "flex";
-            btn.style.display="block";
+  const container = document.getElementById("container_cadastrar_equipe");
+  const btn = document.getElementById("btn_cadastrar_equipe");
 
-        } else {
-            btn.style.display = "none";
-            container.style.display = "none";
-        }
+  if (container) {
+    if (supervisorId === "null" || podeCadastrar === "1") {
+      container.style.display = "flex";
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+      container.style.display = "none";
     }
+  }
 }
-    function toggleSidebar() {
-      const sidebar = document.querySelector('.container-lateral');
-      const overlay = document.getElementById('sidebarOverlay');
-      const btn     = document.getElementById('hamburgerDash');
-      const open    = sidebar.classList.toggle('open');
-      overlay.classList.toggle('active', open);
-      btn.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    }
-    function fecharSidebar() {
-      document.querySelector('.container-lateral').classList.remove('open');
-      document.getElementById('sidebarOverlay').classList.remove('active');
-      document.getElementById('hamburgerDash').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) fecharSidebar();
-    });
+function toggleSidebar() {
+  const sidebar = document.querySelector(".container-lateral");
+  const overlay = document.getElementById("sidebarOverlay");
+  const btn = document.getElementById("hamburgerDash");
+  const open = sidebar.classList.toggle("open");
+  overlay.classList.toggle("active", open);
+  btn.classList.toggle("open", open);
+  document.body.style.overflow = open ? "hidden" : "";
+}
+function fecharSidebar() {
+  document.querySelector(".container-lateral").classList.remove("open");
+  document.getElementById("sidebarOverlay").classList.remove("active");
+  document.getElementById("hamburgerDash").classList.remove("open");
+  document.body.style.overflow = "";
+}
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 900) fecharSidebar();
+});
+
+function deslogar() {
+  console.log("Iniciando processo de logout seguro...");
+
+  sessionStorage.clear();
+
+  console.log("Sessão após clear:", sessionStorage.getItem("ID_USUARIO"));
+
+  window.location.replace("../index.html");
+}
